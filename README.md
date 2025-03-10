@@ -16,19 +16,18 @@
 │   ├── home.nix
 │   └── modules
 │       ├── default.nix
-│       ├── firefox.nix
-│       ├── git.nix
-│       ├── gtk.nix
-│       ├── kitty.nix
-│       ├── neovim.nix
-│       └── zsh.nix
+│       ├── firefox
+│       ├── git
+│       ├── kitty
+│       ├── neovim
+│       └── zshell
 ├── nix
 │   ├── apps
 │   │   ├── default.nix
 │   │   ├── devtools
-│   │   ├── nixpkgs.nix
 │   │   ├── notion-app-enhanced
 │   │   ├── printing.nix
+│   │   ├── steam.nix
 │   │   └── tlp.nix
 │   ├── c0d3h01
 │   │   ├── audio.nix
