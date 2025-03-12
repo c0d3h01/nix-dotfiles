@@ -1,7 +1,7 @@
 {
   imports = [
     # ./docker.nix
-    # ./mysql.nix
+    ./mysql.nix
     ./podman.nix
     ./python.nix
     ./rust.nix

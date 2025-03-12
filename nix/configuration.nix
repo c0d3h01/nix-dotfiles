@@ -4,12 +4,12 @@
   imports = [
     ./apps
     ./c0d3h01
-    ./hardware.nix
+    ./hardware-configuration.nix
   ];
 
   # -*-[ NixOS Configuration ]-*-
   system.stateVersion = "24.11";
-  networking.hostName = "NixOS";
+  networking.hostName = "nixos";
 
   # -*-[ Bootloader Configuration ]-*-
   boot.loader = {
