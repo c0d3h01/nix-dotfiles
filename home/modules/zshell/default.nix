@@ -72,6 +72,10 @@
       nr = "nix run nixpkgs#";
       nf = "nix flake";
       nd = "nix develop";
+
+      # Docker
+      ubuntu = "docker run -it ubuntu bash";
+      fedora = "docker run -it fedora bash";
     };
 
     plugins = [
