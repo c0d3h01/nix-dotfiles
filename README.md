@@ -4,7 +4,6 @@
 ```
 .
 ├── LICENSE
-├── Makefile
 ├── README.md
 ├── README_TREE.md
 ├── assets
@@ -20,7 +19,6 @@
 │       ├── kitty
 │       ├── neovim
 │       └── zshell
-├── install.sh
 ├── nix
 │   ├── apps
 │   │   ├── default.nix
@@ -29,14 +27,16 @@
 │   │   ├── printing.nix
 │   │   ├── steam.nix
 │   │   └── tlp.nix
-│   ├── c0d3h01
-│   │   ├── audio.nix
-│   │   ├── default.nix
-│   │   ├── desktop.nix
-│   │   ├── fonts.nix
-│   │   ├── networking.nix
-│   │   └── user.nix
 │   ├── configuration.nix
-│   └── hardware-configuration.nix
+│   ├── hardware.nix
+│   └── user
+│       ├── audio.nix
+│       ├── default.nix
+│       ├── desktop.nix
+│       ├── fonts.nix
+│       ├── networking.nix
+│       └── user.nix
+├── scripts
+│   └── install.sh
 └── shell.nix
 ```
