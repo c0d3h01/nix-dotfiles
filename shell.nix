@@ -3,6 +3,15 @@
 pkgs.mkShell {
   name = "dev-environment";
   buildInputs = [
+    # C/C++ tools
+    pkgs.clang
+    pkgs.gcc
+    pkgs.pkg-config
+    pkgs.gnumake
+    pkgs.cmake
+    pkgs.ninja
+    pkgs.glib
+
     # GTK & Graphics
     pkgs.gtk3
     pkgs.glfw
