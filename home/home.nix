@@ -1,12 +1,12 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 {
   imports = [
     ./modules
   ];
 
   # Home Manager needs a bit of information about you and the paths it should manage.
-  home.username = "c0d3h01";
-  home.homeDirectory = "/home/c0d3h01";
+  home.username = "${username}";
+  home.homeDirectory = "/home/${username}";
 
   # This value determines the Home Manager release that your configuration is
   home.stateVersion = "24.11";
@@ -44,7 +44,6 @@
     fuse
     dos2unix
     zoxide
-    glibc # GNU lib
     android-tools # Android
     appimage-run
     universal-android-debloater # uad-ng
