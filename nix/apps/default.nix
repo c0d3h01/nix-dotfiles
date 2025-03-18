@@ -43,7 +43,6 @@
     telegram-desktop
     github-desktop
     vscodium-fhs
-    vscode-fhs
     slack
     zoom-us
     anydesk
@@ -74,12 +73,6 @@
     cmake
     ninja
     glib
-
-    # GTK & Graphics
-    gtk3
-    glfw
-    glew
-    glm
 
     # Java.
     zulu23
