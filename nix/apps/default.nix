@@ -74,6 +74,12 @@
     ninja
     glib
 
+    # GTK & Graphics
+    gtk3
+    glfw
+    glew
+    glm
+
     # Java.
     zulu23
 
