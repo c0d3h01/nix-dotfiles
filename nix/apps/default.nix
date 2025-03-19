@@ -1,10 +1,9 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
     ./devtools
     ./printing.nix
-    # ./steam.nix
   ];
 
   # -*- Allow unfree softwares -*-
@@ -32,7 +31,7 @@
   nix.settings.trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431Cz7knE28jzE3KFW4c9fPyNn6zhG3QHw=" ];
 
   environment.sessionVariables = {
-    PKG_CONFIG_PATH="/run/current-system/sw/lib/pkgconfig:$PKG_CONFIG_PATH";
+    PKG_CONFIG_PATH = "/run/current-system/sw/lib/pkgconfig:$PKG_CONFIG_PATH";
   };
 
   environment.systemPackages = with pkgs; [
@@ -42,7 +41,7 @@
 
     # -*- Desktop GUI Apps -*-
     jetbrains.webstorm
-    vesktop
+    discord
     telegram-desktop
     github-desktop
     vscodium
@@ -52,37 +51,10 @@
     libreoffice
     element-desktop
     tor-browser
-    youtube-music
     spotify
     transmission_4-gtk
     google-chrome
     postman
-
-    # -*-[ Development tools ]-*-
-    # Algorithmic
-    opencv
-
-    # Web development tools.
-    nodejs
-    yarn
-
-    # C/C++ tools
-    clang
-    pkg-config
-    gnumake
-    cmake
-    ninja
-    lldb
-    gdb
-    openssl
-    # Graphics
-    glib
-    glfw
-    glew
-    glm
-
-    # Java.
-    zulu23
 
     # Networking tools.
     metasploit # msfconsole 
