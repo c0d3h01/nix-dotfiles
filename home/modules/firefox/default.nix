@@ -7,7 +7,7 @@ in
   options.modules.firefox = { enable = mkEnableOption "firefox"; };
 
   config = mkIf cfg.enable {
-    programs.firefox = {
+    programs.firefox = lib.mkForce {
       enable = true;
 
       profiles.${username} = {
@@ -23,6 +23,11 @@ in
           "font.name.serif.x-western" = "Source Serif Pro";
           "font.name.sans-serif.x-western" = "Inter";
           "font.name.monospace.x-western" = "Fira Code";
+          "font.name-list.emoji" = "Noto Color Emoji";
+
+          # Font rendering
+          "gfx.font_rendering.cleartype_params.rendering_mode" = 5;
+          "gfx.font_rendering.cleartype_params.smoothing" = 2;
 
           # Core privacy settings
           "browser.send_pings" = false;

@@ -1,28 +1,46 @@
-{ pkgs, ... }:
-
+{ config, lib,  pkgs, ... }:
 {
   fonts = {
-    enableDefaultPackages = false;
+    fontDir.enable = true;
+    enableDefaultPackages = true;
+    
     packages = with pkgs; [
+      # Sans-serif fonts
       inter
-      roboto
-      open-sans
+      
+      # Serif fonts
       source-serif-pro
-      merriweather
+      
+      # Monospace fonts
       fira-code
-      jetbrains-mono
+      
+      # Extended character support
+      noto-fonts
       noto-fonts-emoji
-      twemoji-color-font
-      font-awesome
-      liberation_ttf
+      
+      # Fallback fonts
+      dejavu_fonts
     ];
-
+    
     fontconfig = {
+      enable = true;
+      antialias = true;
+      hinting = {
+        enable = true;
+        style = "slight";
+      };
+      
       defaultFonts = {
-        serif = [ "Source Serif Pro" "Merriweather" "DejaVu Serif" ];
-        sansSerif = [ "Inter" "Roboto" "Open Sans" "DejaVu Sans" ];
-        monospace = [ "Fira Code" "JetBrains Mono" "DejaVu Sans Mono" ];
-        emoji = [ "Noto Color Emoji" "Twemoji" ];
+        serif = lib.mkForce [ "Source Serif Pro" "DejaVu Serif" ];
+        sansSerif = lib.mkForce [ "Inter" "DejaVu Sans" ];
+        monospace = lib.mkForce [ "Fira Code" "DejaVu Sans Mono" ];
+        emoji = lib.mkForce [ "Noto Color Emoji" ];
+      };
+      
+      # Font rendering
+      subpixel = {
+        rgba = "rgb";
+        lcdfilter = "default";
       };
     };
   };
