@@ -55,6 +55,23 @@
     # Networking tools.
     metasploit # msfconsole 
     nmap
+
+    # Java.
+    zulu23
+
+    # Development tools.
+    nodejs
+    yarn
+
+    # C/C++ tools
+    clang
+    gnumake
+    cmake
+    ninja
+    glib
+    glfw
+    glew
+    glm
   ];
 }
 
