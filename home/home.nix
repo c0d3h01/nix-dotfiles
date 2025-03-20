@@ -52,6 +52,8 @@
     nh # Nix Garbage Cleaner
     xdg-desktop-portal
     xdg-desktop-portal-gtk
+    age
+    gnupg
 
     # -*-[ Editors & Viewers ]-*-
     eza # ls
