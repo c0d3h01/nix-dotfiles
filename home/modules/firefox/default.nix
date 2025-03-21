@@ -7,6 +7,7 @@ in
   options.modules.firefox = { enable = mkEnableOption "firefox"; };
 
   config = mkIf cfg.enable {
+    home.sessionVariables.MOZ_USE_XINPUT2 = "1";
     programs.firefox = lib.mkForce {
       enable = true;
 
@@ -23,16 +24,13 @@ in
           "font.name.serif.x-western" = "Source Serif Pro";
           "font.name.sans-serif.x-western" = "Inter";
           "font.name.monospace.x-western" = "Fira Code";
-          "font.name-list.emoji" = "Noto Color Emoji";
-
-          # Font rendering
-          "gfx.font_rendering.cleartype_params.rendering_mode" = 5;
-          "gfx.font_rendering.cleartype_params.smoothing" = 2;
+          "font.name-list.emoji" = "Twitter Color Emoji";
 
           # Core privacy settings
           "browser.send_pings" = false;
-          "network.cookie.cookieBehavior" = 3;
-          "network.http.referer.XOriginPolicy" = 1;
+          "network.cookie.cookieBehavior" = 1;
+          "privacy.resistFingerprinting" = false;
+          "network.http.referer.XOriginPolicy" = 0;
           "dom.security.https_only_mode_ever_enabled" = true;
           "geo.enabled" = false;
 
@@ -62,7 +60,7 @@ in
           "browser.search.suggest.enabled" = true;
           "browser.urlbar.suggest.bookmark" = true;
           "browser.urlbar.suggest.history" = true;
-          "media.autoplay.enabled" = false;
+          "media.autoplay.enabled" = true;
         };
 
         # UserChrome CSS for consistent theming
