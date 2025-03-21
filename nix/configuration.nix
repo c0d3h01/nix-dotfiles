@@ -8,8 +8,6 @@
     ./hardware.nix
   ];
 
-  age.identityPaths = [ "/home/${username}/dotfiles/secrets/keys/default.key" ];
-
   # -*-[ Bootloader Configuration ]-*-
   boot.loader = {
     systemd-boot.enable = true;

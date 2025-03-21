@@ -35,7 +35,7 @@
 
       # Shared arguments for modules
       specialArgs = {
-        inherit system username hostname useremail;
+        inherit system username hostname useremail agenix;
         inputs = self.inputs;
       };
 
@@ -62,7 +62,6 @@
           # -*-[ System configurations, modules ]-*-
           ./nix/configuration.nix
           ./secrets.nix
-          agenix.nixosModules.default
           ({ config, pkgs, ... }: {
             system.stateVersion = "24.11";
             networking.hostName = "${hostname}";
