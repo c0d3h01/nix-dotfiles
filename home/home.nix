@@ -28,10 +28,10 @@
 
   # -*-[ Home Packages ]-*-
   home.packages = with pkgs; [
-    # -*-[ Let install Home-manager ]-*-
+    # Let install Home-manager
     home-manager
 
-    # -*-[ Utilities ]-*-
+    # Utilities
     fastfetch
     glances
     tmux
@@ -55,34 +55,31 @@
     age
     gnupg
 
-    # -*-[ Editors & Viewers ]-*-
+    # Editors & Viewers
     eza # ls
     bat # cat
     fd # find
     ripgrep # Better than grep
     dust # Disk usage visualization
 
-    # -*-[ Git Tools ]-*-
+    # Git Tools
     git
     git-lfs
     gh # GitHub CLI
     gitui # Terminal UI for git
 
-    # -*-[ Nix Tools ]-*-
-    nix-output-monitor # Monitor nix-build progress
+    # Nix Tools
     nix-prefetch-github
 
-    # -*-[ Language Servers ]-*-
-    nodePackages.typescript-language-server
-    nodePackages.vscode-langservers-extracted
+    # Language Servers
     lua-language-server
     nil
 
-    # -*-[ System Monitoring ]-*-
+    # System Monitoring
     inxi
     procs
 
-    # -*-[ Diffing ]-*-
+    # Diffing
     diff-so-fancy
   ];
 
