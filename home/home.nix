@@ -26,6 +26,8 @@
     LESS = "-R";
   };
 
+  home.sessionPath = [ "$HOME/.npm-global/bin" ];
+
   # -*-[ Home Packages ]-*-
   home.packages = with pkgs; [
     # Let install Home-manager
@@ -33,6 +35,7 @@
 
     # Utilities
     fastfetch
+    unzip
     glances
     tmux
     xclip
@@ -48,8 +51,6 @@
     ventoy
     shc # Shell compiler
     nh # Nix Garbage Cleaner
-    xdg-desktop-portal
-    xdg-desktop-portal-gtk
 
     # Editors & Viewers
     eza # ls

@@ -77,7 +77,6 @@
         "git"
         "z"
         "sudo"
-        "docker"
         "colored-man-pages"
         "command-not-found"
         "fzf"
@@ -108,9 +107,6 @@
 
     # Environment setup
     envExtra = ''
-      # NPM global
-      export PATH="$HOME/.npm-global/bin:$PATH"
-
       export BAT_THEME="Catppuccin-mocha"
       export MANPAGER="nvim +Man!"
     '';
@@ -160,7 +156,7 @@
       };
 
       git_branch = {
-        symbol = " ";
+        symbol = " ";
         style = "bold purple";
         format = "[$symbol$branch]($style) ";
       };

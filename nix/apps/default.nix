@@ -2,87 +2,121 @@
 
 {
   imports = [
-    ./android.nix
+    # ./android.nix
     ./devtools
-    ./printing.nix
+    # ./printing.nix
+    # ./vm.nix
   ];
 
-  # -*- Allow unfree softwares -*-
-  nixpkgs.config.allowUnfree = true;
+  # System configuration
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+    };
+  };
 
-  # -*- Allow Nix experimental-features enable -*-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix = {
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      auto-optimise-store = true;
+      max-jobs = "auto";
+      cores = 0;
+      # Cache configuration
+      substituters = [
+        "https://cache.nixos.org"
+        "https://nix-community.cachix.org"
+      ];
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431Cz7knE28jzE3KFW4c9fPyNn6zhG3QHw="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
+    };
+    # Garbage collection
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
+  };
 
-  # -*-[ Automatic cleanup ]-*-
-  nix.gc.automatic = true;
-  nix.gc.dates = "daily";
-  nix.settings.auto-optimise-store = true;
-
-  # Enables nix-ld to run dynamically linked binaries outside the Nix store
-  programs.nix-ld.enable = true;
-
-  # flatpak Apps
-  # flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  # Enable flatpak support
   # services.flatpak.enable = true;
-  # xdg.portal.enable = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk xdg-desktop-portal ];
+  };
 
-  # Limit Nix Build Jobs
-  nix.settings.max-jobs = 2;
-  nix.settings.substituters = [ "https://cache.nixos.org" ];
-  nix.settings.trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431Cz7knE28jzE3KFW4c9fPyNn6zhG3QHw=" ];
+  # Development environment packages
+  environment.systemPackages =
+    let
+      # Group packages by category for better organization
+      devTools = with pkgs; [
+        # Utilities
+        nix-ld
 
-  environment.systemPackages = with pkgs; [
-    # Notion fix patch
-    (pkgs.callPackage ./notion-app-enhanced { })
-    notion-app-enhanced # Notion Desktop
+        # Editors and IDEs
+        vscode-fhs
+        jetbrains.webstorm
 
-    # -*- Desktop GUI Apps -*-
-    jetbrains.webstorm
-    discord
-    telegram-desktop
-    github-desktop
-    vscode-fhs
-    slack
-    zoom-us
-    anydesk
-    libreoffice
-    element-desktop
-    tor-browser
-    spotify
-    transmission_4-gtk
-    google-chrome
-    postman
+        # Version control
+        git
+        github-desktop
 
-    # Networking tools.
-    metasploit # msfconsole
-    nmap
+        # JavaScript/TypeScript
+        nodejs
+        nodePackages.node2nix
+        nodePackages.typescript
+        nodePackages.typescript-language-server
+        nodePackages.vscode-langservers-extracted
+        nodePackages.prettier
+        nodePackages.eslint
 
-    # Java.
-    zulu23
-    gradle
-    maven
+        # Java
+        openjdk
+        gradle
 
-    # -*- Development tools -*-
-    # Node tools
-    nodePackages.nodejs
-    nodePackages.node2nix
-    nodePackages.typescript
-    nodePackages.typescript-language-server
-    nodePackages.vscode-langservers-extracted
-    nodePackages.prettier
-    nodePackages.eslint
+        # C/C++
+        clang
+        gnumake
+        cmake
+        ninja
 
-    # C/C++ tools
-    clang
-    gnumake
-    cmake
-    ninja
-    glib
-    glfw
-    glew
-    glm
-    sfml
-    vcpkg
-  ];
+        # Graphics libraries
+        glib
+        glfw
+        glew
+        glm
+        sfml
+
+        # API Development
+        postman
+      ];
+
+      communicationApps = with pkgs; [
+        discord
+        telegram-desktop
+        slack
+        zoom-us
+        element-desktop
+      ];
+
+      desktopApps = with pkgs; [
+        # Custom patched Notion
+        (pkgs.callPackage ./notion-app-enhanced { })
+        libreoffice
+        tor-browser
+        spotify
+        transmission_4-gtk
+        google-chrome
+        anydesk
+      ];
+
+      networkingTools = with pkgs; [
+        metasploit
+        nmap
+        wireshark
+        tcpdump
+      ];
+    in
+    devTools ++ communicationApps ++ desktopApps ++ networkingTools;
 }
-

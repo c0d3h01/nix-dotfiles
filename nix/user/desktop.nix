@@ -11,10 +11,6 @@
   # Enable dconf service for GNOME settings management
   programs.dconf.enable = true;
 
-  # Virtual boxes
-  virtualisation.libvirtd.enable = true;
-  users.users.${username}.extraGroups = [ "libvirtd" ];
-
   # Exclude unwanted GNOME packages
   environment.gnome.excludePackages = with pkgs; [
     gnome-tour
@@ -39,13 +35,12 @@
   environment.systemPackages = with pkgs; [
     gnome-photos
     gnome-tweaks
-    gnome-boxes
     evolutionWithPlugins
     libreoffice
 
     # Gnome Extensions
     gnomeExtensions.gsconnect
-    gnomeExtensions.dash-to-dock
+    gnomeExtensions.dash2dock-lite
   ];
 
   home-manager.users.${username} = { pkgs, ... }: {
@@ -54,7 +49,7 @@
         disable-user-extensions = false;
         enabled-extensions = [
           "gsconnect@andyholmes.github.io"
-          "dash-to-dock@micxgx.gmail.com"
+          "dash2dock-lite@icedman.github.com"
         ];
       };
 

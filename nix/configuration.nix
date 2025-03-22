@@ -3,9 +3,9 @@
 {
   imports = [
     ./apps
-    ./tweaks
     ./user
     ./hardware.nix
+    ./optimization.nix
   ];
 
   # -*-[ Bootloader Configuration ]-*-
@@ -16,7 +16,7 @@
 
   # Hardware acceleration for video rendering
   hardware.graphics.enable = true;
-  hardware.graphics.enable32Bit = true;
+  # hardware.graphics.enable32Bit = true;
 
   # -*-[ GPG ]-*-
   # Some programs need SUID wrappers, can be configured further or are

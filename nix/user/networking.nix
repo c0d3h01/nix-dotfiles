@@ -1,47 +1,54 @@
 { lib, ... }:
-
 {
-  # Enables wireless support via wpa_supplicant (uncomment if needed)
-  # networking.wireless.enable = true;
-  # Configure network proxy if necessary (uncomment and modify if needed)
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  # Core networking configuration
+  networking = {
+    networkmanager = {
+      enable = true;
+      # Disable WiFi power saving
+      settings.connection."wifi.powersave" = lib.mkForce 2;
+      # Use systemd-resolved for DNS
+      dns = lib.mkForce "none";
+      # Efficient connection config in one block
+      connectionConfig = {
+        "connection.mdns" = 2;
+        "ipv4.dns-priority" = -1;
+        "ipv6.dns-priority" = -1;
+      };
+    };
 
-  # -*-[ Network manager configurations ]-*-
-  networking.networkmanager.enable = true;
-  networking.networkmanager.settings.connection."wifi.powersave" = lib.mkForce 2;
-  systemd.network.wait-online.enable = false;
+    # Direct DNS configuration
+    nameservers = [
+      # Cloudflare DNS (IPv4 + IPv6)
+      "1.1.1.1"
+      "1.0.0.1"
+      "2606:4700:4700::1111"
+      "2606:4700:4700::1001"
+    ];
 
-  # -*-[ DNS ]-*-
-  # Enable systemd-resolved for DNS resolution
-  services.resolved.enable = true;
+    # Prevent DNS config overwrites
+    dhcpcd.extraConfig = "nohook resolv.conf";
 
-  # Disable NetworkManager's internal DNS handling
-  networking.networkmanager.dns = lib.mkForce "none";
-
-  # Set custom DNS servers (IPv4 and IPv6)
-  networking.nameservers = [
-    "1.1.1.1" # Cloudflare DNS
-    "1.0.0.1" # Cloudflare DNS
-    "2606:4700:4700::1111" # Cloudflare IPv6 DNS
-    "2606:4700:4700::1001" # Cloudflare IPv6 DNS
-  ];
-
-  # Prevent dhcpcd from overwriting /etc/resolv.conf
-  networking.dhcpcd.extraConfig = "nohook resolv.conf";
-
-  # Configure NetworkManager to use systemd-resolved and prioritize DNS
-  networking.networkmanager.connectionConfig = {
-    "connection.mdns" = 2; # Enable mDNS
-    "ipv4.dns-priority" = -1; # Ensure systemd-resolved is used
-    "ipv6.dns-priority" = -1; # Ensure systemd-resolved is used
+    # Firewall
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 1716 ];
+      allowedUDPPorts = [ 1716 ];
+    };
   };
 
-  # -*-[ Firewall ]-*-
-  # Enable the firewall
-  networking.firewall.enable = true;
+  # DNS resolution service
+  services.resolved = {
+    enable = true;
+    # Performance optimizations
+    dnssec = "false"; # Disable DNSSEC for faster resolution
+    extraConfig = ''
+      Cache=yes
+      DNSStubListener=yes
+      MulticastDNS=yes
+      DNSOverTLS=opportunistic
+    '';
+  };
 
-  # Open TCP and UDP ports for GSConnect
-  networking.firewall.allowedTCPPorts = [ 1716 ]; # GSConnect
-  networking.firewall.allowedUDPPorts = [ 1716 ]; # GSConnect
+  # Disable waiting for network to be online
+  systemd.network.wait-online.enable = false;
 }
