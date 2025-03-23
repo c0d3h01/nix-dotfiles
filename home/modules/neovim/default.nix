@@ -25,7 +25,7 @@
         config = '''';
       }
 
-      # Install tokyonight theme which will be auto-detected
+      # Install tokyonight theme
       tokyonight-nvim
     ];
 
