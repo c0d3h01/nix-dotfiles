@@ -14,7 +14,6 @@
   # Exclude unwanted GNOME packages
   environment.gnome.excludePackages = with pkgs; [
     gnome-tour
-    gnome-disk-utility
     gnome-backgrounds
     gnome-font-viewer
     epiphany
