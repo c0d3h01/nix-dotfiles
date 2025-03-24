@@ -45,7 +45,7 @@
       efi.canTouchEfiVariables = true;
     };
   };
-  
+
 
   # Hardware acceleration for video rendering
   hardware.graphics = {

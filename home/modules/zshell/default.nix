@@ -107,6 +107,7 @@
 
     # Environment setup
     envExtra = ''
+      export CHROME_EXECUTABLE="/etc/profiles/per-user/c0d3h01/bin/firefox"
       export MANPAGER="nvim +Man!"
     '';
 

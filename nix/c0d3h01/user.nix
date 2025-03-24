@@ -22,6 +22,7 @@
       "video"
       "dialout"
       "plugdev"
+      "kvm" # hardware acceleration
     ];
 
     openssh.authorizedKeys.keys = [

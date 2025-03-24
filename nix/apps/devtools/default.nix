@@ -1,5 +1,6 @@
 {
   imports = [
+    ./android.nix
     # ./docker.nix
     ./mysql.nix
     ./podman.nix

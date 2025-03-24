@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./android.nix
     ./devtools
     ./printing.nix
     # ./virtual.nix
@@ -35,10 +34,6 @@
         nodePackages.vscode-langservers-extracted
         nodePackages.prettier
         nodePackages.eslint
-
-        # Java
-        openjdk
-        gradle
 
         # C/C++
         clang
@@ -94,6 +89,11 @@
       androidTools = with pkgs; [
         android-studio
         flutter
+        dart
+        openjdk
+        gradle
+        kotlin
+        go
       ];
     in
     devTools ++ communicationApps ++ desktopApps ++ networkingTools ++ androidTools;

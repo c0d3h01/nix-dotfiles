@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, username, pkgs, ... }:
 let
   androidenv = pkgs.androidenv;
   androidSdk = (androidenv.composeAndroidPackages {
@@ -16,6 +16,8 @@ in
 {
   # SDK license acceptance
   nixpkgs.config.android_sdk.accept_license = true;
+
+  users.users.${username}.extraGroups = [ "adbusers" ];
 
   environment.variables = {
     ANDROID_HOME = "${androidSdk}/libexec/android-sdk";
