@@ -61,7 +61,7 @@
         modules = [
           # -*-[ System configurations, modules ]-*-
           ./nix/configuration.nix
-          ./secrets.nix
+          # ./secrets.nix
           ({ config, ... }: {
             system.stateVersion = "24.11";
             networking.hostName = hostname;
