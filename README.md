@@ -23,9 +23,7 @@
 │   ├── apps
 │   │   ├── default.nix
 │   │   ├── devtools
-│   │   ├── notion-app-enhanced
-│   │   ├── printing.nix
-│   │   └── virtual.nix
+│   │   └── notion-app-enhanced
 │   ├── c0d3h01
 │   │   ├── audio.nix
 │   │   ├── default.nix
