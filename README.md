@@ -1,4 +1,4 @@
-<img src="image.png" alt="Custom Image" height="100"/>
+<img src="assets/image.png" alt="Custom Image" height="100"/>
 
 ## 📂 **Dotfiles Installation**
 ```bash
