@@ -17,7 +17,6 @@
 │       ├── kitty
 │       ├── neovim
 │       └── zshell
-├── image.png
 ├── nix
 │   ├── apps
 │   │   ├── default.nix
