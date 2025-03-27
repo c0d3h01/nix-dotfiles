@@ -4,6 +4,7 @@
 ├── LICENSE
 ├── README.md
 ├── assets
+│   ├── image.png
 │   └── wallpaper.png
 ├── flake.lock
 ├── flake.nix
@@ -16,6 +17,7 @@
 │       ├── kitty
 │       ├── neovim
 │       └── zshell
+├── image.png
 ├── nix
 │   ├── apps
 │   │   ├── default.nix
@@ -29,12 +31,12 @@
 │   │   ├── networking.nix
 │   │   └── user.nix
 │   ├── default.nix
+│   ├── hardware-configuration.nix
 │   └── modules
 │       ├── boot.nix
 │       ├── config.nix
 │       ├── default.nix
-│       ├── nix-settings.nix
-│       └── services.nix
+│       └── nix-settings.nix
 ├── scripts
 │   ├── npm.sh
 │   └── secrets.sh
