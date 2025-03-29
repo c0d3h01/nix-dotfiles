@@ -16,23 +16,27 @@
 │   ├── home.nix
 │   └── modules
 │       ├── default.nix
+│       ├── discord
 │       ├── firefox
 │       ├── git
 │       ├── kitty
 │       ├── neovim
+│       ├── nextcloud
+│       ├── spicetify
 │       └── zshell
+├── hosts
+│   └── c0d3h01
+│       ├── audio.nix
+│       ├── default.nix
+│       ├── desktop.nix
+│       ├── fonts.nix
+│       ├── networking.nix
+│       └── user.nix
 ├── nix
 │   ├── apps
 │   │   ├── default.nix
 │   │   ├── devtools
 │   │   └── notion-app-enhanced
-│   ├── c0d3h01
-│   │   ├── audio.nix
-│   │   ├── default.nix
-│   │   ├── desktop.nix
-│   │   ├── fonts.nix
-│   │   ├── networking.nix
-│   │   └── user.nix
 │   ├── default.nix
 │   ├── hardware-configuration.nix
 │   └── modules
