@@ -94,77 +94,14 @@
 
     # Functional config
     initExtra = ''
-            # Improved Vi mode
-            bindkey -v
-            bindkey '^?' backward-delete-char
-            bindkey '^h' backward-delete-char
-            bindkey '^w' backward-kill-word
-      
-            # Directory stack
-            setopt AUTO_PUSHD
-            setopt PUSHD_IGNORE_DUPS
-      
-            # Extract function
-            extract() {
-          if [ -z "$1" ]; then
-              echo "Usage: extract <file>"
-              return 1
-          fi
-
-          if [ ! -f "$1" ]; then
-              echo "Error: '$1' is not a valid file"
-              return 1
-          fi
-
-          case "$1" in
-              # Tar archives
-              *.tar)       tar xf "$1"       ;;
-              *.tar.bz2)   tar xjf "$1"      ;;
-              *.tbz2)      tar xjf "$1"      ;;
-              *.tar.gz)    tar xzf "$1"      ;;
-              *.tgz)       tar xzf "$1"      ;;
-              *.tar.xz)    tar xJf "$1"      ;;
-              *.txz)       tar xJf "$1"      ;;
-              *.tar.zst)   tar --use-compress-program=unzstd -xf "$1" ;;
-
-              # Compressed files
-              *.7z)        7z x "$1"         ;;
-              *.zip)       unzip "$1"        ;;
-              *.rar)       unrar x "$1"      ;;
-              *.gz)        gunzip "$1"       ;;
-              *.bz2)       bunzip2 "$1"      ;;
-              *.xz)        unxz "$1"         ;;
-              *.zst)       unzstd "$1"       ;;
-
-              # Archives
-              *.war)       unzip "$1"        ;;
-              *.jar)       unzip "$1"        ;;
-              *.deb)       ar x "$1"         ;;
-
-              # Compressed images
-              *.Z)         uncompress "$1"   ;;
-
-              # Apple disk image
-              *.dmg)       hdiutil mount "$1" ;;
-
-              # Windows compressed files
-              *.cab)       cabextract "$1"   ;;
-
-              # If no matching type is found
-              *)
-                  echo "Error: Cannot extract '$1' - unknown file type"
-                  return 1
-                  ;;
-          esac
-
-          # Check if extraction was successful
-          if [ $? -eq 0 ]; then
-              echo "Successfully extracted: $1"
-          else
-              echo "Extraction failed for: $1"
-              return 1
-          fi
-      }
+      # Improved Vi mode
+      bindkey -v
+      bindkey '^?' backward-delete-char
+      bindkey '^h' backward-delete-char
+      bindkey '^w' backward-kill-w  
+      # Directory stack
+      setopt AUTO_PUSHD
+      setopt PUSHD_IGNORE_DUPS
     '';
   };
 
