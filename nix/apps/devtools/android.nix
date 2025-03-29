@@ -21,7 +21,6 @@ let
   }).androidsdk;
 in
 {
-  users.users.${username}.extraGroups = [ "adbusers" ];
   environment = {
     variables = {
       ANDROID_HOME = "${androidSdk}/libexec/android-sdk";
