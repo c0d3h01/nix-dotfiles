@@ -1,11 +1,14 @@
-{ config, lib, pkgs, ... }:
+{ config
+, lib
+, pkgs
+, ...
+}:
 {
   programs.kitty = lib.mkForce {
     enable = true;
 
     # Modern, minimal, soft dark theme configuration
     themeFile = "Catppuccin-Mocha";
-
     settings = {
       # Font configuration
       font_size = "13.0";
