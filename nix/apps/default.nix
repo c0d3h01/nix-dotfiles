@@ -58,7 +58,6 @@
         # Custom patched Notion
         (pkgs.callPackage ./notion-app-enhanced { })
         spotify
-        transmission_4-gtk
         anydesk
         github-desktop
         chromium
