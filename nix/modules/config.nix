@@ -13,7 +13,7 @@
     # SSH support
     openssh = {
       enable = true;
-      # openFirewall = true;
+      openFirewall = true;
       settings = {
         PasswordAuthentication = false;
         PermitRootLogin = "prohibit-password";
@@ -27,7 +27,7 @@
     };
     avahi = {
       enable = true;
-      # openFirewall = true;
+      openFirewall = true;
     };
   };
 
@@ -35,16 +35,16 @@
     enable = true;
     settings = {
       apply_nice = true;
-      check_freq=10; # runs every seconds
-      cgroup_load=true;
-      type_load=true;
-      rule_load=true;
-      apply_ioclass=true;
-      apply_ionice=true;
-      apply_sched=true;
-      apply_oom_score_adj=true;
-      apply_cgroup=true;
-      check_disks_schedulers=true;
+      check_freq = 10; # runs every seconds
+      cgroup_load = true;
+      type_load = true;
+      rule_load = true;
+      apply_ioclass = true;
+      apply_ionice = true;
+      apply_sched = true;
+      apply_oom_score_adj = true;
+      apply_cgroup = true;
+      check_disks_schedulers = true;
     };
   };
 
