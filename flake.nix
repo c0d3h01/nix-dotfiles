@@ -1,6 +1,5 @@
 {
   description = "c0d3h01 dotfiles";
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
@@ -67,7 +66,6 @@
         modules = [
           ./nix
           ./secrets.nix
-
           inputs.stylix.nixosModules.stylix
           inputs.sops-nix.nixosModules.sops
 
@@ -88,11 +86,8 @@
           nur.modules.nixos.default
         ];
       };
-
       devShells.${system}.default = pkgs.mkShell {
         packages = with pkgs; [
-          nixpkgs-fmt
-          nil
           pkg-config
           gtk3
         ];
