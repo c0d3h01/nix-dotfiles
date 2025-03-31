@@ -5,7 +5,7 @@
     ./git
     ./kitty
     ./neovim
-    ./nextcloud
+    # ./nextcloud
     ./spicetify
     ./zshell
   ];
