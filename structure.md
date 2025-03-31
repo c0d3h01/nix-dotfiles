@@ -38,7 +38,6 @@
 │   │   ├── devtools
 │   │   └── notion-app-enhanced
 │   ├── default.nix
-│   ├── hardware-configuration.nix
 │   └── modules
 │       ├── boot.nix
 │       ├── config.nix
