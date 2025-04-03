@@ -62,6 +62,7 @@
           ./hosts/${user.hostname}
           inputs.spicetify-nix.nixosModules.default
           inputs.sops-nix.nixosModules.sops
+          inputs.nur.modules.nixos.default
 
           home-manager.nixosModules.home-manager
           {
@@ -75,7 +76,6 @@
               };
             };
           }
-          inputs.nur.modules.nixos.default
         ];
       };
 
