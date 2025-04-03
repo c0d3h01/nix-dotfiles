@@ -19,11 +19,6 @@
       fetch.prune = true;
       push.default = "current";
 
-      # GPG signing
-      core.sshCommand = "${pkgs.openssh}/bin/ssh -i ~/.ssh/id_ed25519";
-      url."git@github.com:".insteadOf = "https://github.com/";
-      commit.gpgsign = false;
-
       # Core helpful aliases
       alias = {
         st = "status";
