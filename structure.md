@@ -13,6 +13,7 @@
 ├── flake.nix
 ├── home
 │   ├── default.nix
+│   ├── flake.lock
 │   ├── flake.nix
 │   └── modules
 │       ├── default.nix
