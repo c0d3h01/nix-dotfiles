@@ -1,5 +1,6 @@
 { config
 , pkgs
+, lib
 , ...
 }: {
 
@@ -99,7 +100,7 @@
         bindkey -v
         bindkey '^?' backward-delete-char
         bindkey '^h' backward-delete-char
-        bindkey '^w' backward-kill-w  
+        bindkey '^w' backward-kill-w
         # Directory stack
         setopt AUTO_PUSHD
         setopt PUSHD_IGNORE_DUPS
@@ -216,5 +217,6 @@
             style = darkgray;
           };
         };
+    };
     };
 }
