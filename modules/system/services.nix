@@ -10,6 +10,6 @@
   services.avahi = {
     enable = true;
     nssmdns4 = true;
-    openFirewall = true;
+    # openFirewall = true;
   };
 }

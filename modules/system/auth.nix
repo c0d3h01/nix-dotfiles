@@ -8,7 +8,7 @@
   # SSH Daemon
   services.openssh = {
     enable = true;
-    openFirewall = true;
+    # openFirewall = true;
     settings = {
       PasswordAuthentication = false;
       PermitRootLogin = "no";

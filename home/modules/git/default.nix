@@ -13,12 +13,39 @@
 
     # Git Configuations
     extraConfig = {
-      init.defaultBranch = "main";
-      push.autoSetupRemote = true;
-      pull.rebase = true;
       color.ui = true;
-      fetch.prune = true;
-      push.default = "current";
+      diff.algorithm = "histogram";
+      merge.conflictstyle = "zdiff3";
+      credential.helper = "store";
+
+      branch.autosetuprebase = "always";
+      pull.rebase = "merges";
+      init.defaultBranch = "main";
+
+      rebase = {
+        autostash = true;
+        updateRefs = true;
+      };
+
+      push = {
+        default = "current";
+        autosetupremote = true;
+      };
+
+      fetch = {
+        prune = true;
+        recurseSubmodules = true;
+      };
+
+      url = {
+        "ssh://aur@aur.archlinux.org/".insteadOf = "aur:";
+        "ssh://git@codeberg.org/".insteadOf = "cb:";
+        "ssh://git@gitlab.freedesktop.org/".insteadOf = "fdo:";
+        "ssh://git@github.com/".insteadOf = "gh:";
+        "ssh://git@gitlab.com/".insteadOf = "gl:";
+        "ssh://git@invent.kde.org/".insteadOf = "kde:";
+        "ssh://git@git.lix.systems/".insteadOf = "lix:";
+      };
 
       # Core helpful aliases
       alias = {
