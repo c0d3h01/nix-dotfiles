@@ -12,6 +12,11 @@
   # Allow running dynamically linked binaries
   programs.nix-ld.enable = true;
 
+  programs.wireshark = {
+    enable = true;
+    package = pkgs.wireshark-qt;
+  };
+
   # Environment packages
   environment.systemPackages =
     let
