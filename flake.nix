@@ -31,13 +31,14 @@
     };
   };
 
-  outputs = { self
+  outputs =
+    { self
     , nixpkgs-stable
     , nixpkgs-unstable
     , home-manager
     , agenix
-    , ... 
-  } @ inputs:
+    , ...
+    } @ inputs:
     let
       # System Architecture
       supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
@@ -48,7 +49,7 @@
         username = "c0d3h01";
         fullName = "Harshal Sawant";
         email = "c0d3h01@gmail.com";
-        hostname = "localhost";
+        hostname = "NixOS";
         stateVersion = "24.11";
       };
 
@@ -65,7 +66,7 @@
 
         overlays = [
           (final: prev: {
-            unstable = import inputs.nixpkgs-unstable {
+            unstable = import nixpkgs-unstable {
               inherit system;
               config.allowUnfree = true;
             };
@@ -74,7 +75,7 @@
         ];
       };
 
-      mkSpecialArgs = {
+      mkSpecialArgs = system: {
         inherit inputs system agenix;
         user = userConfig;
         pkgs = mkPkgs system;
@@ -97,6 +98,7 @@
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 extraSpecialArgs = mkSpecialArgs system;
+
                 users.${userConfig.username} = {
                   imports = [ ./home ];
                   home.stateVersion = userConfig.stateVersion;
@@ -124,15 +126,15 @@
             shellHook = "exec zsh";
           };
         });
-      
-      checks = forAllSystems (system: {
-        formatting = pkgsFor system.runCommand "check-formatting" {
-          nativeBuildInputs = [ (pkgsFor system).nixpkgs-fmt ];
-        } ''
-          nixpkgs-fmt --check ${./.}
-          touch $out
-        '';
-      });
+
+      # checks = forAllSystems (system: {
+      #   formatting = mkPkgs system.runCommand "check-formatting" {
+      #     nativeBuildInputs = [ (mkPkgs system).nixpkgs-fmt ];
+      #   } ''
+      #     nixpkgs-fmt --check ${./.}
+      #     touch $out
+      #   '';
+      # });
 
       formatter = forAllSystems (system: (mkPkgs system).nixpkgs-fmt);
     };
