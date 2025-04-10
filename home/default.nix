@@ -1,7 +1,6 @@
 { pkgs
 , user
-, ...
-}: {
+, ... }: {
 
   imports = [ ./modules ];
 
@@ -9,7 +8,7 @@
   home = {
     username = "${user.username}";
     homeDirectory = "/home/${user.username}";
-    stateVersion = "24.11";
+    stateVersion = "${user.stateVersion}";
 
     sessionVariables = {
       EDITOR = "nvim";
@@ -36,7 +35,6 @@
       # Utilities
       fastfetch
       glances
-      tmux
       xclip
       curl
       wget
