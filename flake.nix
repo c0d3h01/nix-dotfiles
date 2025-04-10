@@ -17,7 +17,10 @@
 
     agenix = {
       url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
     };
 
     spicetify-nix = {
@@ -34,7 +37,6 @@
   outputs =
     { self
     , nixpkgs
-    , nixpkgs-stable
     , home-manager
     , agenix
     , ...
@@ -43,6 +45,7 @@
       # System Architecture
       supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
       defaultSystem = "x86_64-linux";
+      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
 
       # User Configuations
       userConfig = {
@@ -53,43 +56,42 @@
         stateVersion = "24.11";
       };
 
-      # Helper Functions
-      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-
-      mkPkgs = system: import nixpkgs {
+      pkgsFor = system: import nixpkgs {
         inherit system;
-        # Unstable Nixpkgs Config
         config = {
           allowUnfree = true;
           tarball-ttl = 0;
           android_sdk.accept_license = true;
         };
-
         overlays = [
-          (final: prev: {
-            # Stable Nixpkgs config
-            stable = import nixpkgs-stable {
-              inherit system;
-              config.allowUnfree = true;
-            };
-          })
-          inputs.nur.overlays.default
+           (final: prev: {
+             # Stable Nixpkgs config
+             stable = import inputs.nixpkgs-stable {
+               inherit system;
+               config.allowUnfree = true;
+             };
+           })
+           inputs.nur.overlays.default
         ];
       };
 
-      mkSpecialArgs = system: {
+      # Special Arguments for NixOS modules
+      specialArgs = system: {
         inherit inputs system agenix;
         user = userConfig;
-        pkgs = mkPkgs system;
       };
 
       # NixOS Configuration
       mkNixOSConfiguration = { system ? defaultSystem, hostname ? userConfig.hostname }:
         nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = mkSpecialArgs system;
+          specialArgs = specialArgs system;
 
           modules = [
+            {
+              nixpkgs.pkgs = pkgsFor system;
+            }
+
             # Host-specific configuration
             ./hosts/${userConfig.username}
 
@@ -99,7 +101,7 @@
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                extraSpecialArgs = mkSpecialArgs system;
+                extraSpecialArgs = specialArgs system;
 
                 users.${userConfig.username} = {
                   imports = [ ./home ];
@@ -109,7 +111,6 @@
             }
           ];
         };
-
     in
     {
       # ========== Outputs ==========
@@ -117,7 +118,7 @@
 
       devShells = forAllSystems (system:
       let
-        pkgs = mkPkgs system;
+        pkgs = pkgsFor system;
       in
         {
           default = pkgs.mkShell {
@@ -127,17 +128,26 @@
             ];
             shellHook = "exec zsh";
           };
+
+          ci = pkgs.mkShell {
+            packages = with pkgs; [
+              nixpkgs-fmt
+              statix
+              deadnix
+            ];
+          };
         });
 
-      checks = forAllSystems (system: {
-        formatting = mkPkgs system.runCommand "check-formatting" {
-          nativeBuildInputs = [ (mkPkgs system).nixpkgs-fmt ];
-        } ''
-          nixpkgs-fmt --check ${./.}
-          touch $out
-        '';
-      });
+      checks = forAllSystems (system:
+        inputs.pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            nixpkgs-fmt.enable = true;
+            statix.enable = true;
+            deadnix.enable = true;
+          };
+        });
 
-      formatter = forAllSystems (system: (mkPkgs system).nixpkgs-fmt);
+      formatter = forAllSystems (system: (pkgsFor system).nixpkgs-fmt);
     };
 }
