@@ -6,7 +6,6 @@
   networking = {
     networkmanager = {
       enable = true;
-      # wifi.backend = "iwd";
       connectionConfig."connection.mdns" = 2; # enabled
       wifi.powersave = false;
     };
@@ -33,6 +32,4 @@
       AllowAgentForwarding = true;
     };
   };
-
-  programs.ssh.knownHosts = lib.mapAttrs (_: v: { publicKey = v; }) (import ../../secrets/keys.nix);
 }

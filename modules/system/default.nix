@@ -8,6 +8,7 @@
     ./desktop
     ./fonts.nix
     ./hardware.nix
+    ./hosts.nix
     ./networking.nix
     ./nix.nix
     ./security.nix

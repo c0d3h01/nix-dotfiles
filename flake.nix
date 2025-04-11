@@ -38,7 +38,6 @@
     { self
     , nixpkgs
     , home-manager
-    , agenix
     , ...
     } @ inputs:
     let
@@ -51,8 +50,8 @@
       userConfig = {
         username = "c0d3h01";
         fullName = "Harshal Sawant";
-        email = "c0d3h01@gmail.com";
-        hostname = "NixOS";
+        email = "haarshalsawant@gmail.com";
+        hostname = "Nixlocalhost";
         stateVersion = "24.11";
       };
 
@@ -64,20 +63,20 @@
           android_sdk.accept_license = true;
         };
         overlays = [
-           (final: prev: {
-             # Stable Nixpkgs config
-             stable = import inputs.nixpkgs-stable {
-               inherit system;
-               config.allowUnfree = true;
-             };
-           })
-           inputs.nur.overlays.default
+          (final: prev: {
+            # Stable Nixpkgs config
+            stable = import inputs.nixpkgs-stable {
+              inherit system;
+              config.allowUnfree = true;
+            };
+          })
+          inputs.nur.overlays.default
         ];
       };
 
       # Special Arguments for NixOS modules
       specialArgs = system: {
-        inherit inputs system agenix;
+        inherit inputs system;
         user = userConfig;
       };
 
@@ -117,9 +116,9 @@
       nixosConfigurations.${userConfig.hostname} = mkNixOSConfiguration { };
 
       devShells = forAllSystems (system:
-      let
-        pkgs = pkgsFor system;
-      in
+        let
+          pkgs = pkgsFor system;
+        in
         {
           default = pkgs.mkShell {
             packages = with pkgs; [

@@ -1,5 +1,7 @@
 { pkgs, ... }:
 {
+  # powerManagement.cpuFreqGovernor = "schedutil";
+
   # ZRAM Swap
   zramSwap = {
     enable = true;
@@ -7,5 +9,10 @@
     priority = 100;
     algorithm = "zstd";
     memoryPercent = 100;
+  };
+
+  hardware = {
+    cpu.amd.updateMicrocode = true;
+    enableRedistributableFirmware = true;
   };
 }

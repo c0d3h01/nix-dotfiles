@@ -1,3 +1,2 @@
-# Gitignore for commits 
 result*
-secrets/keys/
+secrets/keys/*

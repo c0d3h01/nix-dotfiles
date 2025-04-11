@@ -7,21 +7,6 @@
   # build takes forever
   documentation.nixos.enable = false;
 
-  powerManagement.cpuFreqGovernor = "schedutil";
-
-  system.autoUpgrade = {
-    enable = true;
-    dates = "daily";
-    randomizedDelaySec = "45min";
-    allowReboot = false;
-    flake = "/home/${user.username}/dotfiles#${user.hostname}";
-    flags = [
-      "--update-input"
-      "nixpkgs"
-      "--commit-lock-file"
-    ];
-  };
-
   nix = {
     settings = {
       show-trace = true;

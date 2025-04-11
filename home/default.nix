@@ -1,6 +1,7 @@
 { pkgs
 , user
-, ... }: {
+, ...
+}: {
 
   imports = [ ./modules ];
 
@@ -47,11 +48,11 @@
       ventoy
       shc # Shell compiler
       nh # Nix Garbage Cleaner
-      rsync
 
       # Editors & Viewers
       fd # find
       dust # Disk usage visualization
+      file
 
       # Nix Tools
       nix-prefetch-github

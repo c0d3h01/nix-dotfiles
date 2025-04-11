@@ -115,11 +115,6 @@
         setopt SHORT_LOOPS
         setopt NO_FLOW_CONTROL
 
-        # Custom functions
-        function mkcd() {
-          mkdir -p "$1" && cd "$1"
-        }
-
         # Lazy load Direnv
         direnv() {
           unset -f direnv

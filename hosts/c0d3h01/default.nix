@@ -1,11 +1,11 @@
 { pkgs
 , user
-, ... }: {
+, ...
+}: {
 
   imports = [
     ../../modules
-    #../../secrets
-    # Hardware configuration
+    ../../secrets
     ./hardware-configuration.nix
   ];
 

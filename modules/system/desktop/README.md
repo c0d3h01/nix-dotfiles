@@ -1,0 +1,1 @@
+## The i3 and swaybar are not complete configure!
