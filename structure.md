@@ -2,8 +2,8 @@
 ```
 .
 ├── LICENSE
-├── Makefile
 ├── README.md
+├── age.key
 ├── assets
 │   ├── README
 │   │   ├── chillet.png
@@ -30,6 +30,7 @@
 │   │   ├── default.nix
 │   │   └── hardware-configuration.nix
 │   └── common.nix
+├── keys.nix
 ├── modules
 │   ├── applications
 │   │   ├── default.nix
@@ -52,13 +53,13 @@
 │       ├── desktop
 │       ├── fonts.nix
 │       ├── hardware.nix
+│       ├── hosts.nix
 │       ├── networking.nix
 │       ├── nix.nix
 │       ├── security.nix
 │       └── services.nix
 ├── secrets
 │   ├── default.nix
-│   ├── keys.nix
 │   ├── secrets.nix
 │   └── ssh-private-key.age
 └── structure.md
