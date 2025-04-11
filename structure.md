@@ -29,6 +29,7 @@
 │   └── c0d3h01
 │       ├── default.nix
 │       └── hardware-configuration.nix
+├── install.sh
 ├── keys.nix
 ├── modules
 │   ├── applications
