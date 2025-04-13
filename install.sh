@@ -20,7 +20,7 @@ FLAKE_TARGET="NixOS"
 echo -e "${GREEN}Starting installation...${null}"
 
 echo -e "${YELLOW}Installing git...${null}"
-nix-env -iA nixos.git
+nix-shell -p git
 
 echo -e "${CYAN}Cloning dotfiles...${null}"
 git clone "$REPO_URL" "$DOTFILES_DIR"
