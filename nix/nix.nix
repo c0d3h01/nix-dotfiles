@@ -1,8 +1,10 @@
-{ config
-, userConfig
-, lib
-, ...
-}: {
+{
+  config,
+  userConfig,
+  lib,
+  ...
+}:
+{
 
   # build takes forever
   documentation.nixos.enable = false;
@@ -14,7 +16,10 @@
       auto-optimise-store = true;
       max-jobs = "auto";
       cores = 0; # Use all available cores
-      trusted-users = [ "root" "${userConfig.username}" ];
+      trusted-users = [
+        "root"
+        "${userConfig.username}"
+      ];
 
       experimental-features = [
         "nix-command"

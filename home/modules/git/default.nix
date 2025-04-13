@@ -1,6 +1,7 @@
-{ userConfig
-, pkgs
-, ...
+{
+  userConfig,
+  pkgs,
+  ...
 }:
 {
   programs = {

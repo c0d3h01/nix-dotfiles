@@ -1,13 +1,19 @@
-{ lib
-, config
-, userConfig
-, pkgs
-, ... }: with lib;
+{
+  lib,
+  config,
+  userConfig,
+  pkgs,
+  ...
+}:
+with lib;
 let
   cfg = config.modules.firefox;
-in {
+in
+{
 
-  options.modules.firefox = { enable = mkEnableOption "firefox"; };
+  options.modules.firefox = {
+    enable = mkEnableOption "firefox";
+  };
 
   config = mkIf cfg.enable {
     home.sessionVariables.MOZ_USE_XINPUT2 = "1";

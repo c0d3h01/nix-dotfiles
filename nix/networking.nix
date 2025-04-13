@@ -1,4 +1,5 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
 
   services.resolved.enable = true;
   systemd.network.wait-online.enable = false;

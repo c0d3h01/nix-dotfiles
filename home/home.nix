@@ -1,7 +1,10 @@
-{ pkgs
-, userConfig
-, inputs
-, ... }: {
+{
+  pkgs,
+  userConfig,
+  inputs,
+  ...
+}:
+{
 
   imports = [ ./modules ];
 

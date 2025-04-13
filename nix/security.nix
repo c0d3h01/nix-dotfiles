@@ -36,7 +36,7 @@
     allowedUDPPorts = [
       53 # DNS - Domain Name System
       123 # NTP - Network Time Protocol (Time sync)
-      1716 # gsconnect 
+      1716 # gsconnect
     ];
   };
 }

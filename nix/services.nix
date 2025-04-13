@@ -1,11 +1,16 @@
-{ pkgs
-, ...
-}: {
+{
+  pkgs,
+  ...
+}:
+{
   # Printing
   services = {
     printing = {
       enable = true;
-      drivers = [ pkgs.gutenprint pkgs.hplip ];
+      drivers = [
+        pkgs.gutenprint
+        pkgs.hplip
+      ];
     };
 
     # Avahi (mDNS)

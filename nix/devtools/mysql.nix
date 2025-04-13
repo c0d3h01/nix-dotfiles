@@ -4,7 +4,8 @@
 # FLUSH PRIVILEGES;
 # EXIT;
 
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;

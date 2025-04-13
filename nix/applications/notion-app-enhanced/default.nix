@@ -3,12 +3,12 @@
 # whereas wrapType2 (what used to be here) does not, and will instead re-extract it.
 # this caused many hours of headaches.
 
-{ appimageTools
-, lib
-, fetchurl
-, asar
-, dos2unix
-,
+{
+  appimageTools,
+  lib,
+  fetchurl,
+  asar,
+  dos2unix,
 }:
 let
   pname = "notion-app-enhanced";

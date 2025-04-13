@@ -1,6 +1,6 @@
 {
   imports = [
-    ./fastfetch
+    #./fastfetch
     ./firefox
     ./git
     ./kitty

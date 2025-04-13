@@ -1,8 +1,10 @@
-{ lib
-, pkgs
-, config
-, ...
-}: {
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
+{
 
   # Remove greetd since using GDM from GNOME
   # services.greetd = {
@@ -89,7 +91,8 @@
         # System
         "${modifier}+Shift+c" = "reload";
         "${modifier}+Shift+r" = "restart";
-        "${modifier}+Shift+e" = "exec swaynag -t warning -m 'Do you want to exit sway?' -b 'Yes' 'swaymsg exit'";
+        "${modifier}+Shift+e" =
+          "exec swaynag -t warning -m 'Do you want to exit sway?' -b 'Yes' 'swaymsg exit'";
 
         # Media controls
         "XF86AudioRaiseVolume" = "exec --no-startup-id pamixer -i 5";
@@ -105,7 +108,8 @@
 
         # Screenshot
         "Print" = "exec --no-startup-id grim -g \"$(slurp)\" - | wl-copy";
-        "${modifier}+Print" = "exec --no-startup-id grim -g \"$(slurp)\" ~/Pictures/Screenshots/$(date +%Y-%m-%d-%H-%M-%S).png";
+        "${modifier}+Print" =
+          "exec --no-startup-id grim -g \"$(slurp)\" ~/Pictures/Screenshots/$(date +%Y-%m-%d-%H-%M-%S).png";
       };
 
       # Input configuration

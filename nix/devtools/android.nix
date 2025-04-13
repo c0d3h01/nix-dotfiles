@@ -1,20 +1,21 @@
 { pkgs, ... }:
 let
   androidenv = pkgs.androidenv.override { licenseAccepted = true; };
-  androidSdk = (androidenv.composeAndroidPackages {
-    cmdLineToolsVersion = "8.0";
-    platformToolsVersion = "35.0.2";
-    buildToolsVersions = [ "30.0.3" ];
-    platformVersions = [ "30" ];
-    includeEmulator = false;
-    includeSources = false;
-    includeSystemImages = false;
-    includeNDK = true;
-    ndkVersions = [ "22.0.7026061" ];
-    extraLicenses = [
-      "android-sdk-license"
-    ];
-  }).androidsdk;
+  androidSdk =
+    (androidenv.composeAndroidPackages {
+      cmdLineToolsVersion = "8.0";
+      platformToolsVersion = "35.0.2";
+      buildToolsVersions = [ "30.0.3" ];
+      platformVersions = [ "30" ];
+      includeEmulator = false;
+      includeSources = false;
+      includeSystemImages = false;
+      includeNDK = true;
+      ndkVersions = [ "22.0.7026061" ];
+      extraLicenses = [
+        "android-sdk-license"
+      ];
+    }).androidsdk;
 in
 {
   environment = {

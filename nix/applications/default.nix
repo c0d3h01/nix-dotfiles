@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
 
   # Flatpak apps support
   # services.flatpak.enable = true;
@@ -13,9 +14,14 @@
   # Environment packages
   environment.systemPackages =
     let
+      stablePkgs = with pkgs.stable; [
+        (pkgs.callPackage ./notion-app-enhanced { })
+      ];
+
       devTools = with pkgs; [
         # Editors and IDEs
         vscode-fhs
+        android-studio
 
         # JavaScript/TypeScript
         nodejs
@@ -53,7 +59,6 @@
       ];
 
       desktopApps = with pkgs; [
-        (pkgs.callPackage ./notion-app-enhanced { })
         spotify
         anydesk
         github-desktop
@@ -65,5 +70,5 @@
         android-tools
       ];
     in
-    utilityApps ++ devTools ++ communicationApps ++ desktopApps ++ androidTools;
+    stablePkgs ++ utilityApps ++ devTools ++ communicationApps ++ desktopApps ++ androidTools;
 }

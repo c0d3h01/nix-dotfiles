@@ -1,4 +1,5 @@
-{ userConfig, ... }: {
+{ userConfig, ... }:
+{
 
   imports = [
     # Foldors

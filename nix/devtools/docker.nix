@@ -1,6 +1,7 @@
-{ pkgs
-, userConfig
-, ...
+{
+  pkgs,
+  userConfig,
+  ...
 }:
 {
   users.users.${userConfig.username}.extraGroups = [ "docker" ];

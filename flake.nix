@@ -35,14 +35,18 @@
   };
 
   outputs =
-    { self
-    , nixpkgs
-    , home-manager
-    , ...
-    } @ inputs:
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }@inputs:
     let
       # System Architecture
-      supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
       defaultSystem = "x86_64-linux";
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
 
@@ -55,26 +59,28 @@
         stateVersion = "24.11";
       };
 
-      mkPkgs = system: import nixpkgs {
-        inherit system;
-        # Unstable Nixpkgs config
-        config = {
-          allowUnfree = true;
-          tarball-ttl = 0;
-          android_sdk.accept_license = true;
+      mkPkgs =
+        system:
+        import nixpkgs {
+          inherit system;
+          # Unstable Nixpkgs config
+          config = {
+            allowUnfree = true;
+            tarball-ttl = 0;
+            android_sdk.accept_license = true;
+          };
+          overlays = [
+            (final: prev: {
+              # Stable Nixpkgs config
+              stable = import inputs.nixpkgs-stable {
+                inherit system;
+                config.allowUnfree = true;
+              };
+            })
+            # Nur for firefox extensions
+            inputs.nur.overlays.default
+          ];
         };
-        overlays = [
-          (final: prev: {
-            # Stable Nixpkgs config
-            stable = import inputs.nixpkgs-stable {
-              inherit system;
-              config.allowUnfree = true;
-            };
-          })
-          # Nur for firefox extensions
-          inputs.nur.overlays.default
-        ];
-      };
 
       # Special Arguments for Nix modules
       specialArgs = system: {
@@ -82,7 +88,11 @@
       };
 
       # NixOS Configuration
-      mkNixOSConfiguration = { system ? defaultSystem, hostname ? userConfig.hostname }:
+      mkNixOSConfiguration =
+        {
+          system ? defaultSystem,
+          hostname ? userConfig.hostname,
+        }:
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = specialArgs system;
@@ -112,8 +122,12 @@
       # ========== Outputs ==========
       nixosConfigurations.${userConfig.hostname} = mkNixOSConfiguration { };
 
-      devShells = forAllSystems (system:
-      let pkgs = mkPkgs system; in {
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = mkPkgs system;
+        in
+        {
           default = pkgs.mkShell {
             packages = with nixpkgs; [
               pkg-config
@@ -121,9 +135,11 @@
             ];
             shellHook = "exec zsh";
           };
-        });
+        }
+      );
 
-      checks = forAllSystems (system:
+      checks = forAllSystems (
+        system:
         inputs.pre-commit-hooks.lib.${system}.run {
           src = ./.;
           hooks = {
@@ -131,8 +147,9 @@
             statix.enable = true;
             deadnix.enable = true;
           };
-        });
+        }
+      );
 
-      formatter = forAllSystems (system: (mkPkgs system).nixfmt-rfc-style);
+      formatter = forAllSystems (system: (mkPkgs system).nixfmt-tree);
     };
 }

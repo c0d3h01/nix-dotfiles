@@ -1,4 +1,5 @@
-{ pkgs, userConfig, ... }: {
+{ pkgs, userConfig, ... }:
+{
 
   imports = [
     ../../secrets

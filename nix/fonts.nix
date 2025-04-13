@@ -1,6 +1,7 @@
-{ lib
-, pkgs
-, ...
+{
+  lib,
+  pkgs,
+  ...
 }:
 {
   fonts = {
@@ -38,10 +39,23 @@
     fontconfig = {
       enable = true;
       defaultFonts = {
-        serif = lib.mkForce [ "Noto Serif" "DejaVu Serif" ];
-        sansSerif = lib.mkForce [ "Noto Sans" "DejaVu Sans" ];
-        monospace = lib.mkForce [ "JetBrains Mono" "Fira Code" "Hack" ];
-        emoji = lib.mkForce [ "Twitter Color Emoji" "Noto Color Emoji" ];
+        serif = lib.mkForce [
+          "Noto Serif"
+          "DejaVu Serif"
+        ];
+        sansSerif = lib.mkForce [
+          "Noto Sans"
+          "DejaVu Sans"
+        ];
+        monospace = lib.mkForce [
+          "JetBrains Mono"
+          "Fira Code"
+          "Hack"
+        ];
+        emoji = lib.mkForce [
+          "Twitter Color Emoji"
+          "Noto Color Emoji"
+        ];
       };
       hinting = {
         enable = true;
