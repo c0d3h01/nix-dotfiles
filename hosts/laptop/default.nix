@@ -34,7 +34,7 @@
       "input"
     ];
     openssh.authorizedKeys.keys = [
-      ""
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINUA3sq3OYb6T+xvWdhM/LlN58Y3NdVka6OrHfDpYbQO haarshalsawant@gmail.com"
     ];
   };
 }
