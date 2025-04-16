@@ -1,6 +1,6 @@
 {
   imports = [
-    # ./bat.nix
+    ./bat.nix
     ./direnv.nix
     ./eza.nix
     ./fzf.nix
