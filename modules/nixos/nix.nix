@@ -5,11 +5,13 @@
   userConfig,
   lib,
   ...
-}:
-{
-
+}: let
+  flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+in {
   nixpkgs = {
+    overlays = builtins.attrValues outputs.overlays;
     config = {
+      allowUnfreePredicate = _: true;
       allowUnfree = true;
       tarball-ttl = 0;
       android_sdk.accept_license = true;
@@ -28,7 +30,10 @@
   };
 
   nix = {
+    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
+
     settings = {
+      flake-registry = "";
       warn-dirty = false;
       show-trace = true;
       keep-going = true;
