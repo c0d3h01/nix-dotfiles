@@ -9,6 +9,7 @@
 
 {
   nixpkgs.overlays = [
+    inputs.hyprpanel.overlay
     (final: prev: {
       # Stable Nixpkgs config
       stable = import inputs.nixpkgs-stable {

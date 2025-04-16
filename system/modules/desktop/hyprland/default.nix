@@ -1,10 +1,18 @@
-{ config, pkgs, lib, userConfig, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  userConfig,
+  ...
+}:
 
 let
-  python-packages = pkgs.python3.withPackages (ps: with ps; [
-    requests
-    pyquery
-  ]);
+  python-packages = pkgs.python3.withPackages (
+    ps: with ps; [
+      requests
+      pyquery
+    ]
+  );
 in
 {
   ###### Hyprland Base Programs ######
@@ -24,7 +32,9 @@ in
     dunst
     wofi
     swaylock-effects
-    grim slurp swappy
+    grim
+    slurp
+    swappy
     swww
     wl-clipboard
     cliphist

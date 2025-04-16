@@ -1,5 +1,7 @@
 {
   imports = [
     ./gnome
+    # ./hyprland
+    # ./hyprwm
   ];
 }
