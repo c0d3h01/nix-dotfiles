@@ -44,6 +44,8 @@
       ...
     }@inputs:
     let
+    inherit (self) outputs;
+    
       supportedSystems = [
         "aarch64-linux"
         "i686-linux"
@@ -79,7 +81,7 @@
       nixosConfigurations = {
         ${userConfig.hostname} = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs userConfig; };
+          specialArgs = { inherit inputs outputs userConfig; };
           modules = [
             ./modules/nixos
             ./hosts/laptop
@@ -91,7 +93,7 @@
       homeConfigurations = {
         "${userConfig.username}@${userConfig.hostname}" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs userConfig; };
+          extraSpecialArgs = { inherit inputs outputs userConfig; };
           modules = [
             ./modules/home-manager/home.nix
           ];
