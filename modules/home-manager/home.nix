@@ -8,6 +8,7 @@
 {
 
   imports = [
+    ./config
     ./git
     ./gtk
     ./kitty
@@ -29,9 +30,6 @@
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
-
-  # Let install home manager itself he is 18+ now
-  programs.home-manager.enable = true;
 
   home = {
     username = "${userConfig.username}";
