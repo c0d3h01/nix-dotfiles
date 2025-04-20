@@ -17,13 +17,15 @@
   boot = {
     tmp.cleanOnBoot = true;
     consoleLogLevel = 3;
-    # kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
 
     initrd = {
       verbose = false;
     };
 
     kernelParams = [
+      "quite"
+      "splash"
       "preempt=full"
       "mitigations=off"
       "udev.log_level=3"
