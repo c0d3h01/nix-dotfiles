@@ -85,7 +85,7 @@
               useUserPackages = true;
               extraSpecialArgs = { inherit inputs outputs userConfig; };
               users.${userConfig.username} = {
-                imports = [ ./home/home.nix ];
+                imports = [ ./modules/home-manager/home.nix ];
                 home.stateVersion = userConfig.stateVersion;
               };
             };
