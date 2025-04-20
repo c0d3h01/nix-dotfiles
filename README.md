@@ -1,6 +1,6 @@
-<div align="center">
+<!-- <div align="center">
   <img src="assets/README/fastfetch.png" width="600" alt="Fastfetch Screenshot" />
-</div>
+</div> -->
 
 ## Overview
 
