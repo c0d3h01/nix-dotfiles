@@ -22,6 +22,14 @@
       ];
     };
 
+    # dash-to-dock
+    "org/gnome/shell/extensions/dash-to-dock" = {
+      apply-custom-theme = true;
+      custom-theme-shrink = true;
+      intellihide-mode = "ALL_WINDOWS";
+      show-trash = false;
+    };
+
     # interface
     "org/gnome/desktop/interface" = {
       enable-hot-corners = true;
@@ -37,6 +45,11 @@
       tap-to-click = true;
       two-finger-scrolling-enabled = true;
       natural-scroll = true;
+    };
+
+    # keyboard
+    "org/gnome/desktop/peripherals/keyboard" = {
+      numlock-state = true;
     };
 
     # workspaces
