@@ -24,9 +24,8 @@
     };
 
     kernelParams = [
-      "preempt=full"
-      "mitigations=off"
-      "udev.log_level=3"
+      "quiet"
+      "splash"
     ];
 
     loader = {
@@ -34,7 +33,7 @@
       timeout = 3;
       systemd-boot = {
         enable = true;
-        configurationLimit = 10;
+        configurationLimit = 5;
         consoleMode = "auto";
         editor = false;
       };
