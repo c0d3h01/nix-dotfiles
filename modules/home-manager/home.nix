@@ -5,17 +5,14 @@
   inputs,
   ...
 }:
-{
 
+{
   imports = [
     ./config
     ./git
     ./gtk
     ./spicetify
     ./zshell
-
-    # Gnome ( dconf, xdg ) home config
-    ../nixos/desktop/gnome/home-gnome.nix
   ];
 
   home = {
@@ -27,7 +24,7 @@
       EDITOR = "nvim";
       VISUAL = "nvim";
       TERMINAL = "kitty";
-      BROWSER = "brave";
+      BROWSER = "firefox";
       PAGER = "less";
       LESS = "-R";
       JAVA_HOME = "${pkgs.openjdk}/lib/openjdk";
@@ -35,7 +32,7 @@
       # ANDROID_SDK_ROOT = "/home/c0d3h01/Android";
       # ANDROID_NDK_HOME = "/home/c0d3h01/Android/android-ndk-r27c";
       # PATH = "$HOME/Android/cmdline-tools/bin:$HOME/Android/platform-tools:$HOME/Android/android-ndk-r27c:$PATH";
-      CHROME_EXECUTABLE = "${pkgs.brave}/bin/brave";
+      CHROME_EXECUTABLE = "${pkgs.firefox-esr}/bin/firefox-esr";
     };
 
     sessionPath = [
