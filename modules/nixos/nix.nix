@@ -9,11 +9,6 @@
   system.stateVersion = userConfig.stateVersion;
   networking.hostName = userConfig.hostname;
 
-  fileSystems."/home" = {
-    device = "/dev/sda1";
-    fsType = "ext4";
-  };
-
   nixpkgs = {
     overlays = outputs.overlays;
     config = {

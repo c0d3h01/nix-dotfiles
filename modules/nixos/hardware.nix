@@ -11,13 +11,31 @@
     memoryPercent = 100;
   };
 
+  # Override filesystems to prevent conflicts
+  fileSystems = lib.mkForce {
+    "/" = {
+      device = "/dev/disk/by-partlabel/nixos-boot";
+      fsType = "vfat";
+    };
+
+    "/boot" = {
+      device = "/dev/disk/by-partlabel/nixos-root";
+      fsType = "ext4";
+    };
+
+    "/home" = {
+      device = "/dev/sda1";
+      fsType = "ext4";
+    };
+  };
+
   # Fstrim optimization
   services.fstrim.enable = true;
 
   boot = {
     tmp.cleanOnBoot = true;
-    consoleLogLevel = 3;
-    kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
+    # consoleLogLevel = 3;
+    # kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
 
     initrd = {
       verbose = false;
