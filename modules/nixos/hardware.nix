@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   # powerManagement.cpuFreqGovernor = "schedutil";
