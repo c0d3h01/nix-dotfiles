@@ -13,12 +13,12 @@
 
   # Override filesystems to prevent conflicts
   fileSystems = lib.mkForce {
-    "/" = {
+    "/boot" = {
       device = "/dev/disk/by-partlabel/nixos-boot";
       fsType = "vfat";
     };
 
-    "/boot" = {
+    "/" = {
       device = "/dev/disk/by-partlabel/nixos-root";
       fsType = "ext4";
     };
