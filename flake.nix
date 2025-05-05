@@ -70,6 +70,7 @@
         modules = [
           ./hosts/laptop # Host Modules <<-
           inputs.sops-nix.nixosModules.sops
+          inputs.disko.nixosModules.disko
           home-manager.nixosModules.home-manager
           {
             home-manager = {
