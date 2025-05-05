@@ -11,7 +11,7 @@
 
   # VirtualMachine
   # virtualisation.libvirtd.enable = true;
-  # users.users.${userConfig.username}.extraGroups = [ "libvirtd" ];
+  # users.users.userConfig.username.extraGroups = [ "libvirtd" ];
 
   # Allow running dynamically linked binaries
   programs.nix-ld.enable = true;
