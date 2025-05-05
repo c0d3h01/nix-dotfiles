@@ -15,8 +15,8 @@
       lfs.enable = true;
 
       # User Configurations
-      userName = "${userConfig.username}";
-      userEmail = "${userConfig.email}";
+      userName = userConfig.username;
+      userEmail = userConfig.email;
 
       # Git Configuations
       extraConfig = {
