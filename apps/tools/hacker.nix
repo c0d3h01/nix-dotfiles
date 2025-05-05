@@ -72,7 +72,7 @@
     ];
 
     # Optional: allow Wireshark non-root capture
-    users.users.${userConfig.username}.extraGroups = [ "wireshark" ];
+    users.users.userConfig.username.extraGroups = [ "wireshark" ];
     programs.wireshark.enable = true;
   };
 }
