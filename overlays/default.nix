@@ -7,4 +7,5 @@
       config.allowUnfree = true;
     };
   })
+  inputs.nur.overlays.default
 ]

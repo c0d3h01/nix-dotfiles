@@ -30,6 +30,8 @@
       docker
       docker-compose
       lazydocker
+      kubectl
+      kind
     ];
   };
 }

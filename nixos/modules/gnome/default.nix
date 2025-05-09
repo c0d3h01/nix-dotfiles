@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   userConfig,
   ...
@@ -33,6 +32,7 @@
       gnome-font-viewer
       epiphany
       yelp
+      geary
       baobab
       gnome-weather
       gnome-connections
@@ -50,6 +50,7 @@
       libreoffice
       rhythmbox
       qbittorrent
+      thunderbird
 
       # Gnome extensions
       gnomeExtensions.gsconnect

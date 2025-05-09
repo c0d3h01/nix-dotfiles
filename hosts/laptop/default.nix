@@ -5,6 +5,7 @@
     ./disko.nix
     ./hardware.nix
     ../../nixos
+    ../../secrets
   ];
 
   time.timeZone = "Asia/Kolkata";
@@ -24,7 +25,7 @@
   };
 
   users.users.${userConfig.username} = {
-    description = "${userConfig.fullName}";
+    description = userConfig.fullName;
     isNormalUser = true;
     shell = pkgs.zsh;
     ignoreShellProgramCheck = true;
@@ -36,7 +37,7 @@
       "video"
     ];
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHh6J/Bx4RkVH8kRcSuKELT0N7lLWhTYUFUVxJWpRiJf haarshalsawant@gmail.com"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID+1xp8R61gtbYX6xLKpHerFshlFvlNPIDeGYvyVAMn8 harshalsawant.dev@gmail.com"
     ];
   };
 }

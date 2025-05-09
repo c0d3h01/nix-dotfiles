@@ -1,22 +1,19 @@
 {
   pkgs,
   userConfig,
-  outputs,
-  inputs,
-  lib,
   ...
 }:
 
 {
   imports = [
-    ./configs
+    ./config.nix
     ./modules
   ];
 
   home = {
-    username = "${userConfig.username}";
+    username = userConfig.username;
     homeDirectory = "/home/${userConfig.username}";
-    stateVersion = "${userConfig.stateVersion}";
+    stateVersion = userConfig.stateVersion;
 
     sessionVariables = {
       EDITOR = "nvim";
@@ -48,6 +45,8 @@
       fuse
       appimage-run
       nh # Nix Garbage Cleaner
+      stow
+      zellij
 
       # Editors & Viewers
       fd # find
@@ -72,18 +71,5 @@
       zstd
       cabextract
     ];
-  };
-
-  programs = {
-    ssh = {
-      enable = true;
-      matchBlocks = {
-        "c0d3h01" = {
-          hostname = "c0d3h01";
-          user = "root";
-          forwardAgent = true;
-        };
-      };
-    };
   };
 }

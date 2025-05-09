@@ -26,6 +26,8 @@
       dive
       podman-compose
       podman-desktop
+      kind
+      kubectl
     ];
   };
 }
