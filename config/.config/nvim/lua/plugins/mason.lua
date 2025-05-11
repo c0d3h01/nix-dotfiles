@@ -17,7 +17,7 @@ return {
 			local f = io.open(data_dir .. "/suggested-pkgs.json", "w")
 			f:write(vim.json.encode(suggested_packages))
 			f:close()
-			opts.run_on_start = false
+			opts.run_on_start = true
 			opts.integrations["mason-nvim-dap"] = false
 		end,
 	},

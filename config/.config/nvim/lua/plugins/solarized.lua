@@ -3,6 +3,6 @@ return {
 	name = "NeoSolarized.nvim",
 	opts = {
 		style = "dark", -- "dark" or "light"
-		transparent = false,
+		transparent = true,
 	},
 }
