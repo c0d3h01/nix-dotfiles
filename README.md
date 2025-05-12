@@ -20,3 +20,9 @@ $ sudo nix --experimental-features "nix-command flakes" run github:nix-community
 
 $ sudo nixos-install --flake .#NixOS
 ```
+
+## Stow (Home configs)
+
+```bash
+$ stow config
+```
