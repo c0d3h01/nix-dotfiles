@@ -39,6 +39,9 @@
         # Notion Enhancer With patches
         (pkgs.callPackage ./notion-app-enhanced { })
 
+        # Code editor
+        vscode-fhs
+
         # Developement desktop apps
         postman
         github-desktop
@@ -59,10 +62,6 @@
       ];
 
       unstablePkgs = with pkgs; [
-        # Code editor
-        vscode-fhs
-        zed-editor
-
         # -+ Common Developement tools
         nodejs
 
