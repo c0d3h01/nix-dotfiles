@@ -9,7 +9,6 @@
   home.sessionVariables.MOZ_USE_XINPUT2 = "1";
   programs.firefox = {
     enable = true;
-    package = pkgs.firefox-unwrapped;
 
     profiles.${userConfig.username} = {
       extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
