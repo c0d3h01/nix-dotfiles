@@ -14,6 +14,7 @@
       twitter-color-emoji
       noto-fonts
       noto-fonts-cjk-sans
+      inter
     ];
 
     fontconfig = {
@@ -25,6 +26,7 @@
         ];
 
         sansSerif = lib.mkForce [
+          "Inter"
           "Noto Sans"
         ];
 
@@ -35,16 +37,6 @@
         emoji = lib.mkForce [
           "Twitter Color Emoji"
         ];
-      };
-
-      hinting = {
-        enable = true;
-        style = "slight";
-      };
-
-      antialias = true;
-      subpixel = {
-        rgba = "rgb";
       };
     };
   };

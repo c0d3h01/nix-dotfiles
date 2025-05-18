@@ -2,9 +2,10 @@
 
 {
   imports = [
-    ./disko.nix
+    ../installer/disko-config.nix
     ./hardware.nix
     ../../nixos
+    ../../apps
     ../../secrets
   ];
 
@@ -35,6 +36,9 @@
       "wheel"
       "audio"
       "video"
+      "adbusers"
+      "wireshark"
+      "usbmon"
     ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOGOsLJ8MvzMo4QMjZYUhObxB565LmF+0PWf3RGClCOQ harshalsawant.dev@gmail.com"

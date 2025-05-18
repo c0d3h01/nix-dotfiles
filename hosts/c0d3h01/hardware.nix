@@ -23,24 +23,23 @@
     interval = "weekly";
   };
 
-  powerManagement.cpuFreqGovernor = "schedutil";
-
   boot = {
     kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];
 
     tmp.cleanOnBoot = true;
     consoleLogLevel = 3;
-    kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
+    # kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
     kernelParams = [
       "quiet"
       "splash"
       "nowatchdog"
       "loglevel=3"
       "mitigations=off"
+      "nohz_full=4-7"
     ];
 
-    kernel.sysctl = {};
+    kernel.sysctl = { };
 
     loader = {
       efi.canTouchEfiVariables = true;

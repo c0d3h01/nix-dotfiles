@@ -3,6 +3,7 @@
   userConfig,
   ...
 }:
+
 {
   # Enable X server and GNOME
   services = {
@@ -23,6 +24,11 @@
         }
     });
   '';
+
+  programs.kdeconnect = {
+    enable = true;
+    package = pkgs.gnomeExtensions.gsconnect;
+  };
 
   # Exclude unwanted GNOME packages
   environment = {
@@ -46,7 +52,6 @@
       transmission_4
 
       # Gnome extensions
-      gnomeExtensions.gsconnect
       gnomeExtensions.tiling-assistant
     ];
   };
@@ -56,7 +61,6 @@
       "org/gnome/shell" = {
         disable-user-extensions = false;
         enabled-extensions = [
-          "gsconnect@andyholmes.github.io"
           "tiling-assistant@leleat-on-github"
         ];
       };
