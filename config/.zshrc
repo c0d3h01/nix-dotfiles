@@ -1,3 +1,5 @@
+# shellcheck disable=SC1036
+
 # ===== Core Configuration =====
 export ZDOTDIR="$HOME/.config/zsh"
 export EDITOR="nvim"
@@ -5,10 +7,20 @@ export VISUAL="nvim"
 export MANPAGER="nvim +Man!"
 
 # ===== Path Configuration =====
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-export PATH="$HOME/.npm-globle/bin:$PATH"
+path=(
+    $HOME/.local/bin
+    $HOME/.cargo/bin
+    $HOME/go/bin
+    $HOME/.npm-global/bin
+    $HOME/bin
+    $HOME/.cabal/bin
+    $HOME/.gem/ruby/*.*.*/bin(NOn[1])
+    $path
+)
+
+typeset -U path   # unique entries only
+path=($^path(N))  # remove nonexistent paths
+export PATH
 
 # ===== Tool Configurations =====
 export LESS="-R -F -X -M"
@@ -46,12 +58,24 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 compinit -d "$HOME/.cache/zsh/.zcompdump"
 
-# Directory options
-setopt AUTO_PUSHD PUSHD_IGNORE_DUPS PUSHD_SILENT
-setopt CDABLE_VARS EXTENDED_GLOB NO_BEEP
-setopt MULTIOS NO_HUP IGNORE_EOF RC_QUOTES
-setopt RM_STAR_SILENT SHORT_LOOPS NO_FLOW_CONTROL
-setopt INTERACTIVE_COMMENTS AUTOCD
+# Options
+setopt auto_pushd           # push dir stack
+setopt pushd_ignore_dups    # no dup dirs
+setopt pushd_silent         # quiet pushd
+setopt cdable_vars          # cd to $var
+setopt autocd               # auto 'cd' dirs
+setopt extended_glob        # advanced globbing
+setopt interactive_comments # allow # comments
+setopt short_loops          # short for loops
+setopt rc_quotes            # rc-style quotes
+setopt no_flow_control      # disable Ctrl-S/Q
+setopt no_beep              # disable bell
+setopt ignore_eof           # disable Ctrl-D exit
+setopt multios              # multi redirects
+setopt no_hup               # no HUP on exit
+setopt rm_star_silent       # no rm * warning
+setopt complete_in_word
+unsetopt always_to_end
 
 # ===== Key Bindings =====
 bindkey -v
@@ -101,7 +125,6 @@ alias ps='ps auxf'
 alias top='htop'
 alias ip='ip -color=auto'
 alias diff='diff --color=auto'
-alias grep='rg'
 alias find='fd'
 alias mkdir='mkdir -pv'
 alias ping='ping -c 5'
@@ -116,21 +139,41 @@ alias mv='mv -iv'
 alias ln='ln -iv'
 
 # Modern alternatives
-alias cat='bat'
 alias vi='nvim'
 alias vim='nvim'
 
 # Handy shortcuts
-alias ff='fastfetch'
 alias cl='clear'
 alias x='exit'
 alias ts='date '\''+%Y-%m-%d %H:%M:%S'\'
 alias reload='source ~/.zshrc'
 
-# Fix session vars
-source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+if [[ -f ~/.nix-profile/etc/profile.d/hm-session-vars.sh ]]; then
+  source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+fi
 
-# Add Home Manager to XDG paths
+if [[ -e /etc/profile.d/nix.sh ]]; then
+  . /etc/profile.d/nix.sh
+fi
+
+if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
+  . ~/.nix-profile/etc/profile.d/nix.sh
+fi
+
+if [ -f ~/.nix-profile/zsh/ghostty-integration ]; then
+  . ~/.nix-profile/zsh/ghostty-integration
+fi
+
+if [[ $OSTYPE == darwin* ]]; then
+  export NIX_PATH="$NIX_PATH:darwin-config=$HOME/.config/nixpkgs/darwin-configuration.nix"
+fi
+
+if [[ -S /nix/var/nix/daemon-socket/socket ]]; then
+  export NIX_REMOTE=daemon
+fi
+
+export NIX_USER_PROFILE_DIR=${NIX_USER_PROFILE_DIR:-/nix/var/nix/profiles/per-user/${USER}}
+export NIX_PROFILES=${NIX_PROFILES:-$HOME/.nix-profile}
 export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
 
 # ===== Functions =====
@@ -179,6 +222,62 @@ colors() {
   done
 }
 
+flake-check() {
+    if [ $# -lt 1 ]; then
+      nix flake check
+    fi
+    for arg in "$@"; do
+      nix build ".#checks.$(nix eval --impure --raw --expr builtins.currentSystem).$1"
+    done
+}
+
+make(){
+  local build_path="$(dirname "$(upfind "Makefile")")"
+  command nice -n19 make -C "${build_path:-.}" -j$(nproc) "$@"
+}
+
+if [ -n "${commands[bat]}" ]; then
+  cat() {
+    if [[ -t 1 ]] && [[ -o interactive ]]; then
+      if [[ -n "$WAYLAND_DISPLAY" ]]; then
+        wl-copy < "$1" 2>/dev/null &
+      fi
+      bat "$@"
+    else
+      command cat "$@"
+    fi
+  }
+fi
+
+if [ -n "${commands[fastfetch]}" ]; then
+  ff() {
+    if [[ -t 1 ]] && [[ -o interactive ]]; then
+      fastfetch "$@"
+    else
+      command fastfetch "$@"
+    fi
+  }
+fi
+
+if [ -n "${commands[rg]}" ]; then
+  grep() {
+    if [[ -t 1 ]] && [[ -o interactive ]]; then
+      rg "$@"
+    else
+      command grep "$@"
+    fi
+  }
+fi
+
+if [ -n "${commands[direnv]}" ]; then
+  eval "$(direnv hook zsh)"
+fi
+
+if [[ $commands[kubectl] ]]; then
+   alias k=kubectl
+   source <(kubectl completion zsh)
+fi
+
 # ===== Tool Initialization =====
 # Initialize zoxide (if installed)
 command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh --cmd j)"
@@ -190,8 +289,6 @@ command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 # command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
 
 # ===== Custom Plugin Submodules =====
-# ZSH_PLUGINS="${HOME}/dotfiles/zsh"
-
 # zsh-completions
 fpath+=("$HOME/.zsh-completions")
 
@@ -199,8 +296,21 @@ fpath+=("$HOME/.zsh-completions")
 source "$HOME/.zsh-autosuggestions/zsh-autosuggestions.zsh"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=60
 
-# pure prompt
+if [[ -n "${commands[fzf-share]}" ]]; then
+  FZF_CTRL_R_OPTS=--reverse
+  if [[ -n "${commands[fd]}" ]]; then
+    export FZF_DEFAULT_COMMAND='fd --type f'
+  fi
+  source "$(fzf-share)/key-bindings.zsh"
+fi
+
+# Pure Prompt
 fpath+=("$HOME/.zsh-pure")
+zstyle :prompt:pure:path color yellow
+zstyle :prompt:pure:git:branch color yellow
+zstyle :prompt:pure:user color cyan
+zstyle :prompt:pure:host color yellow
+zstyle :prompt:pure:git:branch:cached color red
 autoload -U promptinit; promptinit
 prompt pure
 
