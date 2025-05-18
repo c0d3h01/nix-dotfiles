@@ -5,6 +5,11 @@ export ZDOTDIR="$HOME/.config/zsh"
 export EDITOR="nvim"
 export VISUAL="nvim"
 export MANPAGER="nvim +Man!"
+export CHROME_EXECUTABLE="$(which firefox-esr)"
+export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which javac))))"
+export NIX_USER_PROFILE_DIR=${NIX_USER_PROFILE_DIR:-/nix/var/nix/profiles/per-user/${USER}}
+export NIX_PROFILES=${NIX_PROFILES:-$HOME/.nix-profile}
+export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
 
 # ===== Path Configuration =====
 path=(
@@ -145,6 +150,7 @@ alias vim='nvim'
 # Handy shortcuts
 alias cl='clear'
 alias x='exit'
+alias home-check='journalctl -u home-manager-$USER.service'
 alias ts='date '\''+%Y-%m-%d %H:%M:%S'\'
 alias reload='source ~/.zshrc'
 
@@ -171,10 +177,6 @@ fi
 if [[ -S /nix/var/nix/daemon-socket/socket ]]; then
   export NIX_REMOTE=daemon
 fi
-
-export NIX_USER_PROFILE_DIR=${NIX_USER_PROFILE_DIR:-/nix/var/nix/profiles/per-user/${USER}}
-export NIX_PROFILES=${NIX_PROFILES:-$HOME/.nix-profile}
-export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
 
 # ===== Functions =====
 path() {
@@ -239,9 +241,6 @@ make(){
 if [ -n "${commands[bat]}" ]; then
   cat() {
     if [[ -t 1 ]] && [[ -o interactive ]]; then
-      if [[ -n "$WAYLAND_DISPLAY" ]]; then
-        wl-copy < "$1" 2>/dev/null &
-      fi
       bat "$@"
     else
       command cat "$@"
