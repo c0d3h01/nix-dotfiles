@@ -22,6 +22,12 @@
       enable = true;
       dockerCompat = true;
     };
+    virtualisation.containers.containersConf.settings = {
+      containers.dns_servers = [
+        "8.8.8.8"
+        "8.8.4.4"
+      ];
+    };
     environment.systemPackages = with pkgs; [
       dive
       podman-compose
