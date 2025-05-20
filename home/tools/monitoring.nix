@@ -6,13 +6,13 @@
 }:
 
 {
-  options.myModules.hackerMode = lib.mkOption {
+  options.myModules.monitoringModules = lib.mkOption {
     type = lib.types.bool;
     default = false;
     description = "Enable monitoring tools";
   };
 
-  config = lib.mkIf config.myModules.hackerMode {
+  config = lib.mkIf config.myModules.monitoringModules {
     home.packages = with pkgs; [
       # Recon & Scanning
       nmap
