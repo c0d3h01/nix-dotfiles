@@ -31,6 +31,7 @@
       telegram-desktop
       zoom-us
       element-desktop
+      signal-desktop
 
       # Common desktop apps
       postman
@@ -76,8 +77,20 @@
       ruby
       xdg-utils
       pciutils
+      inxi
+      procs
+      glances
+      htop
       cheat
       nixos-shell
+      bottom
+      julia
+      go
+      # gotools
+      tree-sitter
+      stylua
+      hpx
+      sqlite
 
       # Nix Tools
       nix-prefetch-github
@@ -85,12 +98,6 @@
       # Language Servers
       lua-language-server
       nil
-
-      # System Monitoring
-      inxi
-      procs
-      glances
-      htop
 
       # Extractors
       unzip
