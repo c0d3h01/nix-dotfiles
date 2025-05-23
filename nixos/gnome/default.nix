@@ -62,6 +62,7 @@
         disable-user-extensions = false;
         enabled-extensions = [
           "tiling-assistant@leleat-on-github"
+          "gsconnect@andyholmes.github.io"
         ];
       };
 
