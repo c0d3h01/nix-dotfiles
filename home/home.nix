@@ -24,8 +24,8 @@
 
       # Code editor
       vscode-fhs
-      jetbrains.pycharm-community-bin
-      android-studio
+      # jetbrains.pycharm-community-bin
+      # android-studio
 
       # Communication apps
       vesktop
@@ -42,13 +42,10 @@
       electrum
       blender-hip
       gimp
-      graphicsmagick
 
-      # Terminal
+      # Terminal Utilities
       kitty
       neovim
-
-      # Utilities
       tmux
       coreutils
       fastfetch
@@ -56,21 +53,19 @@
       curl
       wget
       tree
-      asar
-      fuse
+      tree-sitter
       nh
       stow
       zellij
       bat
-      # direnv
       zoxide
-      eza
       ripgrep
       fzf
       fd
       file
       bashInteractive
       lsd
+      eza
       tea
       less
       findutils
@@ -81,28 +76,24 @@
       inxi
       procs
       glances
-      htop
       cheat
-      nixos-shell
-      bottom
       julia
       go
-      # gotools
-      tree-sitter
-      stylua
-      hpx
-      sqlite
-
-      #gtkextra
       glade
       gtk4
-      gtk3
-      gtkmm3
       gtkmm4
-      gtk-server
-
-      # Nix Tools
-      nix-prefetch-github
+      glib
+      nodejs
+      yarn
+      electron
+      gdb
+      gcc
+      clang
+      gnumake
+      cmake
+      ninja
+      clang-tools
+      pkg-config
 
       # Language Servers
       lua-language-server
