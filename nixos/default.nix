@@ -1,6 +1,7 @@
 {
   imports = [
     ./gnome
+    # ./KDE
     ./audio.nix
     ./fonts.nix
     ./libvirt.nix

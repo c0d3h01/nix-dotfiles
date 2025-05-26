@@ -33,6 +33,15 @@
     videoDrivers = [ "amdgpu" ];
   };
 
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+        if (action.id.indexOf("org.freedesktop.udisks2.filesystem-mount") == 0 &&
+            subject.isInGroup("users")) {
+            return polkit.Result.YES;
+        }
+    });
+  '';
+
   users.users.${userConfig.username} = {
     description = userConfig.fullName;
     isNormalUser = true;

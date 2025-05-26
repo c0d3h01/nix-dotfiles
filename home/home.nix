@@ -88,7 +88,6 @@
       electron
       gdb
       gcc
-      clang
       gnumake
       cmake
       ninja
