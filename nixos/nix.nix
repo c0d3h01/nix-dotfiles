@@ -13,7 +13,6 @@
   programs.nix-ld.enable = true;
 
   nixpkgs = {
-    overlays = outputs.overlays;
     config = {
       allowUnfree = true;
       allowInsecure = true;
