@@ -2,29 +2,32 @@
   description = "NixOS configuration with flakes";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "git+https://github.com/c0d3h01/nixpkgs?shallow=1&ref=nixos-unstable-small";
     flake-utils.url = "github:numtide/flake-utils";
 
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
-
-    disko.url = "github:nix-community/disko";
-    disko.inputs.nixpkgs.follows = "nixpkgs";
-
-    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
-    pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
-
-    sops-nix.url = "github:Mic92/sops-nix";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-
-    nur = {
-      url = "github:nix-community/NUR";
+    home-manager = {
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
   };
+
   outputs =
     {
       self,
@@ -41,6 +44,7 @@
         "x86_64-darwin"
       ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+
       # User Configuations
       userConfig = {
         username = "c0d3h01";
@@ -62,7 +66,7 @@
           };
         };
       });
-      overlays = import ./overlays { inherit inputs; };
+
       # NixOS configuration with home-manager.
       nixosConfigurations.${userConfig.hostname} = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -85,6 +89,7 @@
           }
         ];
       };
+
       # Standalone home-manager configuration
       homeConfigurations = {
         "${userConfig.username}@${userConfig.hostname}" = home-manager.lib.homeManagerConfiguration {
