@@ -75,6 +75,7 @@
       procs
       glances
       cheat
+      sops
 
       # Language Servers
       lua-language-server
