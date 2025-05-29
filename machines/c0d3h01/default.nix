@@ -6,7 +6,7 @@
     ./hardware.nix
     ../../nixos
     ../../apps
-    ../../secrets
+    # ../../sops/secrets
   ];
 
   time.timeZone = "Asia/Kolkata";
