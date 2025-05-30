@@ -17,7 +17,6 @@
   config = lib.mkIf config.myModules.r.enable {
     environment.systemPackages = with pkgs; [
       R
-      rstudio
       rPackages.tidyverse
       rPackages.devtools
       rPackages.shiny
