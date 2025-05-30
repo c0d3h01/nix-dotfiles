@@ -75,7 +75,7 @@
       procs
       glances
       cheat
-      sops
+      tree-sitter
 
       # Language Servers
       lua-language-server
