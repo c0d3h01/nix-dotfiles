@@ -20,6 +20,10 @@
 
   hardware.bluetooth.enable = true;
 
+  environment.systemPackages = with pkgs; [
+    mesa-demos
+  ];
+
   # boot.loader.grub.efiSupport = lib.mkDefault true;
   # boot.loader.grub.efiInstallAsRemovable = lib.mkDefault true;
 
