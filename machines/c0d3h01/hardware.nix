@@ -18,6 +18,8 @@
     memoryPercent = 100;
   };
 
+  hardware.bluetooth.enable = true;
+
   # boot.loader.grub.efiSupport = lib.mkDefault true;
   # boot.loader.grub.efiInstallAsRemovable = lib.mkDefault true;
 
