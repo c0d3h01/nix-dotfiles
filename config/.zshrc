@@ -161,6 +161,7 @@ alias cl='clear'
 alias x='exit'
 alias nc='nix-collect-garbage'
 alias home-check='journalctl -u home-manager-$USER.service'
+alias hm='home-manager'
 alias ts='date '\''+%Y-%m-%d %H:%M:%S'\'
 alias reload='source ~/.zshrc'
 
