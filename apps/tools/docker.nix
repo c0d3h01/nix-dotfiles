@@ -20,7 +20,7 @@
     users.users.${userConfig.username}.extraGroups = [ "docker" ];
     virtualisation.docker = {
       enable = true;
-      enableOnBoot = false;
+      enableOnBoot = true;
       autoPrune.enable = true;
     };
     virtualisation.docker.extraOptions = ''
