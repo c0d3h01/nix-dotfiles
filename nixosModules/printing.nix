@@ -4,6 +4,7 @@
   services = {
     printing = {
       enable = true;
+      openFirewall = true;
       drivers = with pkgs; [
         gutenprint
         hplip
