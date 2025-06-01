@@ -23,7 +23,13 @@
               size = "100%";
               content = {
                 type = "btrfs";
-                extraArgs = [ "-f" "-O" "no-holes" "-R" "free-space-tree" ];
+                extraArgs = [
+                  "-f"
+                  "-O"
+                  "no-holes"
+                  "-R"
+                  "free-space-tree"
+                ];
                 subvolumes = {
                   "/@" = {
                     mountpoint = "/";
