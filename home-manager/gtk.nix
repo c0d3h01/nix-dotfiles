@@ -35,9 +35,9 @@
     };
   };
 
-  # qt = {
-  #   enable = true;
-  #   platformTheme = "gtk";
-  #   style.name = "adwaita-dark";
-  # };
+  qt = {
+    enable = true;
+    platformTheme.name = "gtk";
+    style.name = "adwaita-dark";
+  };
 }
