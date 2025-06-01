@@ -1,4 +1,5 @@
 {
+  lib,
   inputs,
   outputs,
   userConfig,
@@ -7,7 +8,7 @@
 }:
 
 {
-  system.stateVersion = userConfig.stateVersion;
+  system.stateVersion = lib.trivial.release;
   networking.hostName = userConfig.hostname;
 
   programs.nix-ld.enable = true;
