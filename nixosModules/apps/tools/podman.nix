@@ -21,13 +21,10 @@
     virtualisation.podman = {
       enable = true;
       dockerCompat = true;
+      dockerSocket.enable = true;
+      defaultNetwork.settings.dns_enabled = true;
     };
-    virtualisation.containers.containersConf.settings = {
-      containers.dns_servers = [
-        "8.8.8.8"
-        "8.8.4.4"
-      ];
-    };
+
     environment.systemPackages = with pkgs; [
       dive
       podman-compose
