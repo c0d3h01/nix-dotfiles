@@ -1,0 +1,30 @@
+format = "[╭─](#b2320f)$os$username[](fg:#b2320f bg:#81544e)$directory[](fg:#81544e bg:#5e5d64)$time[](#5e5d64)$line_break[╰─](#b2320f)$character"
+[character]
+error_symbol = "[❯](bold white)"
+success_symbol = "[❯](bold white)"
+
+[directory]
+format = "[ $path ]($style)"
+style = "bg:#81544e"
+truncation_length = 4
+truncation_symbol = "…/"
+
+[os]
+disabled = false
+style = "bg:#b2320f"
+
+[os.symbols]
+Arch = "󰣇"
+NixOS = "󱄅"
+
+[time]
+disabled = false
+format = "[ $time ]($style)"
+style = "bg:#5e5d64"
+time_format = "%R"
+
+[username]
+format = "[ $user ]($style)"
+show_always = true
+style_root = "bg:#b2320f"
+style_user = "bg:#b2320f"
