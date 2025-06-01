@@ -2,6 +2,7 @@
 
 # ===== Core Configuration =====
 export ZDOTDIR="$HOME/.config/zsh"
+export LC_ALL=en_IN.UTF-8
 export NIX_USER_PROFILE_DIR=${NIX_USER_PROFILE_DIR:-/nix/var/nix/profiles/per-user/${USER}}
 export NIX_PROFILES=${NIX_PROFILES:-$HOME/.nix-profile}
 export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
@@ -10,10 +11,27 @@ if command -v nvim >/dev/null; then
   export EDITOR="nvim"
   export VISUAL="nvim"
   export MANPAGER="nvim +Man!"
+elif command -v vim >/dev/null; then
+  export EDITOR="vim"
+  export VISUAL="vim"
+  export MANPAGER="vim +Man!"
+fi
+
+if command -v ghostty >/dev/null; then
+  export TERMINAL="ghostty"
+elif command -v kitty >/dev/null; then
+  export TERMINAL="kitty"
 fi
 
 if command -v firefox >/dev/null; then
+  export BROWSER="firefox"
   export CHROME_EXECUTABLE="$(command -v firefox)"
+elif command -v firefox-esr >/dev/null; then
+  export BROWSER="firefox-esr"
+  export CHROME_EXECUTABLE="$(command -v firefox-esr)"
+elif command -v brave >/dev/null; then
+  export BROWSER="brave"
+  export CHROME_EXECUTABLE="$(command -v brave)"
 fi
 
 if command -v java >/dev/null; then
@@ -156,8 +174,8 @@ alias mv='mv -iv'
 alias ln='ln -iv'
 
 # Modern alternatives
+alias v='nvim'
 alias vi='nvim'
-alias vim='nvim'
 
 # Handy shortcuts
 alias cl='clear'
@@ -296,6 +314,28 @@ command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 # command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
 
 # ===== Custom Plugin Submodules =====
+if [[ -n ${commands[fzf]} ]]; then
+  source ~/.zsh-fzf-tab/fzf-tab.zsh
+  if [ -n $TMUX ]; then
+    zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+  fi
+  # disable sort when completing `git checkout`
+  zstyle ':completion:*:git-checkout:*' sort false
+  # set descriptions format to enable group support
+  # NOTE: don't use escape sequences here, fzf-tab will ignore them
+  zstyle ':completion:*:descriptions' format '[%d]'
+  # set list-colors to enable filename colorizing
+  zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+  # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+  zstyle ':completion:*' menu no
+  # preview directory's content with lsd when completing cd
+  if [[ -n ${commands[lsd]} ]]; then
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd -1 --color=always $realpath'
+  fi
+  # switch group using `<` and `>`
+  zstyle ':fzf-tab:*' switch-group '<' '>'
+fi
+
 # zsh-completions
 fpath+=("$HOME/.zsh-completions")
 
@@ -311,13 +351,22 @@ if [[ -n "${commands[fzf-share]}" ]]; then
   source "$(fzf-share)/key-bindings.zsh"
 fi
 
+fignore=(.DS_Store $fignore)
+[[ -d ~/.zsh-completions/src ]] && fpath+=(~/.zsh-completions/src)
+[[ -d ~/.nix-profile/share/zsh/site-functions ]] && fpath+=(~/.nix-profile/share/zsh/site-functions)
+[[ -d /run/current-system/sw/share/zsh/site-functions/ ]] && fpath+=(/run/current-system/sw/share/zsh/site-functions/)
+
 # Pure Prompt
-fpath+=("$HOME/.zsh-pure")
+PURE_GIT_UNTRACKED_DIRTY=0
+PURE_GIT_PULL=0
+PURE_PROMPT_SYMBOL="%(?.%F{green}.%F{red})%%%f"
+fpath+=($HOME/.zsh-pure)
 zstyle :prompt:pure:path color yellow
 zstyle :prompt:pure:git:branch color yellow
 zstyle :prompt:pure:user color cyan
 zstyle :prompt:pure:host color yellow
 zstyle :prompt:pure:git:branch:cached color red
+RPS1='%(?.%F{magenta}.%F{red}(%?%) %F{magenta})'
 autoload -U promptinit; promptinit
 prompt pure
 
