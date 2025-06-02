@@ -57,7 +57,7 @@
     hashedPasswordFile = config.age.secrets.ssh.path;
     home = "/home/${userConfig.username}";
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN7FuJyM0VDKj1ajyypGEHW6F/AN3mCCRL3bLCDcUaer harshalsawant.dev@gmail.com"
+      (builtins.readFile ../../secrets/ssh.pub)
     ];
     extraGroups = [
       "networkmanager"
