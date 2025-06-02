@@ -1,6 +1,6 @@
 let
   userPublicKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN7FuJyM0VDKj1ajyypGEHW6F/AN3mCCRL3bLCDcUaer harshalsawant.dev@gmail.com"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG5qPWYOZSxl3Fnsiu3fBCTxQuwGrigSoqHAoMpLGmAC harshalsawant.dev@gmail.com"
   ];
 
   systemPublicKeys = [
