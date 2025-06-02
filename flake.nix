@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "git+https://github.com/nixos/nixpkgs?shallow=1&ref=nixos-unstable-small";
-    # nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     systems.url = "github:nix-systems/default";
 
     flake-utils.url = "github:numtide/flake-utils";
@@ -18,8 +18,8 @@
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
 
-    # sops-nix.url = "github:Mic92/sops-nix";
-    # sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     ghostty.url = "github:/ghostty-org/ghostty";
     ghostty.inputs.nixpkgs.follows = "nixpkgs";
@@ -76,6 +76,7 @@
         modules = [
           ./machines/c0d3h01
           inputs.disko.nixosModules.disko
+          inputs.sops-nix.nixosModules.sops
           # inputs.nixos-hardware.nixosModules.dell-inspiron-14-5420
 
           home-manager.nixosModules.home-manager
