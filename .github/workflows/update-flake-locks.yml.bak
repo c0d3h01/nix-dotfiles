@@ -1,36 +1,24 @@
-name: Autoupdate flake.lock
+name: "Flake.lock: update Nix dependencies"
 
 on:
+  workflow_dispatch: # allows manual triggering
   schedule:
-    - cron: "0 */6 * * *"
-  workflow_dispatch:
+    - cron: '0 0 * * 0' # runs weekly on Sunday at 00:00
 
 jobs:
-  update-flake:
+  nix-flake-update:
+    permissions:
+      contents: write
+      id-token: write
+      issues: write
+      pull-requests: write
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - uses: DeterminateSystems/update-flake-lock@main
         with:
-          fetch-depth: 0
-
-      - name: Install Nix
-        uses: cachix/install-nix-action@v26
-
-      - name: Update flake.lock
-        run: nix flake update
-
-      - name: Commit and push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "Automated flake.lock update"
-          branch: main
-          commit_options: '--no-verify --signoff'
-          file_pattern: flake.lock
-          commit_user_name: "Flake Bot"
-          commit_author: "Flake Bot <actions@github.com>"
-          skip_dirty_check: false
-          skip_fetch: false
-          skip_checkout: false
-          push_options: '--force'
+          pr-title: "Update Nix flake inputs" # Title of PR to be created
+          pr-labels: |                  # Labels to be set on the PR
+            dependencies
+            automated
