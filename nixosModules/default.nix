@@ -2,7 +2,6 @@
   imports = [
     ./apps
     ./gnome
-    # ./KDE
     ./server
     ./audio.nix
     ./fonts.nix
