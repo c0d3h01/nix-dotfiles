@@ -6,4 +6,6 @@
   environment.gnome.excludePackages = with pkgs; [
     kdePackages.kate
   ];
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
 }
