@@ -1,7 +1,7 @@
 {
   lib,
   pkgs,
-  userConfig,
+  declarative,
   inputs,
   ...
 }:
@@ -17,8 +17,8 @@
   manual.manpages.enable = false;
 
   home = {
-    username = userConfig.username;
-    homeDirectory = "/home/${userConfig.username}";
+    username = declarative.username;
+    homeDirectory = "/home/${declarative.username}";
     stateVersion = lib.trivial.release;
     enableNixpkgsReleaseCheck = false;
 
@@ -27,7 +27,7 @@
       NIXPKGS_ALLOW_UNFREE = "1";
     };
 
-    packages = with pkgs; [
+    packages = with pkgs.stable; [
       # Notion Enhancer With patches
       (pkgs.callPackage ./notion-app-enhanced { })
 

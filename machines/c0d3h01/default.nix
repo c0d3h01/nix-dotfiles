@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  userConfig,
+  declarative,
   ...
 }:
 
@@ -50,13 +50,13 @@
     });
   '';
 
-  users.users.${userConfig.username} = {
-    description = userConfig.fullName;
+  users.users.${declarative.username} = {
+    description = declarative.fullName;
     isNormalUser = true;
     shell = pkgs.zsh;
     ignoreShellProgramCheck = true;
     hashedPasswordFile = config.age.secrets.ssh.path;
-    home = "/home/${userConfig.username}";
+    home = "/home/${declarative.username}";
     openssh.authorizedKeys.keys = [
       (builtins.readFile ../../secrets/ssh.pub)
     ];

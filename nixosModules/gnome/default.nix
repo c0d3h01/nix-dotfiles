@@ -1,6 +1,6 @@
 {
   pkgs,
-  userConfig,
+  declarative,
   ...
 }:
 
@@ -8,6 +8,10 @@
   # Enable Gnome, X server
   services.desktopManager.gnome.enable = true;
   services.displayManager.gdm.enable = true;
+
+  # services.xserver.desktopManager.gnome.enable = true;
+  # services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.xterm.enable = false;
 
   programs.kdeconnect = {
     enable = true;
@@ -38,24 +42,24 @@
     with pkgs.gnomeExtensions;
     [
       dash-to-dock
-      user-themes
+      # user-themes
       # blur-my-shell
-      # open-bar
+      open-bar
     ]
     ++ (with pkgs; [
       gnome-photos
       gnome-tweaks
     ]);
 
-  home-manager.users."${userConfig.username}" = {
+  home-manager.users."${declarative.username}" = {
     dconf.settings = {
       "org/gnome/shell" = {
         disable-user-extensions = false;
         enabled-extensions = [
           "gsconnect@andyholmes.github.io"
-          # "openbar@neuromorph"
+          "openbar@neuromorph"
           "dash-to-dock@micxgx.gmail.com"
-          "user-theme@gnome-shell-extensions.gcampax.github.com"
+          # "user-theme@gnome-shell-extensions.gcampax.github.com"
           # "blur-my-shell@aunetx"
         ];
       };
@@ -100,8 +104,8 @@
 
       # wallpaper
       # "org/gnome/desktop/background" = {
-      #   picture-uri = "file:///home/${userConfig.username}/dotfiles/assets/wallpapers/Space-Nebula.png";
-      #   picture-uri-dark = "file:///home/${userConfig.username}/dotfiles/assets/wallpapers/Space-Nebula.png";
+      #   picture-uri = "file:///home/${declarative.username}/dotfiles/assets/wallpapers/Space-Nebula.png";
+      #   picture-uri-dark = "file:///home/${declarative.username}/dotfiles/assets/wallpapers/Space-Nebula.png";
       #   picture-options = "zoom";
       # };
     };

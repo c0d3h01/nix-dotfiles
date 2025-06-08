@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  userConfig,
+  declarative,
   ...
 }:
 
@@ -17,7 +17,7 @@
 
   config = lib.mkIf config.myModules.podman.enable {
 
-    users.users.${userConfig.username}.extraGroups = [ "podman" ];
+    users.users.${declarative.username}.extraGroups = [ "podman" ];
     virtualisation.podman = {
       enable = true;
       dockerCompat = true;
