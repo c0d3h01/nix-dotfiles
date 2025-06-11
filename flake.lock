@@ -5,7 +5,7 @@
         "darwin": "darwin",
         "home-manager": "home-manager",
         "nixpkgs": [
-          "nixpkgs-stable"
+          "nixpkgs"
         ],
         "systems": "systems"
       },
@@ -98,15 +98,15 @@
         "git-hooks": "git-hooks",
         "nix": "nix",
         "nixpkgs": [
-          "nixpkgs-stable"
+          "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1749492770,
-        "narHash": "sha256-2X3C5RiCbH/ZoSr91q2D84Mod5ZJX4vF8rfsCzCrYT0=",
+        "lastModified": 1749550420,
+        "narHash": "sha256-YxbYLZSeEJX76fW0KPDpTjlF3ppQ+uh2z0fM5hEZbLU=",
         "owner": "cachix",
         "repo": "devenv",
-        "rev": "60e27492dd2d52c5867e066eb54279d08ad2b2cb",
+        "rev": "851a96d662ab265a15212ae4a4ec242a7c420d6f",
         "type": "github"
       },
       "original": {
@@ -118,7 +118,7 @@
     "disko": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-stable"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -287,17 +287,17 @@
         "flake-compat": "flake-compat_2",
         "flake-utils": "flake-utils_2",
         "nixpkgs": [
-          "nixpkgs-stable"
+          "nixpkgs"
         ],
         "zig": "zig",
         "zon2nix": "zon2nix"
       },
       "locked": {
-        "lastModified": 1749478499,
-        "narHash": "sha256-9DvS+1sC3xFysrd02mUC5kPegMpHxRepXCqpSWZ9kgE=",
+        "lastModified": 1749565348,
+        "narHash": "sha256-h3gh4HG4ebsMfMcJSh3MjsORoj1TCa1v3K8VwFOpXhc=",
         "owner": "ghostty-org",
         "repo": "ghostty",
-        "rev": "57cd5ef08520800533596f00a60ce84b9bd8950d",
+        "rev": "ad4facf8f1e136c39e50d88c3d15403db4719eb1",
         "type": "github"
       },
       "original": {
@@ -398,7 +398,7 @@
     "home-manager_2": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-stable"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -532,22 +532,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-stable": {
-      "locked": {
-        "lastModified": 1749237914,
-        "narHash": "sha256-N5waoqWt8aMr/MykZjSErOokYH6rOsMMXu3UOVH5kiw=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "70c74b02eac46f4e4aa071e45a6189ce0f6d9265",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-25.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1733212471,
@@ -582,19 +566,18 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1749411262,
-        "narHash": "sha256-gRBkeW9l5lb/90lv1waQFNT+18OhITs11HENarh6vNo=",
-        "ref": "nixos-unstable-small",
-        "rev": "0fc422d6c394191338c9d6a05786c63fc52a0f29",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/nixos/nixpkgs"
+        "lastModified": 1749494155,
+        "narHash": "sha256-FG4DEYBpROupu758beabUk9lhrblSf5hnv84v1TLqMc=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "88331c17ba434359491e8d5889cce872464052c2",
+        "type": "github"
       },
       "original": {
-        "ref": "nixos-unstable-small",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/nixos/nixpkgs"
+        "owner": "nixos",
+        "ref": "nixos-25.05",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "nixpkgs_5": {
@@ -617,16 +600,16 @@
       "inputs": {
         "flake-parts": "flake-parts_2",
         "nixpkgs": [
-          "nixpkgs-stable"
+          "nixpkgs"
         ],
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1749524584,
-        "narHash": "sha256-HmCC4yGxVpkXcgDWOzQBEufPeV7AF8ZG7F3WxmpxFag=",
+        "lastModified": 1749560521,
+        "narHash": "sha256-Yizir0yHi3i+sQQu2PhExEiBPq7NSi0bXP9ypGYJLdA=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "7927302feae7ea72dfcba91bde916a55626ab2ab",
+        "rev": "8facaa8de19c6af15769679c5e553a6cca62f459",
         "type": "github"
       },
       "original": {
@@ -669,7 +652,6 @@
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",
-        "nixpkgs-stable": "nixpkgs-stable",
         "nur": "nur",
         "pre-commit-hooks": "pre-commit-hooks",
         "spicetify-nix": "spicetify-nix",
