@@ -66,11 +66,17 @@
 
       # Modular devshells import
       devShellModules = {
-        python = ./devshells/python.nix;
-        rust = ./devshells/rust.nix;
-        node = ./devshells/node.nix;
-        go = ./devshells/go.nix;
-        java = ./devshells/java.nix;
+        python = ./devShells/python.nix;
+        rust = ./devShells/rust.nix;
+        node = ./devShells/node.nix;
+        go = ./devShells/go.nix;
+        java = ./devShells/java.nix;
+      };
+
+      # Modular devenv shells import
+      devenvShellModules = {
+        rust = ./devenvShells/rust.nix;
+        flutter = ./devenvShells/flutter.nix;
       };
     in
 
@@ -92,6 +98,7 @@
         };
 
         devShells = builtins.mapAttrs (name: file: import file { inherit pkgs; }) devShellModules;
+        devenvShells = builtins.mapAttrs (name: file: import file { pkgs = pkgs; inputs = inputs; }) devenvShellModules;
 
         homeConfigurations."${declarative.username}@${declarative.hostname}" =
           home-manager.lib.homeManagerConfiguration
