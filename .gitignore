@@ -1,4 +1,10 @@
 result
-.direnv
 local.properties
 .android
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
