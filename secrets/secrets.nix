@@ -4,7 +4,7 @@ let
   ];
 
   systemPublicKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFRE0JplI8hxY68EhpXnfU6otlNt4lAV38BRo9t5heC+ root@NixOS"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIdsj+1/I+lofo/qHqRIt3gOyEUtnQBRqONBeDq6SJOY root@devbox"
   ];
 in
 {
