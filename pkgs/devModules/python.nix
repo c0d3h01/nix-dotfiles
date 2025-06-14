@@ -17,7 +17,7 @@
   config = lib.mkIf config.myModules.python.enable {
 
     environment.systemPackages = with pkgs; [
-      (pkgs.python312.withPackages (
+      (pkgs.python313.withPackages (
         ps: with ps; [
           pip
           virtualenv
