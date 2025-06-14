@@ -9,9 +9,9 @@
 
 let
   theme = {
-    flavor = "macchiato"; # Options: "mocha", "macchiato", "frappe", "latte"
+    flavor = "mocha"; # Options: "mocha", "macchiato", "frappe", "latte"
     accent = "mauve"; # Options: "mauve" "blue", "flamingo", "green", ...
-    size = "standard"; # "standard", "compact"
+    size = "compact"; # "standard", "compact"
   };
 
   catppuccinGtkTheme = inputs.catppuccin.packages.${pkgs.system}.gtk.override {
@@ -27,14 +27,12 @@ in
     inputs.catppuccin.nixosModules.catppuccin
   ];
 
-  # System-wide Catppuccin theme
-  catppuccin = {
+  catppuccin.tty = {
     enable = true;
     flavor = theme.flavor;
-    accent = theme.accent;
   };
 
-  catppuccin.tty = {
+  catppuccin.grub = {
     enable = true;
     flavor = theme.flavor;
   };
@@ -63,9 +61,6 @@ in
           package = pkgs.bibata-cursors;
           size = 24;
         };
-        gtk2.extraConfig = ''
-          gtk-application-prefer-dark-theme = 1
-        '';
         gtk3.extraConfig = {
           gtk-application-prefer-dark-theme = 1;
         };
@@ -74,7 +69,29 @@ in
         };
       };
 
-      # Catppuccin for terminal emulator
-      catppuccin.kitty.enable = true;
+      # Catppuccin configs
+      catppuccin = {
+        brave = {
+          enable = true;
+          flavor = theme.flavor;
+        };
+        obs = {
+          enable = true;
+          flavor = theme.flavor;
+        };
+        starship = {
+          enable = true;
+          flavor = theme.flavor;
+        };
+        micro = {
+          enable = true;
+          flavor = theme.flavor;
+          transparent = true;
+        };
+        zellij = {
+          enable = true;
+          flavor = theme.flavor;
+        };
+      };
     };
 }
