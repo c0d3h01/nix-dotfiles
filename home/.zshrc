@@ -298,6 +298,19 @@ fi
 
 fignore=(.DS_Store $fignore)
 
+
+# Pure Prompt
+fpath+=($HOME/.zsh-pure)
+# fpath+=("$(brew --prefix)/share/zsh/site-functions") # For Homebrew
+zstyle :prompt:pure:path color yellow
+zstyle :prompt:pure:git:branch color yellow
+zstyle :prompt:pure:user color cyan
+zstyle :prompt:pure:host color yellow
+zstyle :prompt:pure:git:branch:cached color red
+zstyle :prompt:pure:git:stash show yes
+autoload -U promptinit; promptinit
+prompt pure
+
 # zsh-autopair
 source "$HOME/.zsh-autopair/autopair.zsh"
 
