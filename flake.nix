@@ -2,17 +2,15 @@
   description = "NixOS Flake: WorkSpace";
 
   inputs = {
-    # Use stable as the default nixpkgs
+    # System module inputs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     systems.url = "github:nix-systems/default";
     flake-utils.inputs.systems.follows = "systems";
-
-    # Home Manager
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Host-specific modules
+    # Extras / Modules
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
@@ -20,11 +18,6 @@
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
-    vscode-server.inputs.nixpkgs.follows = "nixpkgs";
-    nixos-generators.url = "github:nix-community/nixos-generators";
-    nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     catppuccin.url = "github:c0d3h01/catppuccin-nix/main";
   };
 
@@ -53,18 +46,13 @@
       overlays = import ./overlays;
 
       nixpkgsConfig = {
-        config = {
-          allowUnfree = true;
-          allowBroken = false;
-          allowUnsupportedSystem = false;
-        };
+        config.allowUnfree = true;
         overlays = overlays;
       };
 
       machineModule = name: ./machines/${name};
       homeModule = ./homeManager/home.nix;
 
-      # Modular devshells import
       devShellModules = {
         python = ./devShells/python.nix;
         rust = ./devShells/rust.nix;
@@ -73,11 +61,25 @@
         java = ./devShells/java.nix;
       };
 
-      # Modular devenv shells import
       devenvShellModules = {
         rust = ./devenvShells/rust.nix;
         flutter = ./devenvShells/flutter.nix;
       };
+
+      homeConfigurations = {
+        "${declarative.username}@${declarative.hostname}" = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            overlays = overlays;
+            config.allowUnfree = true;
+          };
+          extraSpecialArgs = {
+            inherit inputs self declarative;
+          };
+          modules = [ homeModule ];
+        };
+      };
+
     in
 
     flake-utils.lib.eachSystem allSystems (
@@ -97,27 +99,19 @@
           };
         };
 
-        devShells = builtins.mapAttrs (name: file: import file { inherit pkgs; }) devShellModules;
+        devShells = builtins.mapAttrs (_: file: import file { inherit pkgs; }) devShellModules;
         devenvShells = builtins.mapAttrs (
-          name: file:
+          _: file:
           import file {
             pkgs = pkgs;
             inputs = inputs;
           }
         ) devenvShellModules;
-
-        homeConfigurations."${declarative.username}@${declarative.hostname}" =
-          home-manager.lib.homeManagerConfiguration
-            {
-              pkgs = pkgs;
-              extraSpecialArgs = {
-                inherit inputs self declarative;
-              };
-              modules = [ homeModule ];
-            };
       }
     )
     // {
+      inherit homeConfigurations;
+
       nixosConfigurations.${declarative.hostname} = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
@@ -126,23 +120,15 @@
         modules = [
           (machineModule declarative.username)
           inputs.disko.nixosModules.disko
-          (
-            { config, ... }:
-            {
-              nixpkgs = nixpkgsConfig;
-            }
-          )
           home-manager.nixosModules.home-manager
           {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = {
-                inherit inputs self declarative;
-              };
-              users.${declarative.username} = {
-                imports = [ homeModule ];
-              };
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = {
+              inherit inputs self declarative;
+            };
+            home-manager.users.${declarative.username} = {
+              imports = [ homeModule ];
             };
           }
         ];
