@@ -20,8 +20,8 @@
     ];
 
     secrets = {
-      ssh.file = ./ssh.age;
-      element.file = ./element.age;
+      ssh-key.file = ./ssh-key.age;
+      element-key.file = ./element-key.age;
     };
   };
 }

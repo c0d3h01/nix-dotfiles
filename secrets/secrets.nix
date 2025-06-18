@@ -1,13 +1,13 @@
 let
   userPublicKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG5qPWYOZSxl3Fnsiu3fBCTxQuwGrigSoqHAoMpLGmAC harshalsawant.dev@gmail.com"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO8va6PxchHjK67XVlCqf8R2Hy7OeSji1Ve6PscBhhY0 harshalsawant.dev@gmail.com"
   ];
 
   systemPublicKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG5aLVlwNTE6Qw7yBLKJc8YRWcwFbRZaZ9bwzqwboOcc root@devbox"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHzpjkemvDlj/Z4nj3Uzk1Mc6I+Jty8cDEqamzqfNcYK root@devbox"
   ];
 in
 {
-  "ssh.age".publicKeys = userPublicKeys ++ systemPublicKeys;
-  "element.age".publicKeys = userPublicKeys ++ systemPublicKeys;
+  "ssh-key.age".publicKeys = userPublicKeys ++ systemPublicKeys;
+  "element-key.age".publicKeys = userPublicKeys ++ systemPublicKeys;
 }
