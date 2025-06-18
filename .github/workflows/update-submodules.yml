@@ -27,9 +27,14 @@ jobs:
           git commit -m "Update submodules" || echo "No changes to commit"
 
       - name: Create Pull Request
+        id: pr
         uses: peter-evans/create-pull-request@v7
         with:
           title: Update SubModules
           token: ${{ secrets.DOTFILES }}
-          labels: |
-            auto-merge
+
+      - name: Merge PR
+        if: steps.pr.outputs.pull-request-number
+        run: gh pr merge ${{ steps.pr.outputs.pull-request-number }} --merge --auto
+        env:
+          GH_TOKEN: ${{ secrets.DOTFILES }}
