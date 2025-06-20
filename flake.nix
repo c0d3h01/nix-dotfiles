@@ -20,7 +20,6 @@
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
-    catppuccin.url = "github:c0d3h01/catppuccin-nix/main";
   };
 
   outputs =
