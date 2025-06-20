@@ -2,14 +2,13 @@
   imports = [
     ../pkgs
     ./gnome
-    ./server
+    # ./server
     ./audio.nix
-    ./catppuccin.nix
     ./fonts.nix
-    ./libvirt.nix
+    # ./libvirt.nix
     ./networking.nix
     ./nix.nix
-    ./printing.nix
+    # ./printing.nix
     ./security.nix
     ./tweaks.nix
   ];
