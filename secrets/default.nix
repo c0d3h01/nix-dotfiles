@@ -1,6 +1,7 @@
 {
   inputs,
   pkgs,
+  declarative,
   ...
 }:
 
@@ -16,7 +17,7 @@
 
   age = {
     identityPaths = [
-      "/etc/ssh/ssh_host_ed25519_key"
+      "/home/${declarative.username}/.ssh/id_ed25519"
     ];
 
     secrets = {

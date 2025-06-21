@@ -61,7 +61,7 @@
     home = "/home/${declarative.username}";
     hashedPasswordFile = config.age.secrets.ssh-key.path;
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO8va6PxchHjK67XVlCqf8R2Hy7OeSji1Ve6PscBhhY0 harshalsawant.dev@gmail.com"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICSjL8HGjiSAnLHupMZin095bql7A8+UDfc7t9XCZs8l harshalsawant.dev@gmail.com"
     ];
     extraGroups = [
       "networkmanager"
