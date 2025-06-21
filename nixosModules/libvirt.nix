@@ -1,5 +1,8 @@
 {
-  users.users.c0d3h01.extraGroups = [ "libvirtd" "kvm" ];
+  users.users.c0d3h01.extraGroups = [
+    "libvirtd"
+    "kvm"
+  ];
   programs.virt-manager.enable = true;
 
   virtualisation = {
