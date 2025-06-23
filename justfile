@@ -16,6 +16,14 @@ check:
 deve:
     devenv shell -v
 
+swapon:
+    btrfs filesystem mkswapfile --size 4G swapfile
+    sudo swapon swapfile
+
+swapoff:
+    sudo swapoff swapfile
+    rm swapfile
+
 help:
     @echo "Available commands:"
     @echo "  switch - Rebuild and switch to the new configuration"
