@@ -2,7 +2,7 @@
 
 * _Declarative NixOS configuration with Flakes & Home Manager_
 
-### Fresh Installation
+## Fresh Installation
 
 ```bash
 # Clone the repository
@@ -26,6 +26,7 @@ sudo swapon /mnt/swap/swapfile
 sudo nixos-install --flake .#devbox
 ```
 
+<<<<<<< Updated upstream
 #### One-liner for fresh installation
 
 ```bash
@@ -36,6 +37,11 @@ sudo nix run \
 ```
 
 ### Existing System
+||||||| Stash base
+### Existing System
+=======
+## Existing System
+>>>>>>> Stashed changes
 
 ```bash
 # Clone the repository
