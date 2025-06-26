@@ -16,10 +16,15 @@
       allowUnfree = true;
       allowInsecure = true;
       android_sdk.accept_license = true;
+      permittedInsecurePackages = true;
     };
   };
 
   nix = {
+    enable = true;
+    checkConfig = true;
+    channel.enable = false;
+
     gc = {
       automatic = true;
       dates = "daily";
@@ -36,6 +41,7 @@
       keep-derivations = true;
       fallback = true;
       cores = 0; # Use all available cores
+      sandbox = true;
 
       trusted-users = [
         "root"
