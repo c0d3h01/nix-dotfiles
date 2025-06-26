@@ -18,7 +18,7 @@
   powerManagement = {
     enable = true;
     powertop.enable = true;
-    cpuFreqGovernor = "schedutil";
+    cpuFreqGovernor = lib.mkDefault "schedutil";
   };
 
   # I/O scheduler & USB autosuspend
