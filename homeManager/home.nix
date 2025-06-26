@@ -9,9 +9,7 @@
 
 {
   imports = [
-    # inputs.agenix.homeManagerModules.default
     ./spicetify.nix
-    # ../secrets
   ];
 
   # services.syncthing.enable = true;
@@ -24,9 +22,9 @@
 
     packages = with pkgs; [
 
-      # Secrets management tools
-      inputs.agenix.packages.x86_64-linux.default
+      # Secrets management tool
       age
+      sops
 
       # Let install Home manager
       home-manager
@@ -53,19 +51,16 @@
       less
       binutils
       findutils
-      hub
       xdg-utils
       pciutils
       inxi
       procs
       glances
-      cheat
+      cheat # CheatSheet
       tree-sitter
       devenv
       just
-      just-formatter
       pre-commit
-      starship
       fzf
 
       # Language Servers
