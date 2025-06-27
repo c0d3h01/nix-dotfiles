@@ -21,6 +21,12 @@ swapoff:
     sudo swapoff swapfile
     rm swapfile
 
+sopse:
+    sops -e -i
+
+sopsd:
+    sops -d
+
 help:
     @echo "Available commands:"
     @echo "  switch - Rebuild and switch to the new configuration"

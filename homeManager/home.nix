@@ -9,13 +9,13 @@
 
 {
   imports = [
+    # Sops secret management for homeland
+    inputs.sops-nix.homeManagerModules.sops
+
     ./spicetify.nix
-    ../secrets
   ];
 
   # services.syncthing.enable = true;
-
-  age.secrets.ssh-key.file = ../secrets/ssh-key.age;
 
   home = {
     username = userConfig.username;
@@ -26,7 +26,6 @@
     packages = with pkgs; [
 
       # Secrets management tool
-      inputs.agenix.packages.x86_64-linux.default
       age
       sops
 

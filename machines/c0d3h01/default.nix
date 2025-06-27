@@ -9,10 +9,9 @@
 
 {
   imports = [
-    # inputs.agenix.nixosModules.default
-
     ../installer
     ../../nixosModules
+    ../../secrets
   ];
 
   time.timeZone = "Asia/Kolkata";
@@ -48,15 +47,13 @@
     });
   '';
 
-  # age.secrets.ssh-key.file = ../../secrets/ssh-key.age;
-
   users.users.${userConfig.username} = {
     description = userConfig.fullName;
     isNormalUser = true;
     shell = pkgs.zsh;
     ignoreShellProgramCheck = true;
     home = "/home/${userConfig.username}";
-    # hashedPasswordFile = config.age.secrets.ssh-key.path;
+    hashedPasswordFile = config.sops.secrets.ssh-host.path;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICSjL8HGjiSAnLHupMZin095bql7A8+UDfc7t9XCZs8l harshalsawant.dev@gmail.com"
     ];

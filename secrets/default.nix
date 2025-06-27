@@ -1,22 +1,34 @@
 {
-  config,
   inputs,
+  config,
   userConfig,
   ...
 }:
 
 {
   imports = [
-    inputs.agenix.homeManagerModules.default
+    inputs.sops-nix.nixosModules.sops
   ];
 
-  age = {
-    identityPaths = [
-      "${config.home.homeDirectory}/.ssh/id_ed25519"
-    ];
+  sops = {
+    age = {
+      keyFile = "/etc/sops/sops-secrets-key.txt";
+      sshKeyPaths = [
+        "/etc/ssh/ssh_host_ed25519_key"
+      ];
+    };
 
     secrets = {
-      ssh-key.file = ./ssh-key.age;
+      "ssh-host" = {
+        sopsFile = ./c0d3h01/ssh-host.enc;
+        path = "/run/secrets/ssh";
+        format = "binary";
+      };
+      "element" = {
+        sopsFile = ./c0d3h01/element.enc;
+        path = "/run/secrets/element";
+        format = "binary";
+      };
     };
   };
 }

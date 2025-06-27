@@ -1,0 +1,8 @@
+keys:
+  - &c0d3h01 age1ww0gsmswckswnkq9pcpl028sq7jkpsdss2dglv07tdqstd3utfpsxp5dd4
+
+creation_rules:
+  - path_regex: \.(enc|json)$
+    key_groups:
+      - age:
+          - *c0d3h01
