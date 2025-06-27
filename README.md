@@ -1,41 +1,33 @@
-# Personal `localhost` dotfiles
-
-* _Declarative NixOS configuration with Flakes & Home Manager_
+# localhost dotfiles
 
 ## Fresh Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/c0d3h01/dotfiles.git
-cd dotfiles
+
+$ git clone https://github.com/c0d3h01/dotfiles.git
+
+$ cd dotfiles
 
 # Partition and format disk with Disko
-sudo nix --experimental-features "nix-command flakes" run \
-  github:nix-community/disko/latest -- \
-  --mode destroy,format,mount ./machines/installer/disko-config.nix
 
-# Only for low ram devices!
-sudo mkdir /mnt/swap
-sudo chattr +C /mnt/swap
-sudo dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count=8048 status=progress
-sudo chmod 600 /mnt/swap/swapfile
-sudo mkswap /mnt/swap/swapfile
-sudo swapon /mnt/swap/swapfile
-
-# Install NixOS
-sudo nixos-install --flake .#devbox
+$ just bootstrap
 ```
 
 ## Existing System
 
 ```bash
 # Clone the repository
-git clone https://github.com/c0d3h01/dotfiles.git
-cd dotfiles
 
-# Apply system configuration
-sudo nixos-rebuild switch --flake .#devbox
+$ git clone https://github.com/c0d3h01/dotfiles.git
 
-# Apply user configuration
-home-manager switch --flake .#c0d3h01@devbox
+$ cd dotfiles
+
+# Apply NixOS system configuration
+
+$ just switch
+
+# Apply Home manager user configuration
+
+$ just home
 ```
