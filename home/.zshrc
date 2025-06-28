@@ -1,6 +1,7 @@
 # Core Configuration
 export LC_ALL="en_IN.UTF-8"
 
+# The Go lang exports
 export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
 export PATH="$PATH:$GOBIN"
@@ -167,11 +168,22 @@ alias rdev="R -q --no-save"
 alias rlint="Rscript -e 'lintr::lint_dir()'"
 alias rfmt="Rscript -e 'styler::style_dir()'"
 
-# Environment sources (Home Manager, Nix)
-[ -f ~/.nix-profile/etc/profile.d/hm-session-vars.sh ] && source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-[ -e /etc/profile.d/nix.sh ] && . /etc/profile.d/nix.sh
-[ -e ~/.nix-profile/etc/profile.d/nix.sh ] && . ~/.nix-profile/etc/profile.d/nix.sh
-[ -f ~/.nix-profile/zsh/ghostty-integration ] && . ~/.nix-profile/zsh/ghostty-integration
+# Home manager evironment
+if [ -f "/etc/profiles/per-user" ]; then
+  . /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh
+elif [ -f "~/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+  source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+fi
+
+# Nix environment
+if [ -f "/etc/profile.d/nix.sh" ]; then
+  . /etc/profile.d/nix.sh
+elif [ -f "~/.nix-profile/etc/profile.d/nix.sh" ]; then
+  . ~/.nix-profile/etc/profile.d/nix.sh
+fi
+
+# Ghostty terminal integration
+[ -f "~/.nix-profile/zsh/ghostty-integration" ] && . ~/.nix-profile/zsh/ghostty-integration
 
 # Darwin/Nix/Remote
 [[ $OSTYPE == darwin* ]] && export NIX_PATH="$NIX_PATH:darwin-config=$HOME/.config/nixpkgs/darwin-configuration.nix"
