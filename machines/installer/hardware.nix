@@ -40,7 +40,7 @@
     extraModulePackages = [ ];
     supportedFilesystems = [ "ntfs" ];
 
-    kernelPackages = pkgs.linuxPackages_xanmod_stable;
+    kernelPackages = pkgs.linuxPackages_xanmod_latest;
     kernelParams = [
       "quiet"
       "nowatchdog"
