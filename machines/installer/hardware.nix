@@ -32,7 +32,7 @@
     };
     systemd-boot.enable = lib.mkDefault false;
     efi.canTouchEfiVariables = false;
-    timeout = 5;
+    timeout = lib.mkForce 5;
   };
 
   boot = {

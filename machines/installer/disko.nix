@@ -25,8 +25,10 @@
                 type = "btrfs";
                 extraArgs = [
                   "-f"
-                  "--csum" "xxhash64"
-                  "--features" "extref,skinny-metadata"
+                  "--csum"
+                  "xxhash64"
+                  "--features"
+                  "extref,skinny-metadata"
                 ];
 
                 subvolumes = {
