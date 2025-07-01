@@ -1,0 +1,42 @@
+name: Build and Push NixOS ISO
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-push-iso:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Build NixOS ISO
+        run: |
+          nix build .#packages.x86_64-linux.iso --print-build-logs
+
+      - name: Prepare ISO for commit
+        run: |
+          mkdir -p iso
+          cp result/iso/*.iso iso/
+          echo "Built at $(date -u)" > iso/build-info.txt
+
+      - name: Push ISO to 'result' branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: result
+          publish_dir: iso
+          force_orphan: true
+          commit_message: "Update ISO: ${{ github.sha }}"
