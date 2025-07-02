@@ -5,7 +5,13 @@
   userConfig,
   ...
 }:
+let
+  c0d3h01 = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICSjL8HGjiSAnLHupMZin095bql7A8+UDfc7t9XCZs8l harshalsawant.dev@gmail.com"
+  ];
 
+  hashedPass = "$6$aXq5Okrj6w0/MKTc$Bx9M4vijoRTa7wd8W0.xOr.kItJo4o9RYcvWto/o7VybA9DIG2GcFYPw0W6Y1wZZ0C/RIuaJOkrCCa.4slxGG.";
+in
 {
   imports = [
     # inputs.sops-nix.nixosModules.sops
@@ -69,19 +75,17 @@
     root = {
       # Allow the user to log in as root without a password.
       hashedPassword = "";
+      openssh.authorizedKeys.keys = c0d3h01;
     };
 
     ${userConfig.username} = {
       description = userConfig.fullName;
       isNormalUser = true;
-      shell = pkgs.zsh;
-      ignoreShellProgramCheck = true;
+      shell = "/run/current-system/sw/bin/zsh";
       home = "/home/${userConfig.username}";
       # hashedPasswordFile = config.sops.secrets.passwd.path;
-      hashedPassword = "$6$aXq5Okrj6w0/MKTc$Bx9M4vijoRTa7wd8W0.xOr.kItJo4o9RYcvWto/o7VybA9DIG2GcFYPw0W6Y1wZZ0C/RIuaJOkrCCa.4slxGG.";
-      openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICSjL8HGjiSAnLHupMZin095bql7A8+UDfc7t9XCZs8l harshalsawant.dev@gmail.com"
-      ];
+      hashedPassword = hashedPass;
+      openssh.authorizedKeys.keys = c0d3h01;
       extraGroups = [
         "networkmanager"
         "wheel"
