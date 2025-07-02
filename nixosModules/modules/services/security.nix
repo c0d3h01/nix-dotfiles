@@ -1,10 +1,5 @@
 {
-  # Security settings (Hardening)
-  security = {
-    protectKernelImage = true;
-    sudo.execWheelOnly = true;
-    apparmor.enable = true;
-  };
+  security.sudo.execWheelOnly = lib.mkForce false;
 
   networking.firewall = {
     enable = true;
