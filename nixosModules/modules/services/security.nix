@@ -1,3 +1,5 @@
+{ lib, ... }:
+
 {
   security.sudo.execWheelOnly = lib.mkForce false;
 
