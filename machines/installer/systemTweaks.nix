@@ -7,7 +7,6 @@
 {
   systemd.oomd.enable = true;
   services.acpid.enable = true;
-  services.power-profiles-daemon.enable = true;
 
   services.ananicy = {
     enable = true;
