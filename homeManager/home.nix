@@ -105,6 +105,7 @@ in
       just
       pre-commit
       fzf
+      claude-code
 
       # Language Servers
       lua-language-server
