@@ -5,8 +5,14 @@
 }:
 
 {
-  systemd.oomd.enable = true;
   services.acpid.enable = true;
+
+  services.earlyoom = {
+    enable = true;
+    freeMemThreshold = 3;  # Kill when <3% free (about 480MB for 16GB)
+    freeSwapThreshold = 5;  # Kill when <5% swap free
+    enableNotifications = true;
+  };
 
   services.ananicy = {
     enable = true;
