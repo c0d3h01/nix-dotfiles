@@ -18,6 +18,7 @@
 
   environment.systemPackages = with pkgs; [
     dive
+    lazydocker
     docker-compose
     podman-desktop
     kind
