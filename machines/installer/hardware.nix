@@ -18,7 +18,7 @@
   zramSwap = {
     enable = true;
     priority = 100;
-    algorithm = "zstd";
+    algorithm = "lzo-rle";
     memoryPercent = 200;
   };
 
@@ -40,7 +40,7 @@
     extraModulePackages = [ ];
     supportedFilesystems = [ "ntfs" ];
 
-    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       "quiet"
       "nowatchdog"
