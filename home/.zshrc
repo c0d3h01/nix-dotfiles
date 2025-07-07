@@ -1,11 +1,12 @@
 # Export Configuration
 export LANG="en_IN.UTF-8"
-export LC_ALL="en_IN.UTF-8"
+export LC_ALL="$LANG"
 export EDITOR="nvim"
-export VISUAL="nvim"
+export VISUAL="$EDITOR"
+export SUDO_EDITOR="$EDITOR"
 export TERMINAL="kitty"
 export BROWSER="firefox"
-export CHROME_EXECUTABLE="$(command -v "firefox")"
+export CHROME_EXECUTABLE="$(command -v "$BROWSER")"
 export JAVA_HOME="$(dirname "$(dirname "$(readlink -f "$(command -v java)")")")"
 
 # SDK Configurations
@@ -152,8 +153,8 @@ alias mv='mv -iv'
 alias ln='ln -iv'
 
 # Shortty Hand commands
-alias v='nvim'
-alias vi='nvim'
+alias v="$EDITOR"
+alias vi="$EDITOR"
 alias cl='clear'
 alias x='exit'
 alias nc='nix-collect-garbage'
@@ -298,6 +299,16 @@ source "$HOME/.zsh-autopair/autopair.zsh"
 
 # fast-syntax-highlighting
 source "$HOME/.zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+
+# Launch Zellij automatically
+# eval "$(zellij setup --generate-auto-start zsh)"
+if command -v zellij >/dev/null; then
+  if [[ -z "$ZELLIJ" && -z "$ZELLIJ_SESSION_NAME" && -z "$TMUX" ]]; then
+    if [[ -z "$SSH_CONNECTION" && $- == *i* ]]; then
+      exec zellij
+    fi
+  fi
+fi
 
 # Prevent broken terminals by resetting to sane defaults after a command
 ttyctl -f
