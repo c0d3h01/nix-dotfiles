@@ -1,9 +1,15 @@
 {
   lib,
+  pkgs,
   ...
 }:
 
 {
+  environment.systemPackages = with pkgs; [
+    btrfs-assistant
+    virtualgl
+  ];
+
   # Enable Btrfs auto-scrub weekly (for data integrity)
   # "systemd-run -p "IOReadBandwidthMax=/dev/nvme0n1p2 10M" btrfs scrub start -B /"
   services.btrfs.autoScrub = {

@@ -55,7 +55,47 @@
                       "defaults"
                       "noatime"
                       "compress=zstd"
-                      "space_cache=v2"
+                      "commit=120"
+                    ];
+                  };
+
+                  "/@srv" = {
+                    mountpoint = "/srv";
+                    mountOptions = [
+                      "defaults"
+                      "noatime"
+                      "compress=zstd"
+                      "commit=120"
+                    ];
+                  };
+
+                  "/@cache" = {
+                    mountpoint = "/var/cache";
+                    mountOptions = [
+                      "defaults"
+                      "noatime"
+                      "compress=zstd"
+                      "commit=120"
+                    ];
+                  };
+
+                  "/@tmp" = {
+                    mountpoint = "/var/tmp";
+                    mountOptions = [
+                      "defaults"
+                      "noatime"
+                      "compress=zstd"
+                      "commit=120"
+                    ];
+                  };
+
+                  "/@log" = {
+                    mountpoint = "/var/log";
+                    mountOptions = [
+                      "defaults"
+                      "noatime"
+                      "compress=zstd"
+                      "commit=120"
                     ];
                   };
                 };
@@ -63,6 +103,16 @@
             };
           };
         };
+      };
+    };
+    nodev = {
+      "/tmp" = {
+        fsType = "tmpfs";
+        mountOptions = [
+          "defaults"
+          "noatime"
+          "mode=1777"
+        ];
       };
     };
   };
