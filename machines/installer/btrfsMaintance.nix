@@ -17,8 +17,6 @@
     interval = "weekly";
     fileSystems = [
       "/"
-      "/home"
-      "/nix"
     ];
   };
 
@@ -36,16 +34,6 @@
   };
 
   systemd.services."btrfs-balance" = {
-    script = ''
-      # Only run if system is on AC (laptop check)
-      if command -v upower >/dev/null && upower -i $(upower -e | grep BAT) | grep -q 'state:\s*discharging'; then
-        echo "On battery, skipping btrfs balance"
-        exit 0
-      fi
-
-      # Start a limited balance (data and metadata chunks >75% usage)
-      /run/current-system/sw/bin/btrfs balance start -dusage=75 -musage=75 -susage=75 -v --background --noflush /
-    '';
     serviceConfig = {
       Type = "oneshot";
       Nice = 19;
@@ -58,6 +46,6 @@
   # Scheduled fstrim
   services.fstrim = {
     enable = true;
-    interval = "daily";
+    interval = "weekly";
   };
 }
