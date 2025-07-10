@@ -39,19 +39,5 @@
     obs-studio
     libreoffice-qt6-fresh
     obsidian
-
-    # <-- Tools -->
-    gdb
-    gcc
-    gnumake
-    cmakeWithGui
-    ninja
-    clang
-    pkg-config
-    python313
-    R
-    go
-    semeru-bin
-    nodejs
   ];
 }
