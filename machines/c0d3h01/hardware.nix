@@ -25,21 +25,27 @@
     pkgs.rocmPackages.clr.icd
   ];
 
+  # FIX: System clock, booting Windows and going back to the NixOS
+  time.hardwareClockInLocalTime = true;
+
   boot.loader = {
-    efi.canTouchEfiVariables = true;
     timeout = lib.mkForce 5;
 
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot";
+    };
+
     grub = {
-      enable = false;
+      enable = true;
       efiSupport = true;
-      efiInstallAsRemovable = true;
-      device = "nodev"; # For UEFI
+      devices = [ "nodev" ]; # For UEFI
       useOSProber = true;
       memtest86.enable = true;
     };
 
     systemd-boot = {
-      enable = true;
+      enable = false;
       configurationLimit = 15; # Limit the number of entries in the boot menu
       memtest86.enable = true; # Enable memtest86+ in the boot menu
       consoleMode = "auto"; # Automatically detect the console mode
