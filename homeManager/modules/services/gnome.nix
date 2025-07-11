@@ -1,24 +1,44 @@
-{ userConfig, pkgs, ... }:
-
 {
-  dconf.settings = {
-    # GNOME Shell extensions
-    "org/gnome/shell" = {
-      disable-user-extensions = false;
-      enabled-extensions = [
-        "gsconnect@andyholmes.github.io"
-        "dash2dock-lite@icedman.github.com"
-        # "forge@jmmaranan.com"
-        # "dash-to-dock@micxgx.gmail.com"
-      ];
-    };
+  userConfig,
+  pkgs,
+  ...
+}:
+{
 
+  programs.home-manager.enable = true;
+
+  programs.gnome-shell = {
+    enable = true;
+    extensions = [
+      {
+        id = "gsconnect@andyholmes.github.io";
+        package = pkgs.gnomeExtensions.gsconnect;
+      }
+
+      {
+        id = "dash-to-dock@micxgx.gmail.com";
+        package = pkgs.gnomeExtensions.dash-to-dock;
+      }
+
+      {
+        id = "forge@jmmaranan.com";
+        package = pkgs.gnomeExtensions.forge;
+      }
+    ];
+  };
+
+  home.packages = with pkgs; [
+    gnome-photos
+    gnome-tweaks
+  ];
+
+  dconf.settings = {
     # Power settings
     "org/gnome/settings-daemon/plugins/power" = {
       power-button-action = "interactive";
     };
 
-    # # Night Light
+    # Night Light
     # "org/gnome/settings-daemon/plugins/color" = {
     #   night-light-enabled = true;
     #   night-light-temperature = 4000;
@@ -26,19 +46,31 @@
     #   night-light-schedule-to = "8.0";
     # };
 
-    # # Dask to Dock
-    # "org/gnome/shell/extensions/dash-to-dock" = {
-    #   dock-position = "BOTTOM";
-    #   intellihide-mode = "ALL_WINDOWS";
+    # "org/gnome/shell/extensions/dash2dock-lite" = {
+    #   calendar-icon = true;
+    #   clock-icon = true;
+    #   mounted-icon = true;
+    #   open-app-animation = true;
+    #   edge-distance = 0.48837209302325579;
+    #   running-indicator-style = 1;
     # };
 
-    "org/gnome/shell/extensions/dash2dock-lite" = {
-      calendar-icon = true;
-      clock-icon = true;
-      mounted-icon = true;
-      open-app-animation = true;
-      edge-distance = 0.48837209302325579;
-      running-indicator-style = 1;
+    "org/gnome/shell/extensions/dash-to-dock" = {
+      background-opacity = 0.8;
+      custom-theme-shrink = true;
+      dash-max-icon-size = 48;
+      dock-fixed = true;
+      dock-position = "LEFT";
+      extend-height = true;
+      height-fraction = 0.61;
+      hot-keys = false;
+      preferred-monitor = -2;
+      preferred-monitor-by-connector = "eDP-1";
+      scroll-to-focused-application = true;
+      show-apps-at-top = true;
+      show-mounts = true;
+      show-show-apps-button = true;
+      show-trash = false;
     };
 
     # interface
@@ -78,12 +110,5 @@
     #   picture-uri-dark = "file:///home/${userConfig.username}/dotfiles/assets/wallpapers/Space-Nebula.png";
     #   picture-options = "zoom";
     # };
-  };
-
-  # Configure XDG portals for the user
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-gnome ];
-    config.common.default = "gnome";
   };
 }
