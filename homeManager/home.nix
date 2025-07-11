@@ -57,11 +57,21 @@ in
 
   # services.syncthing.enable = true;
 
+  manual = {
+    html.enable = false;
+    json.enable = false;
+    manpages.enable = false;
+  };
+
   home = {
     username = userConfig.username;
     homeDirectory = "/home/${userConfig.username}";
     stateVersion = lib.trivial.release;
     enableNixpkgsReleaseCheck = false;
+
+    sessionVariables = {
+      MOZ_ENABLE_WAYLAND = "1"; # for Firefox/Chrome to integrate properly
+    };
 
     packages = with pkgs; [
 
