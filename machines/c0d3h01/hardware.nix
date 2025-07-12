@@ -25,9 +25,6 @@
     pkgs.rocmPackages.clr.icd
   ];
 
-  # FIX: System clock, booting Windows and going back to the NixOS
-  time.hardwareClockInLocalTime = true;
-
   boot.loader = {
     timeout = lib.mkForce 5;
 
@@ -53,7 +50,12 @@
   };
 
   boot = {
+    # Clean Tmp dir on boot
     tmp.cleanOnBoot = true;
+
+    # Nixos kernel configuration
+    kernelPackages = with pkgs; linuxPackages_latest;
+
     kernelModules = [
       "kvm-amd"
       "amdgpu"
@@ -68,7 +70,6 @@
       "nfs"
     ];
 
-    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       "nowatchdog"
       "mitigations=off"
