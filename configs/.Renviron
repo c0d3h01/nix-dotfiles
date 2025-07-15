@@ -1,0 +1,3 @@
+R_LIBS_USER=~/R/x86_64-library/%v
+EDITOR=nvim
+RSTUDIO_PANDOC=/usr/lib/rstudio/bin/pandoc

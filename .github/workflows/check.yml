@@ -1,0 +1,43 @@
+name: Validate Nix Flake
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      ref:
+        required: false
+        type: string
+  push:
+    paths:
+      - "**.nix"
+      - "**.lock"
+      - ".github/workflows/check.yml"
+      - ".github/actions/**/*"
+
+permissions: {}
+
+jobs:
+  check-flake:
+    name: Check (${{ matrix.system }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            system: x86_64-linux
+          - os: macos-latest
+            system: aarch64-darwin
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref && inputs.ref || github.ref_name }}
+          persist-credentials: false
+
+      - name: Install Lix
+        uses: ./.github/actions/install-lix
+
+      - name: Check Flake
+        run: nix flake check --option allow-import-from-derivation false

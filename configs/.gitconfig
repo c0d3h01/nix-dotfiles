@@ -1,0 +1,160 @@
+[core]
+  excludesfile = ~/.gitignore
+  attributesfile = ~/.gitattributes
+  pager = delta
+  editor = nvim
+
+[interactive]
+  singlekey = true
+  diffFilter = delta --color-only
+
+[format]
+  signoff = true
+
+[color]
+  branch = true
+  diff = true
+  status = true
+
+[push]
+  recurseSubmodules = on-demand
+
+[submodule]
+  fetchJobs = 0
+
+[delta]
+  navigate = true  # use n and N to move between diff sections
+	theme = TwoDark
+
+[am]
+  threeWay = true
+
+[user]
+  name = Harshal Sawant
+  email = harshalsawant.dev@gmail.com
+	signingkey = /home/c0d3h01/.ssh/id_ed25519.pub
+
+[github]
+  user = c0d3h01
+
+[init]
+  defaultBranch = main
+
+[gpg]
+  format = ssh
+
+[diff]
+  compactionHeuristic = true
+  renames = true
+  colorMoved = default
+  noprefix = true
+
+[merge]
+  tool = vimdiff
+  keepBackup = false
+  conflictstyle = zdiff3
+
+[mergetool "vimdiff"]
+  cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+[merge "mergiraf"]
+  name = mergiraf
+  driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
+
+[alias]
+  clone = clone --recursive
+  blame = -w -M
+  update = !git pull && git submodule update --init --recursive
+  comma = commit --amend
+  uncommit = reset --soft HEAD^
+  backport = cherry-pick -x
+  checkout-pr = !"pr() { git fetch origin pull/$1/head:pr-$1; git checkout pr-$1; }; pr"
+  pick-pr = !"am() { git fetch origin pull/$1/head:pr-$1; git cherry-pick HEAD..pr-$1; }; am"
+  reset-pr = reset --hard FETCH_HEAD
+  force-push = push --force-with-lease
+  publish = !git pull && git push
+  # recover failed commit messages: https://stackoverflow.com/questions/9133526/git-recover-failed-commits-message
+  recommit = !git commit -eF $(git rev-parse --git-dir)/COMMIT_EDITMSG
+
+[push]
+  default = simple
+  autoSetupRemote = true
+
+[rerere]
+  autoUpdate = true
+  enabled = true
+
+[branch]
+  autoSetupRebase = always
+  autoSetupMerge = always
+
+[pull]
+  rebase = true
+  autostash = true
+  twohead = ort
+
+[rebase]
+  stat = true
+  autoStash = true
+  autoSquash = true
+  updateRefs = true
+
+[help]
+  autocorrect = 10
+
+[mergetool]
+  prompt = false
+  path = nvim-open
+
+# [imap]
+#   folder = "Drafts"
+#   host = imap://imap.
+#   user =
+
+# [sendemail]
+#   from = harshalsawant.dev@gmail.com
+#   smtpserver =
+#   smtpuser =
+#   smtpencryption = tls
+#   chainreplyto = false
+#   smtpserverport = 587
+
+[http "github.com"]
+  SSLCypherList = "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH"
+
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+
+[magithub]
+  online = false
+
+[magithub "status"]
+  includeStatusHeader = false
+  includePullRequestsSection = false
+  includeIssuesSection = false
+
+[advice]
+  detachedHead = false
+  skippedCherryPicks = false
+
+[credential]
+  helper = store
+
+# sucks with lazygit
+# [commit]
+#  gpgsign = true
+
+[commit]
+  verbose = true
+
+[credential "https://github.com"]
+	helper = !gh auth git-credential
+
+[credential "https://gist.github.com"]
+	helper = !gh auth git-credential
+
+[http]
+  cookiefile = ~/.gitcookies

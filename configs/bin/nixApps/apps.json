@@ -1,0 +1,49 @@
+[
+  "python312Full",
+  "pyright",
+  "ruff",
+  "isort",
+  "black",
+
+  "clippy",
+  "rust-analyzer",
+
+  "semeru-bin",
+  "maven",
+  "gradle",
+
+  "nodejs",
+  "yarn",
+  "eslint",
+  "prettierd",
+  "pnpm",
+  "bun",
+
+  "clang-tools",
+  "clang-analyzer",
+  "gdb",
+  "gcc",
+  "gnumake",
+  "cmakeWithGui",
+  "ninja",
+  "pkg-config",
+
+  "R",
+  "rPackages.tidyverse",
+  "rPackages.devtools",
+  "rPackages.shiny",
+  "rPackages.knitr",
+  "rPackages.rmarkdown",
+
+  "go",
+  "gopls",
+  "gotools",
+  "golangci-lint",
+
+  "gtk4",
+  "glib",
+  "pango",
+  "gdk-pixbuf",
+  "gobject-introspection",
+  "libepoxy"
+]

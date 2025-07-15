@@ -1,0 +1,50 @@
+name: Build and Release ISO Images
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 1,15 * *" # Run on the 1st and 15th of every month at 3:00 AM
+  push:
+    paths:
+      - "github/workflows/build-isos.yml"
+      - ".github/actions/**/*"
+
+permissions:
+  attestations: write
+  contents: write
+
+jobs:
+  build-isos:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Maximize Space
+        uses: easimon/maximize-build-space@v10
+        with:
+          overprovision-lvm: true
+          remove-android: true
+          remove-dotnet: true
+          remove-codeql: true
+          remove-haskell: true
+          remove-docker-images: true
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install Lix
+        uses: ./.github/actions/install-lix
+
+      - name: Build Lilith Iso
+        continue-on-error: false
+        run: nix build -L .#nixosConfigurations.lilith.config.system.build.isoImage
+
+      - name: Upload Release Artifacts
+        if: github.event_name == 'schedule'
+        run: |
+          release=$(date +"%Y-%m-%d")
+          gh release create "$release"
+          gh release upload "$release" ./result/iso/*.iso
+        env:
+          GH_TOKEN: ${{ github.token }}

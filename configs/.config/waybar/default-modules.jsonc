@@ -1,0 +1,240 @@
+{
+  "user": {
+    "format": "{user}",
+    "interval": 60,
+    "height": 30,
+    "width": 30,
+    "icon": true
+  },
+  "custom/wlogout": {
+    "format": "",
+    "interval": "once",
+    "on-click": "wlogout -c 5 -r 5 -p layer-shell"
+  },
+  "wlr/workspaces": {
+    "all-outputs": false,
+    "active-only": "false",
+    "on-click": "activate",
+    "format": "{icon}",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "format-icons": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": "",
+      "7": "",
+      "8": "󰢹",
+      "urgent": "",
+      "default": ""
+    }
+  },
+  "keyboard-state": {
+    "numlock": true,
+    "capslock": true,
+    "format": "{icon} {name}",
+    "format-icons": {
+      "locked": "",
+      "unlocked": ""
+    }
+  },
+  "hyprland/window": {
+    "format": "{}",
+    "separate-outputs": true
+  },
+  "hyprland/submap": {
+    "format": "✌️ {}",
+    "max-length": 8,
+    "tooltip": false
+  },
+  "mpris": {
+    "format": "{player_icon} {status_icon} {dynamic}",
+    "format-paused": "{player_icon} {status_icon} <i>{dynamic}</i>",
+    "max-length": 45,
+    "player-icons": {
+      "chromium": "",
+      "default": "",
+      "firefox": "",
+      "mopidy": "",
+      "mpv": "",
+      "spotify": ""
+    },
+    "status-icons": {
+      "paused": "",
+      "playing": "",
+      "stopped": ""
+    }
+  },
+  "mpd": {
+    "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
+    "format-disconnected": "Disconnected ",
+    "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+    "unknown-tag": "N/A",
+    "interval": 2,
+    "consume-icons": {
+      "on": " "
+    },
+    "random-icons": {
+      "off": "<span color=\"#f53c3c\"></span> ",
+      "on": " "
+    },
+    "repeat-icons": {
+      "on": " "
+    },
+    "single-icons": {
+      "on": "1 "
+    },
+    "state-icons": {
+      "paused": "",
+      "playing": ""
+    },
+    "tooltip-format": "MPD (connected)",
+    "tooltip-format-disconnected": "MPD (disconnected)"
+  },
+  "idle_inhibitor": {
+    "format": "{icon} ",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    }
+  },
+  "tray": {
+    // "icon-size": 21,
+    "spacing": 10
+  },
+  "clock": {
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format": "{:%a %d, %b \n %I:%M %p }",
+    "format-alt": "{:%Y-%m-%d}"
+  },
+  "cpu": {
+    "format": " {usage}%",
+    "tooltip": true
+  },
+  "memory": {
+    "format": "󰍛 {}%"
+  },
+  "disk": {
+    "format": " {percentage_used}%"
+  },
+  "temperature": {
+    //"hwmon-path": "/sys/devices/platform/asus-ec-sensors/hwmon/hwmon4/temp3_input",
+    //"hwmon-path-abs": "/sys/devices/platform/asus-ec-sensors/hwmon",
+    "hwmon-path-abs": "/sys/devices/pci0000:00/0000:00:18.3/hwmon",
+    "input-filename": "temp3_input",
+    "critical-threshold": 80,
+    "format-critical": "{temperatureC}°C {icon}",
+    "format": "{icon} {temperatureC}°C",
+    "format-icons": [
+      "",
+      "",
+      ""
+    ],
+    "interval": "5"
+  },
+  "network": {
+    "interval": 1,
+    "format-wifi": "  󰜮 {bandwidthDownBytes} 󰜷 {bandwidthUpBytes}",
+    "format-ethernet": "󰈀  󰜮 {bandwidthDownBytes} 󰜷 {bandwidthUpBytes}",
+    "tooltip-format": " {ifname} via {gwaddr}",
+    "format-linked": "󰈁 {ifname} (No IP)",
+    "format-disconnected": " Disconnected",
+    "format-alt": "{ifname}: {ipaddr}/{cidr}"
+  },
+  "wireplumber": {
+    "format": "{volume}% {icon}",
+    "format-muted": "",
+    "on-click": "helvum",
+    "format-icons": [
+      "",
+      "",
+      ""
+    ]
+  },
+  "custom/media": {
+    "format": "{icon} {}",
+    "return-type": "json",
+    "max-length": 40,
+    "format-icons": {
+      "spotify": "",
+      "default": "🎜"
+    },
+    "escape": true,
+    "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
+    // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+  },
+  "custom/separator-right": {
+    "format": "",
+    "tooltip": false
+  },
+  "custom/separator-left": {
+    "format": "",
+    "tooltip": false
+  },
+  "custom/notification": {
+    "tooltip": true,
+    "format": "{icon} {}",
+    "format-icons": {
+      "notification": "<span foreground='red'><sup></sup></span>",
+      "none": "",
+      "dnd-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-none": "",
+      "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "inhibited-none": "",
+      "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-inhibited-none": ""
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+  "custom/updates": {
+    "format": "{} {icon}",
+    "return-type": "json",
+    "format-icons": {
+      "has-updates": "󱍷",
+      "updated": "󰂪"
+    },
+    "exec-if": "which waybar-module-pacman-updates",
+    "exec": "waybar-module-pacman-updates"
+  },
+  "custom/github": {
+    "format": " {}",
+    "return-type": "json",
+    "interval": 60,
+    "exec": "$HOME/.config/waybar/scripts/github.sh",
+    "on-click": "xdg-open https://github.com/notifications"
+  },
+  "custom/weather": {
+    "exec": "$HOME/.config/waybar/scripts/weather.py -l $(jq -r '.weathergov | \"(.location)\"' ~/weather_config.json)",
+    "return-type": "json",
+    "format": "{}",
+    "tooltip": true,
+    "interval": 3600
+  },
+  "group/stats": {
+    "orientation": "horizontal",
+    "modules": [
+      "network",
+      "cpu",
+      "memory",
+      "disk",
+      "temperature"
+    ]
+  },
+  "group/notifications": {
+    "orientation": "horizontal",
+    "modules": [
+      "idle_inhibitor",
+      "custom/updates",
+      "custom/notification",
+      "custom/github",
+      "wireplumber"
+    ]
+  }
+}

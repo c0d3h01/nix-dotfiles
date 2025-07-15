@@ -1,0 +1,6 @@
+project:
+  type: book
+editor: visual
+format:
+  html:
+    theme: cosmo
