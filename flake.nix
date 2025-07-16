@@ -5,7 +5,8 @@
     inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } { imports = [ ./modules/flake ]; };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable-small";
+    # nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz";
 
     # lix is fork of nix
     izlix = {
@@ -20,6 +21,11 @@
         nix2container.follows = "";
         flake-compat.follows = "";
       };
+    };
+
+    lix-module = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.2-1.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     darwin = {
@@ -154,6 +160,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Theme like catppuccin
     evergarden = {
       type = "github";
       owner = "everviolet";
@@ -188,7 +195,7 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems";
-        # neovim-nightly-overlay.inputs.flake-parts.follows = "flake-parts";
+        neovim-nightly-overlay.inputs.flake-parts.follows = "flake-parts";
       };
     };
 
