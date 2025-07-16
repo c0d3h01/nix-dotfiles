@@ -45,7 +45,7 @@ in
       };
     }
 
-    (mkIf config.garden.profiles.graphical.enable {
+    (mkIf config.programs.hyprland.enable {
       services = genAttrs services (_: mkService);
     })
   ];

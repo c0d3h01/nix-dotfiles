@@ -4,7 +4,7 @@ let
   prof = config.garden.profiles;
 in
 {
-  config = mkIf prof.laptop.enable {
+  config = mkIf prof.server.enable {
     services.logind = {
       lidSwitch = "ignore";
       lidSwitchDocked = "ignore";

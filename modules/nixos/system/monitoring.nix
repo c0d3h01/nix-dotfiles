@@ -1,11 +1,11 @@
-{ lib, ... }:
+{ lib, config, ... }:
 let
-  inherit (lib) mkDefault;
+  inherit (lib) mkIf mkDefault;
 in
 {
   services = {
     # monitor and control temperature
-    thermald.enable = true;
+    thermald.enable = mkIf (config.garden.device.cpu == "intel") true;
 
     # enable smartd monitoering
     smartd.enable = true;

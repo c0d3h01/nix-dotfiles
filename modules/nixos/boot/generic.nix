@@ -100,7 +100,7 @@ in
       # they are set unless system.boot.loader != none
       loader = {
         # if set to 0, space needs to be held to get the boot menu to appear
-        timeout = mkForce 2;
+        timeout = mkForce 4;
 
         # copy boot files to /boot so that /nix/store is not required to boot
         # it takes up more space but it makes my messups a bit safer
@@ -159,8 +159,8 @@ in
             "dm_mod"
             "uas"
             "usb_storage"
-            "rtsx_usb_sdmmc"
-            "rtsx_pci_sdmmc" # Realtek SD card interface (btw i hate realtek)
+            # "rtsx_usb_sdmmc"
+            # "rtsx_pci_sdmmc"
             "ata_piix"
             "virtio_pci"
             "virtio_scsi"
@@ -194,7 +194,7 @@ in
           "usbcore.autosuspend=-1"
 
           # isables resume and restores original swap space
-          "noresume"
+          # "noresume"
 
           # allow systemd to set and save the backlight state
           "acpi_backlight=native"

@@ -31,6 +31,7 @@
           excludes = [
             ".git-crypt/*"
             "secrets/*"
+            "configs/*"
           ];
 
           formatter = {

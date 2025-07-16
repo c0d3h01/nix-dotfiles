@@ -5,6 +5,7 @@
   };
 
   home-manager.users.c0d3h01 = {
+
     secrets.enable = false;
 
     garden.programs.defaults = {
@@ -13,25 +14,27 @@
     };
 
     programs = {
-      gnome-settings.enable = true;
-      # syncthing.enable = false;
-      git.signing.key = "3E7C7A1B5DEDBB03";
+      # Home Manager Gnome Settings
+      gnome-settings.enable = false;
 
-      # Hyprland Environment
       # hyprland.enable = true;
       # rofi.enable = true;
 
+      syncthing.enable = false;
+
+      git.signing.key = "3E7C7A1B5DEDBB03";
+
       # browser
       firefox.enable = true;
-      chromium.enable = true;
+      chromium.enable = false;
 
       # Shells
       zsh.enable = true;
       # fish.enable = true;
 
       # Desk Apps
-      discord.enable = true;
-      ghostty.enable = true;
+      discord.enable = false;
+      ghostty.enable = false;
     };
   };
 }

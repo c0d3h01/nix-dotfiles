@@ -5,10 +5,16 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkEnableOption;
+
+  cfg = config.programs.rnnoise;
 in
 {
-  config = mkIf (config.garden.profiles.graphical.enable && pkgs.stdenv.hostPlatform.isLinux) {
+  options.programs.rnnoise = {
+    enable = mkEnableOption "Noice Canceling";
+  };
+
+  config = mkIf cfg.enable {
     xdg.configFile."pipewire/pipewire.conf.d/99-input-denoising.conf".text = builtins.toJSON {
       "context.modules" = [
         {

@@ -5,13 +5,18 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkEnableOption;
+
+  cfg = config.programs.syncthing;
 in
 {
-  config = mkIf config.garden.profiles.graphical.enable {
+  options.programs.syncthing = {
+    enable = mkEnableOption "Syncthing";
+  };
+
+  config = mkIf cfg.enable {
     services.syncthing = {
       enable = true;
-
       tray = {
         enable = pkgs.stdenv.hostPlatform.isLinux;
         command = "syncthingtray --wait";

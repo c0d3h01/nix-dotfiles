@@ -24,5 +24,5 @@
   };
 
   # this can allow us to save some storage space
-  fonts.fontDir.decompressFonts = true;
+  # fonts.fontDir.decompressFonts = true;
 }

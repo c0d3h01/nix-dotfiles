@@ -7,7 +7,7 @@
   imports = [
     inputs.disko.nixosModules.disko
 
-    ./disko-btrfs.nix
+    ../c0d3h01/disko-btrfs.nix
     ./users.nix
   ];
 
@@ -17,8 +17,8 @@
 
     profiles = {
       laptop.enable = true;
-      graphical.enable = true;
-      workstation.enable = true;
+      graphical.enable = false;
+      workstation.enable = false;
     };
 
     device = {
@@ -27,19 +27,20 @@
       keyboard = "us";
       capabilities = {
         tpm = true;
-        # bluetooth = true;
+        bluetooth = false;
       };
     };
 
     system = {
       boot = {
-        loader = "grub";
+        loader = "systemd-boot";
         secureBoot = false;
 
         loadRecommendedModules = true;
         enableKernelTweaks = true;
 
-        silentBoot = false;
+        # silentBoot = false;
+        # memtest.enable = false;
 
         initrd = {
           enableTweaks = true;
@@ -48,7 +49,7 @@
       };
 
       bluetooth.enable = true;
-      printing.enable = true;
+      printing.enable = false;
 
       security = {
         fixWebcam = false;

@@ -7,7 +7,7 @@ in
   options.garden.device = {
     monitors = mkOption {
       type = listOf str;
-      default = [ ];
+      default = [ "eDP-1" ];
       description = ''
         this does not affect any drivers and such, it is only necessary for
         declaring things like monitors in window manager configurations
@@ -18,9 +18,8 @@ in
     keyboard = mkOption {
       type = enum [
         "us"
-        "gb"
       ];
-      default = "gb";
+      default = "us";
       description = ''
         the keyboard layout to use for a given system
       '';

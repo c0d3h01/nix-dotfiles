@@ -22,8 +22,8 @@ in
           battery = {
             governor = "powersave";
             energy_performance_preference = "power";
-            scaling_min_freq = mkDefault (MHz 1200);
-            scaling_max_freq = mkDefault (MHz 1800);
+            # scaling_min_freq = mkDefault (MHz 1200);
+            # scaling_max_freq = mkDefault (MHz 1800);
             turbo = "never";
 
             # this enables charging thresholds, this means that the battery will only
@@ -37,8 +37,8 @@ in
           charger = {
             governor = "performance";
             energy_performance_preference = "performance";
-            scaling_min_freq = mkDefault (MHz 1800);
-            scaling_max_freq = mkDefault (MHz 3800);
+            # scaling_min_freq = mkDefault (MHz 1800);
+            # scaling_max_freq = mkDefault (MHz 3800);
             turbo = "auto";
           };
         };

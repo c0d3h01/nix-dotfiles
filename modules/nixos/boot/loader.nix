@@ -37,11 +37,6 @@ in
         description = "The device to install the bootloader to.";
       };
     };
-
-    memtest = {
-      enable = mkEnableOption "memtest86+";
-      package = mkPackageOption pkgs "memtest86plus" { };
-    };
   };
 
   config = mkMerge [
@@ -55,34 +50,26 @@ in
     (mkIf (cfg.loader == "grub") {
       boot.loader.grub = {
         enable = mkDefault true;
+        memtest86.enable = true;
         useOSProber = true;
         efiSupport = true;
         enableCryptodisk = mkDefault false;
         inherit (cfg.grub) device;
-        theme = null;
-        backgroundColor = null;
-        splashImage = null;
+        theme = mkDefault null;
+        backgroundColor = mkDefault null;
+        splashImage = mkDefault null;
       };
     })
 
     (mkIf (cfg.loader == "systemd-boot") {
       boot.loader.systemd-boot = {
         enable = mkDefault true;
+        memtest86.enable = true;
         configurationLimit = 15; # prevent "too many" configuration from showing up on the boot menu
         consoleMode = mkDefault "auto"; # the default is "keep"
 
         # Fix a security hole. See desc in nixpkgs/nixos/modules/system/boot/loader/systemd-boot/systemd-boot.nix
         editor = false;
-      };
-    })
-
-    (mkIf cfg.memtest.enable {
-      boot.loader.systemd-boot = {
-        extraFiles."efi/memtest86plus/memtest.efi" = "${cfg.boot.memtest.package}/memtest.efi";
-        extraEntries."memtest86plus.conf" = ''
-          title MemTest86+
-          efi   /efi/memtest86plus/memtest.efi
-        '';
       };
     })
   ];

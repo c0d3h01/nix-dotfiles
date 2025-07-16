@@ -3,9 +3,9 @@
   imports = [ inputs.easy-hosts.flakeModule ];
 
   config.easy-hosts = {
-    # additionalClasses = {
-    #   wsl = "nixos";
-    # };
+    additionalClasses = {
+      wsl = "nixos";
+    };
 
     perClass = class: {
       modules = [
@@ -24,6 +24,14 @@
     hosts = {
       # Main nixos admin user
       c0d3h01 = { };
+
+      # Just for getting devices into repair shop
+      maintence = { };
+
+      # iso image builder
+      lilith = {
+        class = "iso";
+      };
     };
   };
 }

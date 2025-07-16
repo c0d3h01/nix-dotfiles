@@ -6,7 +6,7 @@ in
   # compress half of the ram to use as swap basically, get more memory per memory
   zramSwap = {
     enable = true;
-    algorithm = "zstd";
+    algorithm = "lz4";
 
     # defaults to 50
     memoryPercent = 200;
@@ -14,7 +14,7 @@ in
 
   boot.kernel.sysctl = mkIf config.zramSwap.enable {
     # zram is relatively cheap, prefer swap
-    "vm.swappiness" = 180;
+    "vm.swappiness" = 10;
     "vm.watermark_boost_factor" = 0;
     "vm.watermark_scale_factor" = 125;
     # zram is in memory, no need to readahead
