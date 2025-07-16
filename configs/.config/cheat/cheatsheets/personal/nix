@@ -1,0 +1,75 @@
+# Modern nix CLI (Nix 2.4+)
+nix build           # Build a derivation or flake output
+nix run             # Run a package or flake output
+nix shell           # Open shell with packages/env from flake/default.nix
+nix develop         # Enter dev shell defined by flake
+nix search          # Search packages (Nixpkgs or flake)
+nix eval            # Evaluate a Nix expression
+nix repl            # Interactive Nix REPL
+nix doctor          # Diagnose Nix installation problems
+
+# --- Flakes ---
+nix flake init      # Create new flake.nix
+nix flake update    # Update flake.lock
+nix flake check     # Run flake checks
+nix flake show      # Show flake outputs
+nix flake metadata  # Show flake metadata
+
+# --- Store & Profiles ---
+nix store gc        # Garbage collect store paths
+nix store verify    # Verify store path integrity
+nix store optimise  # Deduplicate store
+nix profile install # Install package to user profile
+nix profile remove  # Remove package from profile
+nix profile list    # List profile packages
+nix profile upgrade # Upgrade all profile packages
+nix profile rollback # Roll back to previous profile gen
+
+# --- Legacy (pre-Nix 2.4) ---
+nix-env -iA nixpkgs.<pkg>   # Install user package
+nix-env -e <pkg>            # Remove user package
+nix-env -q                  # List installed user packages
+nix-env -u '*'              # Upgrade all user packages
+nix-env --list-generations  # List user generations
+nix-env --rollback          # Roll back to previous gen
+nix-shell -p <pkg>          # Shell with package (no install)
+nix-build <file.nix>        # Build derivation from file
+nix-instantiate <expr>      # Create a derivation (.drv)
+nix-collect-garbage -d      # Delete old generations, free space
+nix-channel --list          # List channels
+nix-channel --add <url> <name> # Add channel
+nix-channel --update        # Update all channels
+
+# --- NixOS System ---
+sudo nixos-rebuild switch   # Rebuild and activate system config
+sudo nixos-rebuild test     # Build/test config, do not switch
+sudo nixos-rebuild boot     # Build for next boot only
+sudo nixos-rebuild dry-run  # Preview rebuild actions
+sudo nixos-rebuild build    # Build system config, no switch
+sudo nixos-rebuild switch --rollback # Roll back config
+
+# --- NixOS VM/Test ---
+nixos-rebuild build-vm                 # Build VM from config
+nixos-rebuild build-vm-with-bootloader # Build VM with bootloader
+nixos-rebuild build-vm-test            # Build test VM
+nixos-rebuild test-vm                  # Run tests in VM
+
+# --- NixOS Options/Diagnostics ---
+nixos-option <opt.path>    # Show value of config option
+journalctl -xe            # View systemd logs
+nix log <drv|path>        # Show build logs
+
+# --- Hashing/Prefetch/Copy ---
+nix hash file <file>      # Hash a file
+nix hash path <path>      # Hash a path
+nix-prefetch-url <url>    # Download and hash a URL
+nix-copy-closure --to/--from <host> # Copy closures between machines
+
+# --- Misc ---
+nix show-config           # Show Nix config
+nix registry list         # List flake registries
+nix path-info <path>      # Info about store path
+
+# --- Help ---
+nix --help                # List all nix commands
+nix <subcmd> --help       # Help for a subcommand

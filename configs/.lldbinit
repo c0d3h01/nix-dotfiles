@@ -1,0 +1,4 @@
+# LLDB settings
+settings set prompt "(lldb) "
+settings set stop-disassembly-display always
+settings set auto-confirm true
