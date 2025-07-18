@@ -10,7 +10,7 @@ let
 in
 {
   boot.initrd.network.ssh.authorizedKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMQDiHbMSinj8twL9cTgPOfI6OMexrTZyHX27T8gnMj2"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOGjkQQxG24k1crCI4dcW4Alkd+a1vgz8iQ/omjA+qgq"
   ];
 
   services.openssh = {
@@ -84,11 +84,11 @@ in
       (mkPubs "github.com" [
         {
           type = "rsa";
-          key = "AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==";
+          key = "AAAAB3NzaC1yc2EAAAADAQABAAACAQClVn6cInE32qWBN3Bi4eBdxWAhyS6DBU1wGpfSQjqq6RNDNbqJi7/yLN4mynzCYonTxF3UpIMj1oHXKoOO8z/X+vc28DqtOMLtVFOUBENiUECra0QPlHKUmCUzWF4aPwSCisqfIgQwfF69XE0p1ACBFyF+4Br8SP4jgus0ev0OK35mIZ/7AR5bw8xrWnh5tjjhDIJ4TC6Lh49AMR+P7cQ1GH3e5B2cCSljqS35FMzXG4jXAiwP00hNjtA11lbvb+rDuam6Hnnu6er+RBdqeIzfQtuGVk/RZocu7UxofE2sqzSvN1BzEyAkTJar53r1WFZCTY+hhf0LV7OVx1IsruEdhNbKfbjSe4O0I6uUA6vAiEyd0Wj4qkUGoxKKWS/LV8/S6GF/SnWDgKjORhZN83Os0jEik7LXSa9BYmESLJxF/axyhTqLeErTWL5alNZ9sE/nY1zYwUn1vwCTLCrv2khjND0viApH3QIub04a4QToDy82AP7k/RXTGDmtL8ZfB9ubXQUkOaaBDeqhMI3Sua5+v/MuxVAo2p3DVWNLAcA1u54anNQ1zrAmJuufe/Wm3rDqPZ0+xP+blC1I/xpm1HzXdTll5AXTE+KHHXCX0hHNp1CZlgGdgKlzAZxt8apRDpIUpcDyX+HsRyFT0WX1fk7vZWQ85rStnfvVwHvDsBMpnw==";
         }
         {
           type = "ed25519";
-          key = "AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
+          key = "AAAAC3NzaC1lZDI1NTE5AAAAIOGjkQQxG24k1crCI4dcW4Alkd+a1vgz8iQ/omjA+qgq";
         }
       ])
 
@@ -99,51 +99,7 @@ in
         }
         {
           type = "ed25519";
-          key = "AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf";
-        }
-      ])
-
-      (mkPubs "codeberg.org" [
-        {
-          type = "rsa";
-          key = "AAAAB3NzaC1yc2EAAAADAQABAAABAQC8hZi7K1/2E2uBX8gwPRJAHvRAob+3Sn+y2hxiEhN0buv1igjYFTgFO2qQD8vLfU/HT/P/rqvEeTvaDfY1y/vcvQ8+YuUYyTwE2UaVU5aJv89y6PEZBYycaJCPdGIfZlLMmjilh/Sk8IWSEK6dQr+g686lu5cSWrFW60ixWpHpEVB26eRWin3lKYWSQGMwwKv4LwmW3ouqqs4Z4vsqRFqXJ/eCi3yhpT+nOjljXvZKiYTpYajqUC48IHAxTWugrKe1vXWOPxVXXMQEPsaIRc2hpK+v1LmfB7GnEGvF1UAKnEZbUuiD9PBEeD5a1MZQIzcoPWCrTxipEpuXQ5Tni4mN";
-        }
-        {
-          type = "ed25519";
-          key = "AAAAC3NzaC1lZDI1NTE5AAAAIIVIC02vnjFyL+I4RHfvIGNtOgJMe769VTF1VR4EB3ZB";
-        }
-      ])
-
-      (mkPubs "git.sr.ht" [
-        {
-          type = "rsa";
-          key = "AAAAB3NzaC1yc2EAAAADAQABAAABAQDZ+l/lvYmaeOAPeijHL8d4794Am0MOvmXPyvHTtrqvgmvCJB8pen/qkQX2S1fgl9VkMGSNxbp7NF7HmKgs5ajTGV9mB5A5zq+161lcp5+f1qmn3Dp1MWKp/AzejWXKW+dwPBd3kkudDBA1fa3uK6g1gK5nLw3qcuv/V4emX9zv3P2ZNlq9XRvBxGY2KzaCyCXVkL48RVTTJJnYbVdRuq8/jQkDRA8lHvGvKI+jqnljmZi2aIrK9OGT2gkCtfyTw2GvNDV6aZ0bEza7nDLU/I+xmByAOO79R1Uk4EYCvSc1WXDZqhiuO2sZRmVxa0pQSBDn1DB3rpvqPYW+UvKB3SOz";
-        }
-        {
-          type = "ed25519";
-          key = "AAAAC3NzaC1lZDI1NTE5AAAAIMZvRd4EtM7R+IHVMWmDkVU3VLQTSwQDSAvW0t2Tkj60";
-        }
-      ])
-
-      (mkPubs "git.isabelroses.com" [
-        {
-          type = "rsa";
-          key = "AAAAB3NzaC1yc2EAAAADAQABAAABgQCcQrSjsd9ZUdT5co+JfeErQbRGBIjxPlouGuS9vq1xwi2twJ8iQkZ8uEwaTVFbru3IQSxIbeTtvorXlHdPDewWvTaXQdL0TvtrB/okc77cyHcuJxyN/OCW2FEfOPXwmC/cAJYGXbc1mul866k79h/GjQECRfO3wuENk1p6TynxRAS38nKCw5zY/XYY9CcSxb0yvv8luhCAD45cc5VImTsiphHWGDDwcD3/4xdml64fWKFo5Cc5AqaL3DQbrPMgB6B5JqtZTq5yN4JfjwpzzDFha6gAmtB5f7Fd2nIoBWa44FSnlIMACmOqlr0nqrtuvLMBaWxV6oJrW85jiQ/qaFSj8UextBjyg062qaZ1EHlqGrlOMyIqk6sgQ0mgEFcyH2vPcqVJRp8Wh6DVX5cQkNRNeDDcq5WmcxY7eWZyZCnYRkRPEcdk6X/xxWUY5aDy3fCEJV7HjcvPW7/9ERduAe1e2/3YHbIkGTv8OUIEWL8Z/Ai8lnQ+GZdrTr/Jjssilmk=";
-        }
-        {
-          type = "ed25519";
-          key = "AAAAC3NzaC1lZDI1NTE5AAAAIFluIN96lPhNvf2JsA2E+HjuQbDseD2sQJOgQbspJWW0";
-        }
-      ])
-
-      (mkPubs "git.auxolotl.com" [
-        {
-          type = "rsa";
-          key = "AAAAB3NzaC1yc2EAAAADAQABAAACAQCd21dQk5Hx5hqMV7KEVm/qCk++jXGp1fOyoPHM0k5Ostdxp3P0DYvzLppud2lYZ3r69qkYVLFjHREHac0UVWKQ2A08T761y53aNlSfRlp/cbN1lAH29HjgLWt4KBFu/gYUrEnXU7rs9JU17N0rS7oW5R+G4RX3dOSPcx7V9RToJ7wHeOeuKhyoFI6bjJfflNPZWKIHk5QFtblyUUnCnuFZvZtq1y7CzB6YPm4wN209yEwVYORovz2maX2hoEEFn1k1DoGaxXtsaIbYFq0DBgrl4302SV9JwLlItpJX8e47owd1Y7mS7riFDTtmiE2IMiCV4tY0n0VMgo3soHKoTbgkG8bCIGWgTQLBBMICnqbz9m8SMvG8dIrN5GBhIMImz4BU+Gq2uqqIfx2DjzpMlMl05qnM4+LcMWeoPloLlxMFB5TSimLxyYOQ6hwj+hSpwBJ1Nt1zUNAM8ZBKKATKkx+FtW58mRN+ByT5iWbofHwJT+xaYcVDQQodgnEIdnNLdB25b60qeo/iHyz6DAAHmHXFCHluIKMlamXCa5myEluhxc8Hy+ddPLqKpQFj/z6vM28Uejy5xKLsndJhcaAS5L30xp7CukSzjYkNb1q/kuNyfVQSmBkahkKIOtjrqad80BWVHdiIbC0sEHX/RC5G6/mePqFQI5aR8eTbIWOITLdh8Q==";
-        }
-        {
-          type = "ed25519";
-          key = "AAAAC3NzaC1lZDI1NTE5AAAAIM4rfWCoqby2qIcq/KVEWCKZVvIxr6h4GxJcsCQYffj+";
+          key = "AAAAC3NzaC1lZDI1NTE5AAAAIOGjkQQxG24k1crCI4dcW4Alkd+a1vgz8iQ/omjA+qgq";
         }
       ])
     ];
