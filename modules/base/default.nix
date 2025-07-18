@@ -3,7 +3,6 @@
     # keep-sorted start prefix_order=../,../../,./
     ../generic
     ../../home
-    ./gui
     ./nix
     ./nixpkgs
     ./programs.nix
