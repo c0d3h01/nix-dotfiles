@@ -1,0 +1,5 @@
+{
+  home.shell = {
+    enableZshIntegration = true;
+  };
+}
