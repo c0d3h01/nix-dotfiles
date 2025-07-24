@@ -2,52 +2,45 @@
   description = "Home Manager Flake for Dotfiles";
 
   inputs = {
-    nixpkgs.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    sops.url = "github:c0d3h01/sops-nix";
-    sops.inputs.nixpkgs.follows = "nixpkgs";
-    nixgl.url = "github:c0d3h01/nixGL";
-    nixgl.inputs.nixpkgs.follows = "nixpkgs";
-    spicetify.url = "github:Gerg-L/spicetify-nix";
-    spicetify.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    systems.url = "github:nix-systems/default";
+
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    sops = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixgl = {
+      url = "github:guibou/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    spicetify = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     inputs@{
       self,
       nixpkgs,
+      flake-parts,
       home-manager,
       ...
     }:
-    let
-      system = "x86_64-linux";
-      username = "c0d3h01";
-      hostname = "fedora";
-      homeDirectory = "/home/${username}";
-      homeModule = ./homeManager;
-    in
-    {
-      # Nix Formatter
-      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-tree;
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [ "x86_64-linux" ];
 
-      # Home Manager Configurations
-      homeConfigurations."${username}@${hostname}" = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          system = system;
-          config.allowUnfree = true;
-        };
-        extraSpecialArgs = {
-          inherit
-            inputs
-            self
-            username
-            hostname
-            homeDirectory
-            ;
-          nixgl = inputs.nixgl;
-        };
-        modules = [ homeModule ];
-      };
+      imports = [
+        ./flake-parts
+        ./homeManager/flake-module.nix
+      ];
     };
 }
