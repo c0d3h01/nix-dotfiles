@@ -29,7 +29,7 @@
     hm-firefox.enable = true;
     # hm-vscode.enable = true;
     # hm-monitoring.enable = true;
-    hm-fonts.enable = true;
+    # hm-fonts.enable = true;
     hm-gnomeshell.enable = true;
     hm-gtk.enable = true;
     hm-nh.enable = true;
