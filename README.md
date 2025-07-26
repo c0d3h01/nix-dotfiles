@@ -69,6 +69,27 @@ If your flake includes a NixOS system configuration:
 sudo nixos-rebuild switch --flake 'github:c0d3h01/dotfiles#fedora'
 ```
 
+## Clean Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/c0d3h01/dotfiles.git
+cd dotfiles
+
+# Partition and format disk with Disko
+sudo nix --experimental-features "nix-command flakes" run \
+  github:nix-community/disko/latest -- \
+  --mode destroy,format,mount \
+  ./nixosConfigs/modules/users/c0d3h01/disko-btrfs.nix
+
+# Only for low ram devices!
+sudo btrfs filesystem mkswapfile --size 8G /mnt/swapfile
+sudo swapon /mnt/swapfile
+
+# Install NixOS
+sudo nixos-install --flake '.#laptop'
+```
+
 ---
 
 ## **Bootstrap on a Fresh System**
