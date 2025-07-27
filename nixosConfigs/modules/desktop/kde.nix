@@ -23,10 +23,5 @@ in
       kwrite
       plasma-browser-integration
     ];
-
-    hardware = {
-      bluetooth.enable = true;
-      bluetooth.powerOnBoot = true;
-    };
   };
 }
