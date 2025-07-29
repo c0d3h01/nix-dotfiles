@@ -24,6 +24,7 @@
     dev = {
       ollama = true;
       tabby = false;
+      phpadmin = true;
       wine = false;
       container = "podman";
       db = true;
