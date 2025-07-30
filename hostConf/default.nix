@@ -2,8 +2,7 @@
   # Laptop machine
   laptop = {
     username = "c0d3h01";
-    hostname = "neo";
-    email = "harshalsawant.dev@gmail.com";
+    hostname = "nixos";
     fullName = "Harshal Sawant";
     system = "x86_64-linux";
 

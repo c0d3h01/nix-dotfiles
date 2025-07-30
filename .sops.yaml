@@ -1,8 +1,8 @@
 keys:
-  - &c0d3h01 age1ww0gsmswckswnkq9pcpl028sq7jkpsdss2dglv07tdqstd3utfpsxp5dd4
+  - &c0d3h01_laptop age1qnpfvptlyqw6f2n9zr2zmp3cl5hcqw8zz28pvr29kelype54aehsj6nm0c
 
 creation_rules:
   - path_regex: .*
     key_groups:
       - age:
-          - *c0d3h01
+          - *c0d3h01_laptop

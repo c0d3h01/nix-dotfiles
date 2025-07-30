@@ -11,7 +11,7 @@
     ./environment
     ./programs
     ./services
-    ./systems
+    ./system
   ];
 
   # Let Home Manager install and manage itself.

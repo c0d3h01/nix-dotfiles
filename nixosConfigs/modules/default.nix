@@ -10,5 +10,6 @@
     ./system
     ./users
     ./base.nix
+    ./secrets.nix
   ];
 }
