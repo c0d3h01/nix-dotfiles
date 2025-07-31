@@ -49,15 +49,11 @@
       home-manager,
       ...
     }:
-    let
-      diskoConfig = import ./nixosConfigs/modules/users/c0d3h01/disko-btrfs.nix;
-    in
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         ./flake
         ./homeManager/flake-module.nix
         ./nixosConfigs/flake-module.nix
       ];
-      diskoConfigurations = diskoConfig;
     };
 }
