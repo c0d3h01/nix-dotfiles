@@ -1,10 +1,25 @@
+{ pkgs, ... }:
 {
   # Enable flakes and optimize Nix settings
   nix = {
+
+    # Keep disable nix channels
+    channel.enable = false;
+
+    # Enable garbage collection
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+
     settings = {
       experimental-features = [
+        # Need for nix configs
         "nix-command"
         "flakes"
+        # Allows Nix to automatically pick UIDs for builds
+        "auto-allocate-uids"
       ];
 
       # Show stack traces for better debugging
@@ -32,6 +47,13 @@
       # Use /var/tmp instead of RAM for builds to avoid tmpfs issues
       build-dir = "/var/tmp";
 
+      # use xdg base directories for all the nix things
+      use-xdg-base-directories = true;
+
+      # build inside sandboxed environments
+      # Only enable this on linux because it servirly breaks on darwin
+      sandbox = pkgs.stdenv.hostPlatform.isLinux;
+
       # Add trusted users for faster builds
       trusted-users = [
         "root"
@@ -47,12 +69,6 @@
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
-    };
-    # Enable garbage collection
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
     };
   };
 }

@@ -3,6 +3,7 @@
   environment.systemPackages = with pkgs; [
     ouch
     psmisc
+    colordiff
     sipcalc
     iperf
     openssl
