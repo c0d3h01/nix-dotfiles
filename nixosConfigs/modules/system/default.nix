@@ -4,6 +4,7 @@
     ./audio.nix
     ./automount.nix
     ./command-not-found.nix
+    ./diff.nix
     ./docs.nix
     ./fhs-compact.nix
     ./firmware.nix
