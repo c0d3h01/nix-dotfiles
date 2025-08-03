@@ -13,6 +13,7 @@
     tcpdump
     rsync
     tig
+    nodejs
     python3
     zig
     go
