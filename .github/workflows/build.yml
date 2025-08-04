@@ -13,5 +13,5 @@ jobs:
         uses: DeterminateSystems/flake-checker-action@main
       - name: Install Nix
         uses: DeterminateSystems/determinate-nix-action@v3
-      - name: Build default package
-        run: nix build
+      - name: Build nixos configs
+        run: nix build .#nixosConfigurations.c0d3h01.config.system.build.toplevel
