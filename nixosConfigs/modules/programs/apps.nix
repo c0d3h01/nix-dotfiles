@@ -23,6 +23,10 @@
     environment.systemPackages =
       with pkgs;
       [
+        # Terminal 
+        ghostty
+        neovim # Editor
+
         # Development tools
         vscode-fhs
         jetbrains.webstorm
