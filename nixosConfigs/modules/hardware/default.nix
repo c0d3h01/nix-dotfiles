@@ -1,7 +1,10 @@
 {
   imports = [
-    ./btrfs-maintence.nix
-    ./gpu.nix
+    ./GPU
+    ./bootloader.nix
+    ./btrfs.nix
+    ./fstrim.nix
     ./hardware.nix
+    ./zramSwap.nix
   ];
 }

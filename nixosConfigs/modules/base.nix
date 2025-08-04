@@ -19,13 +19,24 @@
   users.users.${userConfig.username} = {
     isNormalUser = true;
     description = userConfig.fullName;
+    shell = "/run/current-system/sw/bin/zsh";
     extraGroups = [
       "wheel"
+      "nix"
       "networkmanager"
+      "systemd-journal"
       "audio"
+      "pipewire"
       "video"
+      "input"
+      "plugdev"
+      "lp"
+      "tss"
+      "power"
+      "wireshark"
+      "mysql"
+      "cloudflared"
     ];
-    shell = pkgs.${userConfig.dev.shell};
   };
 
   # Enable sudo for wheel group
@@ -40,6 +51,7 @@
       options = "grp:alt_shift_toggle";
     };
 
+    # Drivers will be detected & set itself
     videoDrivers = [
       "modesetting"
       "fbdev"
@@ -61,12 +73,6 @@
       LC_TELEPHONE = "en_IN";
       LC_TIME = "en_IN";
     };
-  };
-
-  # Scheduled fstrim
-  services.fstrim = {
-    enable = true;
-    interval = "weekly";
   };
 
   # Fonts

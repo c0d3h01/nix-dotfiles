@@ -49,6 +49,8 @@ let
 in
 {
   config = lib.mkIf userConfig.dev.ollama {
+    services.open-webui.enable = true;
+
     services.ollama = {
       enable = true;
 
@@ -66,12 +68,6 @@ in
 
       # Environment variables
       inherit environmentVariables;
-
-      # Preload models (commented out by default)
-      loadModels = [
-        # "llama3.2:3b"
-        # "codellama:7b"
-      ];
     };
 
     # Service optimization

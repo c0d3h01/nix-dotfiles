@@ -6,6 +6,10 @@
     package = pkgs.iptables;
     allowPing = false;
 
+    # make a much smaller and easier to read log
+    logReversePathDrops = true;
+    logRefusedConnections = false;
+
     # TCP Ports
     allowedTCPPorts = [
       22 # SSH

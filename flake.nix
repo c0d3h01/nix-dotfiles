@@ -25,6 +25,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    ethereum-nix = {
+      url = "github:nix-community/ethereum.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixgl = {
       url = "github:guibou/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";

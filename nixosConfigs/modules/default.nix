@@ -7,7 +7,6 @@
     ./programs
     ./security
     ./system
-    ./users
     ./base.nix
     ./secrets.nix
   ];

@@ -9,7 +9,7 @@
   };
 
   # Yubico's official tools
-  environment.systemPackages = [
-    pkgs.yubikey-manager
+  environment.systemPackages = with pkgs; [
+    yubikey-manager
   ];
 }

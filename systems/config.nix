@@ -1,5 +1,13 @@
 {
   c0d3h01 = {
+    /**
+      Primary laptop based userConfigs
+      Default shell: zsh
+      Secrets management: sops, sops-nix
+      Filesystem: btrfs with subvolumes \
+      Mount points: Disko config
+    */
+
     username = "c0d3h01";
     hostname = "nixos";
     fullName = "Harshal Sawant";
@@ -29,7 +37,6 @@
       container = "podman"; # Options = "docker" | "podman"
       db = true; # Mysql - DBMS
       defaultEditor = "nvim";
-      shell = "zsh"; # Options = "bash" | "zsh" | "fish"
       terminalFont = "JetBrains Mono";
     };
   };

@@ -11,10 +11,6 @@ let
   inherit (userConfig.machine) gpuType;
   inherit (userConfig.machine) cpuType;
 
-  # Boot loader selection
-  useSystemdBoot = userConfig.machine.bootloader == "systemd";
-  useGrub = userConfig.machine.bootloader == "grub";
-
   # Dynamic kernel modules based on hardware
   cpuKernelModules =
     lib.optionals (cpuType == "amd") [
@@ -62,14 +58,6 @@ in
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  # ZRAM configuration
-  zramSwap = {
-    enable = true;
-    priority = 100;
-    algorithm = "lzo-rle";
-    memoryPercent = if isLaptop then 200 else 100;
-  };
-
   # Hardware sensors service
   systemd.services.lm-sensors = {
     description = "Initialize hardware sensors";
@@ -84,32 +72,6 @@ in
   # handle ACPI events
   services.acpid.enable = true;
   hardware.acpilight.enable = true;
-
-  boot.loader = {
-    timeout = lib.mkForce 5;
-
-    efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot";
-    };
-
-    # GRUB
-    grub = {
-      enable = useGrub;
-      efiSupport = true;
-      devices = [ "nodev" ]; # For UEFI
-      useOSProber = true;
-      memtest86.enable = true;
-    };
-
-    # systemd-boot
-    systemd-boot = {
-      enable = useSystemdBoot;
-      configurationLimit = 15;
-      memtest86.enable = true;
-      consoleMode = "auto";
-    };
-  };
 
   boot = {
     # Clean tmp dir on boot
@@ -184,6 +146,7 @@ in
 
   # Network configuration
   networking.useDHCP = lib.mkDefault true;
+  networking.dhcpcd.enable = lib.mkDefault true;
 
   # Platform detection
   nixpkgs.hostPlatform = lib.mkDefault userConfig.system;

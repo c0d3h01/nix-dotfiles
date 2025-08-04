@@ -1,6 +1,6 @@
 { inputs, ... }:
 let
-  hosts = import ../hostConf;
+  hosts = import ../systems/config.nix;
 
   # Function to create a NixOS configuration for a host
   mkNixosSystem =
@@ -14,6 +14,7 @@ let
       modules = [
         # Import all NixOS modules
         ./modules
+        ../systems
 
         # Disko integration for disk partitioning
         inputs.disko.nixosModules.disko

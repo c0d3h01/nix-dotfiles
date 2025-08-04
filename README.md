@@ -12,7 +12,7 @@ Run the following command to switch to your Home Manager configuration directly 
 
 ```bash
 nix run github:nix-community/home-manager -- switch \
-  --flake 'github:c0d3h01/dotfiles#c0d3h01@neo'
+  --flake 'github:c0d3h01/dotfiles#c0d3h01@nixos'
 ```
 
 - Optional: Local Clone
@@ -21,7 +21,7 @@ nix run github:nix-community/home-manager -- switch \
 git clone https://github.com/c0d3h01/dotfiles
 cd dotfiles
 nix run github:nix-community/home-manager -- switch \
-  --flake '.#c0d3h01@neo'
+  --flake '.#c0d3h01@nixos'
 ```
 
 ---
@@ -37,7 +37,7 @@ cd dotfiles
 sudo nix --experimental-features "nix-command flakes" run \
   github:nix-community/disko/latest -- \
   --mode destroy,format,mount \
-  ./nixosConfigs/modules/users/c0d3h01/disko-btrfs.nix
+  ./systems/c0d3h01/disko-btrfs.nix
 
 # Only for low ram devices!
 sudo btrfs filesystem mkswapfile --size 8G /mnt/swapfile

@@ -1,6 +1,6 @@
 { inputs, ... }:
 let
-  hosts = import ../hostConf;
+  hosts = import ../systems/config.nix;
 
   # Function to create a Home Manager configuration for a host
   mkHomeConfiguration =
@@ -15,7 +15,10 @@ let
         inherit (inputs) self;
         inherit (inputs) nixgl;
       };
-      modules = [ ./home.nix ];
+      modules = [
+        ./home.nix
+        ../systems
+      ];
     };
 
   # Generate homeConfigurations for all hosts

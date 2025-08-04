@@ -44,7 +44,6 @@
         obsidian
 
         # Media and content creation
-        obs-studio
         gimp # Image editing
 
         # System utilities
