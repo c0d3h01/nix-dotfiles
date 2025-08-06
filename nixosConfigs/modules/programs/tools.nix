@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
+    rustup
     ouch
     psmisc
     colordiff
@@ -14,7 +15,7 @@
     rsync
     tig
     nodejs
-    python3
+    python312
     zig
     go
     strace
