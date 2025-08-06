@@ -8,10 +8,7 @@
 
 {
   config = lib.mkIf userConfig.machineConfig.workstation {
-    programs = {
-      dconf.enable = true;
-      seahorse.enable = true;
-    };
+    programs.dconf.enable = true;
 
     services = {
       gvfs.enable = true;
