@@ -1,0 +1,30 @@
+name: Build NixOS ISO
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Nix
+        uses: cachix/install-nix-action@v25
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Build ISO
+        run: |
+          nix build .#nixosConfigurations.c0d3h01.config.system.build.isoImage
+
+      - name: Upload ISO artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nixos-c0d3h01-iso
+          path: result/iso/*.iso
