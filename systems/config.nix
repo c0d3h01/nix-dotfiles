@@ -31,7 +31,7 @@
     devStack = {
       ollama = true;
       tabby = false;
-      virtualisation = false;
+      virtualisation = true;
       wine = false; # WinApps with 32 bit support
       monitoring = false; # Monitoring grouped tools
       container = "podman"; # Options = "docker" | "podman"
