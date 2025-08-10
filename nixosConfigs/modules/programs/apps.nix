@@ -32,26 +32,26 @@
         # jetbrains.pycharm-community-bin
         postman
         github-desktop
-        drawio
+        # drawio
 
         # Communication apps
-        slack
+        # slack
         vesktop # Better Discord client
         telegram-desktop
         zoom-us
-        element-desktop # Matrix client
-        signal-desktop
+        # element-desktop # Matrix client
+        # signal-desktop
 
         # Productivity apps
-        libreoffice
+        # libreoffice
         obsidian
 
         # Media and content creation
         # gimp # Image editing
 
         # System utilities
-        anydesk # Remote desktop
-        qbittorrent # Torrent client
+        # anydesk # Remote desktop
+        # qbittorrent # Torrent client
 
         # Finance
         electrum # Bitcoin wallet
