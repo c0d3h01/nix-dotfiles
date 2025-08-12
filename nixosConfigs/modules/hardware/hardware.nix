@@ -60,6 +60,20 @@ in
   services.acpid.enable = true;
   hardware.acpilight.enable = true;
 
+  # Scheduled fstrim
+  services.fstrim = {
+    enable = true;
+    interval = "weekly";
+  };
+
+  # ZRAM configuration
+  zramSwap = lib.mkIf isLaptop {
+    enable = true;
+    priority = 50;
+    algorithm = "lz4";
+    memoryPercent = 100;
+  };
+
   boot = {
     # Clean tmp dir on boot
     tmp.cleanOnBoot = true;
@@ -144,5 +158,5 @@ in
   hardware.enableRedistributableFirmware = lib.mkDefault true;
 
   # Intel thermal management
-  services.thermald.enable = lib.mkIf (cpuType == "intel") true;
+  services.thermald.enable = lib.mkIf (cpuType == "intel" && lib.mkIf isLaptop) true;
 }
