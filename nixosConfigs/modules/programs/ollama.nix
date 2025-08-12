@@ -48,8 +48,6 @@ let
 in
 {
   config = lib.mkIf userConfig.devStack.ollama {
-    # services.open-webui.enable = true;
-
     services.ollama = {
       enable = true;
 
@@ -61,6 +59,11 @@ in
 
       # Environment variables
       inherit environmentVariables;
+
+      # Load models pre-defined
+      loadModels = [
+        "qwen2.5-coder:1.5b" # size:986MB, context:32K, text-inputes
+      ];
     };
   };
 }
