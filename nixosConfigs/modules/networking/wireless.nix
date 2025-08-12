@@ -1,21 +1,16 @@
 {
+  lib,
   userConfig,
   ...
 }:
+let
+  cfg = userConfig.machineConfig;
+  enable = cfg.type == "server";
+in
 {
-
-  # Ensures Wi-Fi adheres to your country's power/channel rules
-  hardware.wirelessRegulatoryDatabase = true;
-
-  # === GUI Tool for Managing Secrets (WiFi passwords, SSH keys) ===
-  programs.seahorse.enable = true;
-
-  # Enable MAC randomization during scanning (good for privacy)
-  networking.networkmanager.wifi.scanRandMacAddress = true;
-
-  networking.wireless = {
+  networking.wireless = lib.mkIf cfg.networking.wireless {
     # wpa_supplicant
-    enable = userConfig.machineConfig.networking.backend == "wpa_supplicant";
+    enable = cfg.networking.backend == "wpa_supplicant";
 
     # Allow user to manage networks via `nmcli` or GUI
     userControlled.enable = true;
@@ -30,7 +25,7 @@
 
     # iwd
     iwd = {
-      enable = userConfig.machineConfig.networking.backend == "iwd";
+      enable = cfg.networking.backend == "iwd";
 
       settings = {
         Settings.AutoConnect = true;

@@ -4,34 +4,28 @@
   userConfig,
   ...
 }:
+let
+  cfg = userConfig.machineConfig.networking;
+in
 {
-  # secrets management service
-  services.gnome.gnome-keyring.enable = lib.mkForce true;
+  # Ensures Wi-Fi adheres to your country's power/channel rules
+  hardware.wirelessRegulatoryDatabase = true;
 
-  networking = {
-    # DNS servers (Cloudflare and Google DNS)
-    nameservers = [
-      "1.1.1.1"
-      "1.0.0.1"
-      "8.8.8.8"
-      "8.8.4.4"
-    ];
-
+  networking = lib.mkIf (!cfg.wireless) {
     networkmanager = {
       enable = true;
       dns = "systemd-resolved";
       plugins = [ pkgs.networkmanager-openvpn ];
 
       wifi = {
-        inherit (userConfig.machineConfig.networking) backend;
+        # Default is wpa_supplicant
+        # inherit (userConfig.machineConfig.networking) backend;
         # use a random mac address on every boot, this can scew with static ip
         macAddress = "random";
-
         # Powersaving mode - Disabled
         powersave = lib.mkForce false;
-
         # MAC address randomization of a Wi-Fi device during scanning
-        # scanRandMacAddress = true;
+        scanRandMacAddress = true;
       };
     };
   };
