@@ -7,6 +7,5 @@
     ./podman.nix
     ./syncthing.nix
     ./tabby.nix
-    ./tools.nix
   ];
 }

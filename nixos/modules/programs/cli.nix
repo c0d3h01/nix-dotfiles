@@ -1,6 +1,8 @@
 { pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
+    solana-cli
+    go-ethereum
     rustup
     ouch
     psmisc
