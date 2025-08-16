@@ -26,7 +26,6 @@
         fuse3
         icu
         libnotify
-        libsodium
         libssh
         libunwind
         libusb1
@@ -60,9 +59,27 @@
         gdk-pixbuf
         glib
         gtk3
+        gtk4
         libGL
+        libva
+        libva-vdpau-driver
         libappindicator-gtk3
         vulkan-loader
+        vulkan-memory-allocator
+        xorg.libX11
+        xorg.libXScrnSaver
+        xorg.libXcomposite
+        xorg.libXcursor
+        xorg.libXdamage
+        xorg.libXext
+        xorg.libXfixes
+        xorg.libXi
+        xorg.libXrandr
+        xorg.libXrender
+        xorg.libXtst
+        xorg.libxcb
+        xorg.libxkbfile
+        xorg.libxshmfence
       ];
   };
 }
