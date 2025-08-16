@@ -12,6 +12,7 @@
     ./gtk.nix
     ./jj.nix
     ./monitoring.nix
+    ./neovim.nix
     ./nix-your-shell.nix
     ./ripgrep.nix
     ./secret.nix
