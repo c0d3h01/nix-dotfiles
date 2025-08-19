@@ -8,10 +8,10 @@
 
 {
   config = lib.mkIf userConfig.devStack.sql.enable {
-    sops.secrets = {
-      mysql_root_password = { };
-      mysql_app_password = { };
-    };
+    # sops.secrets = {
+    #   mysql_root_password = { };
+    #   mysql_app_password = { };
+    # };
 
     services.mysql = {
       enable = true;
@@ -20,17 +20,17 @@
       # Pre-create production DB
       ensureDatabases = [ "production" ];
 
-      # One-time initialization script
-      initialScript = pkgs.writeText "mysql-init.sql" ''
-        -- Root user setup
-        ALTER USER 'root'@'localhost' IDENTIFIED BY '$(cat ${config.sops.secrets.mysql_root_password.path})';
+      # # One-time initialization script
+      # initialScript = pkgs.writeText "mysql-init.sql" ''
+      #   -- Root user setup
+      #   ALTER USER 'root'@'localhost' IDENTIFIED BY '$(cat ${config.sops.secrets.mysql_root_password.path})';
 
-        -- App user setup
-        CREATE USER IF NOT EXISTS '${userConfig.username}'@'localhost' IDENTIFIED BY '$(cat ${config.sops.secrets.mysql_app_password.path})';
-        GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,INDEX,ALTER ON production.* TO '${userConfig.username}'@'localhost';
+      #   -- App user setup
+      #   CREATE USER IF NOT EXISTS '${userConfig.username}'@'localhost' IDENTIFIED BY '$(cat ${config.sops.secrets.mysql_app_password.path})';
+      #   GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,INDEX,ALTER ON production.* TO '${userConfig.username}'@'localhost';
 
-        FLUSH PRIVILEGES;
-      '';
+      #   FLUSH PRIVILEGES;
+      # '';
 
       settings.mysqld = {
         bind_address = "127.0.0.1";
