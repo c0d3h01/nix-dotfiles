@@ -22,7 +22,7 @@
     ./printing.nix
     ./scheduler.nix
     ./seatd.nix
-    ./secret.nix
+    ./secrets.nix
     ./serial.nix
     ./touchpad.nix
     ./xdg-portals.nix

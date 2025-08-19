@@ -14,7 +14,7 @@
     ./neovim.nix
     ./nix-your-shell.nix
     ./ripgrep.nix
-    ./secret.nix
+    ./secrets.nix
     ./spicetify.nix
     ./zellij.nix
     ./zoxide.nix
