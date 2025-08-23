@@ -1,6 +1,5 @@
 {
   pkgs,
-  config,
   lib,
   userConfig,
   ...
@@ -9,6 +8,7 @@
   config = lib.mkIf userConfig.machineConfig.workstation.enable {
     # Default browser
     programs.firefox.enable = true;
+    programs.chromium.enable = true;
 
     programs.wireshark = {
       enable = true;
@@ -43,6 +43,7 @@
         electrum
         ledger-live-desktop
         arduino
+        rpi-imager
       ]
       ++ lib.optionals userConfig.devStack.wine.enable [
         wineWowPackages.stable
