@@ -4,21 +4,22 @@
   userConfig,
   ...
 }:
-# https://wiki.debian.org/Suspend#Disable_suspend_and_hibernation
 {
-  config = lib.mkIf (userConfig.machineConfig.type == "server") {
+  config = lib.mkIf (userConfig.machineConfig.type == "laptop") {
+    # Let logind manage power actions on laptops
     services.logind = {
-      lidSwitch = "ignore";
+      lidSwitch = "suspend-then-hibernate";
+      lidSwitchExternalPower = "suspend-then-hibernate";
       lidSwitchDocked = "ignore";
-      lidSwitchExternalPower = "ignore";
       powerKey = "suspend-then-hibernate";
     };
 
     systemd.sleep.extraConfig = ''
-      AllowSuspend=no
-      AllowHibernation=no
-      AllowSuspendThenHibernate=no
-      AllowHybridSleep=no
+      AllowSuspend=yes
+      AllowHibernation=yes
+      AllowSuspendThenHibernate=yes
+      AllowHybridSleep=yes
+      HibernateDelaySec=45min
     '';
   };
 }
