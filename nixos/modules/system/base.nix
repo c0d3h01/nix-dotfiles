@@ -41,6 +41,8 @@
       "wireshark"
       "mysql"
       "cloudflared"
+      "libvirtd"
+      "kvm"
     ];
   };
 }
