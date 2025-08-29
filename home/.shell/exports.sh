@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 ensure_dir() { [ -d "$1" ] || mkdir -p "$1"; }
 ifsource(){ [ -f "$1" ] && source "$1"; }

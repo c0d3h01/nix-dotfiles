@@ -1,11 +1,9 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-export LC_ALL=en_US.UTF-8
+export LC_ALL=en_IN.UTF-8
 export LANG="$LC_ALL"
 export TERM="xterm-256color"
 export EDITOR='nvim'
-export VISUAL="$EDITOR"
-export SUDO_EDITOR="$EDITOR"
 export BROWSER='firefox'
 export DIFFTOOL='icdiff'
 export XDG_DATA_DIRS="$HOME/.nix-profile/share:$HOME/.share:${XDG_DATA_DIRS:-/usr/local/share/:/usr/share/}"
@@ -46,6 +44,9 @@ eval "$(direnv hook zsh)"
 # Starship prompt
 eval "$(starship init zsh)"
 
+# Setup direnv
+eval "$(direnv hook zsh)"
+
 # Autocompletions
 autoload -Uz compinit
 zmodload zsh/complist
@@ -71,9 +72,6 @@ ifsource "$HOME/.zsh_dir_hashes"
 # Load nix
 ifsource /etc/profile.d/nix.sh
 ifsource "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-
-# Local environment
-ifsource "$HOME/.local/bin/env"
 
 # Source plugins
 ifsource "$HOME/.shell/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
@@ -107,9 +105,6 @@ bindkey '^x^e' edit-command-line
 bindkey "''${terminfo[kcuu1]}" history-search-backward
 bindkey "''${terminfo[kcud1]}" history-search-forward
 export KEYTIMEOUT=1
-
-# Setup direnv
-eval "$(direnv hook zsh)"
 
 # Prevent broken terminals by resetting to sane defaults after a command
 ttyctl -f

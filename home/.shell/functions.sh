@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 path() { printf "%s\n" "$PATH" | tr ':' '\n' | bat; }
 
