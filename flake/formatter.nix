@@ -14,12 +14,6 @@
           statix
           stylua
           taplo
-
-          (writeShellScriptBin "statix-fix" ''
-            for file in "$@"; do
-              ${lib.getExe statix} fix "$file"
-            done
-          '')
         ];
 
         settings = {
