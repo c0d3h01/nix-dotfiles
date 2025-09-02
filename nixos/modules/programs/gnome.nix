@@ -11,17 +11,10 @@ in
 {
   config = mkIf (userConfig.machineConfig.windowManager == "gnome") {
 
-    services = {
-      # GNOME desktop environment configuration
-      desktopManager.gnome.enable = true;
-      displayManager.gdm.enable = true;
-
-      xserver = {
-        # Disable xterm
-        desktopManager.xterm.enable = false;
-        excludePackages = [ pkgs.xterm ];
-      };
-    };
+    # GNOME desktop environment configuration
+    services.desktopManager.gnome.enable = true;
+    services.displayManager.gdm.enable = true;
+    xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
 
     # Exclude unwanted GNOME packages
     environment = {
