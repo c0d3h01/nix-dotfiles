@@ -1,16 +1,13 @@
-{ lib, userConfig, ... }:
 {
-  # Configure X11
+  lib,
+  userConfig,
+  pkgs,
+  ...
+}:
+{
   services.xserver = lib.mkIf userConfig.machineConfig.workstation.enable {
-    enable = true;
-    xkb = {
-      layout = "us";
-      variant = ""; # Standard QWERTY
-      options = "grp:alt_shift_toggle";
-    };
-
-    videoDrivers = [
-      "amdgpu"
-    ];
+    enable = false;
+    desktopManager.xterm.enable = false;
+    excludePackages = [ pkgs.xterm ];
   };
 }
