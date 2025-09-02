@@ -1,11 +1,10 @@
 keys:
-  - &c0d3h01_ssh ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICSjL8HGjiSAnLHupMZin095bql7A8+UDfc7t9XCZs8l
-  - &c0d3h01_age age1226wa2fhrhm9cdqs5xght34xwc4vrm2a42mgt3zasvatc98p7ddsft4ux5
+  - &harshal age1slc5p3prmn8hsldxezvsaz29luuhsjxsj7gspk8p506d4xw9rstqeyy0ls
+  - &eva age1eqd59l6ll6sjsqm4gj675kq52mnt6799jghzleaty0202ltk852qaxw7c8
 
 creation_rules:
   - path_regex: .*
     key_groups:
       - age:
-          - *c0d3h01_age
-        ssh:
-          - *c0d3h01_ssh
+          - *harshal
+          - *eva
