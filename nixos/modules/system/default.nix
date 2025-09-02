@@ -25,6 +25,5 @@
     ./touchpad.nix
     ./xdg-portals.nix
     ./xserver.nix
-    ./yubikey.nix
   ];
 }
