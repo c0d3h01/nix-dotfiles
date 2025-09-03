@@ -7,6 +7,7 @@
     ./extractors.nix
     ./fd.nix
     ./fzf.nix
+    ./gh.nix
     ./git.nix
     ./gnome.nix
     ./gtk.nix
@@ -16,6 +17,7 @@
     ./ripgrep.nix
     ./secrets.nix
     ./spicetify.nix
+    ./starship.nix
     ./zellij.nix
     ./zoxide.nix
   ];
