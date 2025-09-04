@@ -7,42 +7,50 @@
 
 let
   inherit (pkgs.stdenv) isDarwin;
-  inherit (pkgs.stdenv) isLinux;
 
   ghCredHelper = "!${pkgs.gh}/bin/gh auth git-credential";
 
+  # Use 1Password's signer on macOS; use ssh-keygen on Linux (default/portable)
   sshSignerProgram =
-    if isDarwin then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign" else "op-ssh-sign";
+    if isDarwin then
+      "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+    else
+      "${pkgs.openssh}/bin/ssh-keygen";
 in
 {
-  home.file.".gitignore".source = ./gitignore;
-  home.file.".gitattributes".source = ./gitattributes;
+  home = {
+    file.".gitattributes".source = ./gitattributes;
+    file.".gitmessage".source = ./gitmessage;
+  };
 
   programs.git = {
     enable = true;
 
-    package = pkgs.gitFull;
-
+    # Identity
     userName = "Harshal Sawant";
     userEmail = "harshalsawant.dev@gmail.com";
 
+    # Signing (SSH-based signing)
     signing = {
       key = "~/.ssh/id_ed25519.pub";
       signByDefault = true;
     };
 
+    # LFS
     lfs.enable = true;
 
+    # Delta pager
     delta = {
       enable = true;
       options = {
-        navigate = true;
-        side-by-side = false;
-        line-numbers = true;
+        navigate = "true";
+        side-by-side = "false";
+        line-numbers = "true";
         syntax-theme = "TwoDark";
       };
     };
 
+    # Aliases
     aliases = {
       st = "status";
       br = "branch --all";
@@ -55,26 +63,56 @@ in
       amend = "commit -a --amend";
       wip = "!git add -u && git commit -m \"WIP\"";
       undo = "reset HEAD~1 --mixed";
-      ignore = ''"!gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi"'';
+      ignore = ''!gi() { curl -sL https://www.toptal.com/developers/gitignore/api/"$@"; }; gi'';
       trim = "!git remote prune origin && git gc";
     };
 
+    # Global ignores
+    ignores = [
+      # system residue
+      ".cache/"
+      ".DS_Store"
+      ".Trashes"
+      ".Trash-*"
+      "*.bak"
+      "*.swp"
+      "*.swo"
+      "*.elc"
+      ".~lock*"
+
+      # build residue
+      "tmp/"
+      "target/"
+      "result"
+      "result-*"
+      "*.exe"
+      "*.exe~"
+      "*.dll"
+      "*.so"
+      "*.dylib"
+
+      # dependencies
+      ".direnv/"
+      "node_modules"
+      "vendor"
+    ];
+
+    # Everything else
     extraConfig = {
+      # Init
       init.defaultBranch = "main";
 
+      # Core
       core = {
         editor = "nvim";
         autocrlf = false;
         safecrlf = true;
-        excludesfile = "~/.gitignore";
-        attributesfile = "~/.gitattributes";
         whitespace = "space-before-tab,-indent-with-non-tab,trailing-space";
         preloadindex = true;
       };
-
       color.ui = "auto";
 
-      # Diff & Merge
+      # Diff & Difftool
       diff = {
         tool = "nvim";
         algorithm = "patience";
@@ -82,15 +120,21 @@ in
         mnemonicPrefix = true;
         compactionHeuristic = true;
       };
-      "difftool.nvim".cmd = "nvim -d $LOCAL $REMOTE";
+      difftool = {
+        prompt = false;
+        "nvim".cmd = ''nvim -d "$LOCAL" "$REMOTE"'';
+      };
 
+      # Merge & Mergetool
       merge = {
         tool = "nvim";
-        conflictstyle = "zdiff3";
+        conflictStyle = "zdiff3";
         log = true;
       };
-      mergetool.keepBackup = false;
-      "mergetool.nvim".cmd = "nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'";
+      mergetool = {
+        keepBackup = false;
+        "nvim".cmd = "nvim -d \"$LOCAL\" \"$REMOTE\" \"$MERGED\" -c 'wincmd w' -c 'wincmd J'";
+      };
 
       # Push / Pull / Fetch
       push = {
@@ -106,7 +150,7 @@ in
       fetch = {
         prune = true;
         pruneTags = true;
-        fsckobjects = true;
+        fsckObjects = true;
       };
 
       # Rebase
@@ -141,44 +185,43 @@ in
       # Commit & Format
       commit = {
         verbose = true;
-        template = "~/.gitmessage";
+        template = "~/.config/git/gitmessage";
       };
       format = {
         signoff = false;
         pretty = "fuller";
       };
 
-      # Misc
+      # Rerere
       rerere = {
         enabled = true;
         autoupdate = true;
       };
+
+      # Submodules
       submodule = {
         fetchJobs = 4;
         recurse = true;
       };
+
+      # Help / Tag
       help.autocorrect = 10;
       tag.sort = "-version:refname";
 
-      # Auth (platform-aware default helper + gh for GitHub domains)
-      credential.helper = if isDarwin then "osxkeychain" else "libsecret";
-      "https://github.com".credential.helper = ghCredHelper;
-      "https://gist.github.com".credential.helper = ghCredHelper;
-
       # SSH signing
       gpg.format = "ssh";
-      "gpg.ssh".program = sshSignerProgram;
-      "gpg.ssh".allowedSignersFile = "~/.ssh/allowed_signers";
+      gpg.ssh.program = sshSignerProgram;
+      gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
 
       # Security
-      transfer.fsckobjects = true;
+      transfer.fsckObjects = true;
       receive.fsckObjects = true;
 
-      # HTTP (avoid deprecated postBuffer)
+      # HTTP (disable low-speed timeouts)
       http = {
         cookiefile = "~/.gitcookies";
         lowSpeedLimit = 0;
-        lowSpeedTime = 999999;
+        lowSpeedTime = 0;
       };
 
       # Advice
@@ -187,27 +230,26 @@ in
         detachedHead = false;
         skippedCherryPicks = false;
         pushUpdateRejected = false;
-        resolveConflict = false;
       };
-
-      # Maintenance
-      maintenance.repo = "/home/c0d3h01/dotfiles";
 
       # URL Shortcuts
       url = {
-        "git@github.com:".insteadOf = "gh:";
-        "git@github.com:".pushInsteadOf = [
+        "git@github.com:".insteadOf = [
+          "gh:"
           "github:"
-          "git://github.com/"
         ];
+        "git@github.com:".pushInsteadOf = [ "git://github.com/" ];
         "git://github.com/".insteadOf = "github:";
-        "git@gist.github.com:".insteadOf = "gst:";
-        "git@gist.github.com:".pushInsteadOf = [
+        "git@gist.github.com:".insteadOf = [
+          "gst:"
           "gist:"
-          "git://gist.github.com/"
         ];
+        "git@gist.github.com:".pushInsteadOf = [ "git://gist.github.com/" ];
         "git://gist.github.com/".insteadOf = "gist:";
       };
+
+      # Auth
+      credential.helper = if isDarwin then "osxkeychain" else "libsecret";
     };
   };
 }
