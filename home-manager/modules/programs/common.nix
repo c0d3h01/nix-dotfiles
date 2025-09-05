@@ -1,7 +1,12 @@
 {
   pkgs,
+  lib,
+  userConfig,
   ...
 }:
+let
+  isWorkstation = userConfig.machineConfig.workstation.enable;
+in
 {
   home.packages =
     with pkgs;
@@ -16,9 +21,8 @@
       file
       icdiff
       glances
-      # fzf
       just
-      gdu # Disk usage analyzer CLI
+      gdu
       imagemagick
     ]
     ++ [
@@ -26,9 +30,8 @@
       lua-language-server
       nil
     ]
-    ++ [
+    ++ lib.optionals isWorkstation [
       # Desk App
-      # Notion App with patch infinity loading
       (callPackage ./notion-app { })
     ];
 }
