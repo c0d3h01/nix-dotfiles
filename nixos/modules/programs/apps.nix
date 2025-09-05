@@ -3,7 +3,8 @@
   lib,
   userConfig,
   ...
-}: {
+}:
+{
   config = lib.mkIf userConfig.machineConfig.workstation.enable {
     programs.wireshark = {
       enable = true;
