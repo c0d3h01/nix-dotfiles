@@ -1,18 +1,33 @@
 {
-  # systemd DNS resolver daemon
-  services.resolved.enable = true;
+  networking.networkmanager.enable = true;
 
-  systemd = {
-    # allow for the system to boot without waiting for the network interfaces are online
-    network.wait-online.enable = false;
+  # Hand DNS to systemd-resolved
+  networking.networkmanager.dns = "systemd-resolved";
 
-    services = {
-      NetworkManager-wait-online.enable = false;
+  services.resolved = {
+    enable = true;
+    dnssec = "allow-downgrade"; # Use DNSSEC when upstream supports it
+    dnsovertls = "opportunistic"; # Try TLS, fall back silently
 
-      # disable networkd and resolved from being restarted on configuration changes
-      # also prevents failures from services that are restarted instead of stopped
-      systemd-networkd.stopIfChanged = false;
-      systemd-resolved.stopIfChanged = false;
-    };
+    # Ordered fallback resolvers
+    fallbackDns = [
+      "1.1.1.1#cloudflare-dns.com"
+      "1.0.0.1#cloudflare-dns.com"
+      "9.9.9.9#dns.quad9.net"
+      "2620:fe::fe#dns.quad9.net"
+    ];
+
+    # Disable legacy noisy protocols
+    llmnr = "false"; # Disable LLMNR
+
+    # extraConfig lines map directly to resolved.conf options not exposed above
+    extraConfig = ''
+      Cache=yes
+      DNSStubListener=yes
+    '';
   };
+
+  # Faster boot: don't block on network-online (ok for workstation)
+  systemd.network.wait-online.enable = false;
+  systemd.services.NetworkManager-wait-online.enable = false;
 }
