@@ -17,6 +17,7 @@ in
 {
   programs.git = {
     enable = true;
+    package = pkgs.git-extras;
 
     userName = "Harshal Sawant";
     userEmail = "harshalsawant.dev@gmail.com";
