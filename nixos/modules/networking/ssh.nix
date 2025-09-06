@@ -5,7 +5,6 @@
     startWhenNeeded = true;
     allowSFTP = true;
     openFirewall = true;
-    # the port(s) openssh daemon should listen on
     ports = [ 22 ];
     settings = {
       # Don't allow root login
