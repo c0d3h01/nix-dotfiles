@@ -14,21 +14,25 @@ in
   networking = lib.mkIf (!cfg.wireless.enable) {
     enableIPv6 = true;
 
+    nameservers = [
+      "1.1.1.1" # Cloudflare primary
+      "1.0.0.1" # Cloudflare secondary
+      "8.8.8.8" # Google
+    ];
+
     networkmanager = {
       enable = true;
-      dns = "systemd-resolved";
+
       plugins = [ pkgs.networkmanager-openvpn ];
 
-      # unmanaged = [
-      #   "interface-name:tailscale*"
-      #   "interface-name:br-*"
-      #   "interface-name:rndis*"
-      #   "interface-name:docker*"
-      #   "interface-name:virbr*"
-      #   "interface-name:vboxnet*"
-      #   "interface-name:waydroid*"
-      #   "type:bridge"
-      # ];
+      dns = "default";
+      appendNameservers = lib.mkForce [];
+
+      # Prevent NetworkManager from overriding our DNS settings
+      insertNameservers = [
+        "1.1.1.1"
+        "1.0.0.1"
+      ];
 
       wifi = {
         # Default is wpa_supplicant
