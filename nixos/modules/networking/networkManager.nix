@@ -23,7 +23,7 @@ in
       powersave = lib.mkForce false;
 
       # MAC address randomization of a Wi-Fi device during scanning
-      scanRandMacAddress = true;
+      scanRandMacAddress = false;
     };
   };
 }

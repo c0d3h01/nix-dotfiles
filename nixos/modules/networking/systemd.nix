@@ -1,6 +1,13 @@
 {
   # systemd DNS resolver daemon
-  services.resolved.enable = true;
+  services.resolved = {
+    enable = true;
+    dnssec = "allow-downgrade";
+    fallbackDns = [
+      "8.8.8.8"
+      "1.1.1.1"
+    ];
+  };
 
   # Faster boot: don't block on network-online
   systemd.network.wait-online.enable = false;
