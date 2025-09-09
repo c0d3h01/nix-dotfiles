@@ -5,43 +5,47 @@
 }:
 let
   cfg = userConfig.machineConfig;
-  enable = cfg.type == "server";
 in
 {
-  networking.wireless = lib.mkIf cfg.networking.wireless.enable {
-    # wpa_supplicant
-    enable = cfg.networking.backend == "wpa_supplicant";
+  config = {
+    # enable wireless database, it helps keeping wifi speedy
+    hardware.wirelessRegulatoryDatabase = true;
 
-    # Allow user to manage networks via `nmcli` or GUI
-    userControlled.enable = true;
+    networking.wireless = {
+      # wpa_supplicant
+      enable = cfg.networking.backend == "wpa_supplicant";
 
-    # Allow imperative commands like `iwlist scan`, `nmcli dev wifi connect`
-    allowAuxiliaryImperativeNetworks = true;
+      # Allow user to manage networks via `nmcli` or GUI
+      userControlled.enable = true;
 
-    # wpa_supplicant: Save network config in /etc/NetworkManager/system-connections/
-    extraConfig = ''
-      update_config=1
-    '';
+      # Allow imperative commands like `iwlist scan`, `nmcli dev wifi connect`
+      allowAuxiliaryImperativeNetworks = true;
 
-    # iwd
-    iwd = {
-      enable = cfg.networking.backend == "iwd";
+      # wpa_supplicant: Save network config in /etc/NetworkManager/system-connections/
+      extraConfig = ''
+        update_config=1
+      '';
 
-      settings = {
-        Settings.AutoConnect = true;
+      # iwd
+      iwd = {
+        enable = cfg.networking.backend == "iwd";
 
-        General = {
-          # AddressRandomization = "network";
-          # AddressRandomizationRange = "full";
+        settings = {
+          Settings.AutoConnect = true;
 
-          # Enable dynamic IP + IPv6 router-based config
-          EnableNetworkConfiguration = true;
-          RoamRetryInterval = 15;
-        };
+          General = {
+            # AddressRandomization = "network";
+            # AddressRandomizationRange = "full";
 
-        Network = {
-          EnableIPv6 = true;
-          RoutePriorityOffset = 300;
+            # Enable dynamic IP + IPv6 router-based config
+            EnableNetworkConfiguration = true;
+            RoamRetryInterval = 15;
+          };
+
+          Network = {
+            EnableIPv6 = true;
+            RoutePriorityOffset = 300;
+          };
         };
       };
     };

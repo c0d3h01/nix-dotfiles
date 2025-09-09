@@ -11,7 +11,6 @@
       bootloader = "systemd"; # Options = "systemd" | "grub"
       cpuType = "amd"; # Options = "amd" | "intel"
       gpuType = "amd"; # Options = "amd" | "nvidia" | "intel"
-      networking.wireless.enable = false;
       networking.backend = "iwd"; # Options = "iwd" | "wpa_supplicant"
       windowManager = "gnome"; # Options = "gnome" | "kde"
     };
