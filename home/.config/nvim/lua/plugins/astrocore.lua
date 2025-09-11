@@ -193,7 +193,10 @@ return {
     )
     map_once(
       "<Leader>e",
-      { function() vim.diagnostic.open_float(nil, { focus = false, border = "rounded" }) end, desc = "Line diagnostics" }
+      {
+        function() vim.diagnostic.open_float(nil, { focus = false, border = "rounded" }) end,
+        desc = "Line diagnostics",
+      }
     )
 
     -- QUICKFIX & LOCATION LIST
