@@ -1,40 +1,55 @@
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  inherit (lib) mkForce;
+in
+{
   services.fail2ban = {
     enable = true;
+
+    # nftables firewall (IPv4/IPv6).
     banaction = "nftables-multiport";
+
+    # Keep allowlist tight for safety.
     ignoreIP = [
       "127.0.0.0/8"
       "::1"
-      "10.0.0.0/8"
-      "172.16.0.0/12"
-      "192.168.0.0/16"
-      "169.254.0.0/16"
-      "fc00::/7"
-      "fe80::/10"
+      # "203.0.113.42"   # example: your admin IP
+      # "2001:db8::/32"  # example: your admin IPv6 range
     ];
 
+    # Progressive bans with a cap; no cross-jail compounding for safety.
     bantime-increment = {
       enable = true;
-      overalljails = true;
+      overalljails = false;
       rndtime = "5m";
       multipliers = "2 4 8 16 32 64 128 256";
-      maxtime = "168h";
+      maxtime = "168h"; # 1 week max
     };
 
     jails = {
       DEFAULT = {
-        settings = {
+        settings = mkForce {
+          backend = "systemd";
+          bantime = "1h";
           findtime = "10m";
+          maxretry = 5;
+          usedns = "no";
+          dbpurgeage = "14d";
         };
       };
 
       sshd = {
         settings = {
-          enable = true;
+          enabled = true;
           port = "ssh";
           filter = "sshd";
           backend = "systemd";
-          logpath = "%(sshd_log)s";
+          journalmatch = "_SYSTEMD_UNIT=sshd.service";
         };
       };
     };
