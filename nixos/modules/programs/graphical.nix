@@ -6,12 +6,16 @@
 }:
 {
   config = lib.mkIf userConfig.machineConfig.workstation.enable {
-    programs = {
-      # we need dconf to interact with gtk
-      dconf.enable = true;
+    # we need dconf to interact with gtk
+    programs.dconf.enable = true;
 
-      # gnome's keyring manager
-      seahorse.enable = true;
-    };
+    # gnome's keyring manager
+    services.gnome.gnome-keyring.enable = true;
+
+    # GUI secrets manager
+    programs.seahorse.enable = true;
+
+    # Automount service
+    services.udisks2.enable = true;
   };
 }
