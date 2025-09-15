@@ -14,6 +14,7 @@
     ./fonts.nix
     ./gnome.nix
     ./gnupg.nix
+    ./kde.nix
     ./libvirt.nix
     ./locale.nix
     ./logind.nix

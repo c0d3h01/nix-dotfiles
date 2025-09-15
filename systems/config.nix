@@ -13,7 +13,7 @@
       cpuType = "amd"; # Options = "amd" | "intel"
       gpuType = "amd"; # Options = "amd" | "nvidia" | "intel"
       networking.backend = "wpa_supplicant"; # Options = "iwd" | "wpa_supplicant"
-      windowManager = "gnome"; # Options = "gnome" | "kde"
+      windowManager = "kde"; # Options = "gnome" | "kde"
     };
 
     devStack = {
