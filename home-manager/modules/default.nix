@@ -1,7 +1,7 @@
 {
   imports = [
-    ./cli
     ./programs
     ./system
+    ./terminal
   ];
 }
