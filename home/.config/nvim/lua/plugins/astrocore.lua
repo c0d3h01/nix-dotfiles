@@ -191,13 +191,10 @@ return {
       "]e",
       { function() vim.diagnostic.goto_next { severity = vim.diagnostic.severity.ERROR } end, desc = "Next error" }
     )
-    map_once(
-      "<Leader>e",
-      {
-        function() vim.diagnostic.open_float(nil, { focus = false, border = "rounded" }) end,
-        desc = "Line diagnostics",
-      }
-    )
+    map_once("<Leader>e", {
+      function() vim.diagnostic.open_float(nil, { focus = false, border = "rounded" }) end,
+      desc = "Line diagnostics",
+    })
 
     -- QUICKFIX & LOCATION LIST
     map_once("<Leader>cq", { "<Cmd>copen<CR>", desc = "Open quickfix" })
