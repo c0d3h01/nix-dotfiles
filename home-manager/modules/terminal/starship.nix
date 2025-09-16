@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ ... }:
 let
   ss = symbol: style: {
     inherit symbol;

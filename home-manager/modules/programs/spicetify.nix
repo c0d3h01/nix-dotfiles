@@ -5,13 +5,15 @@
   userConfig,
   ...
 }:
-
+let
+  inherit (lib) mkIf;
+in
 {
   imports = [
     inputs.spicetify.homeManagerModules.default
   ];
 
-  programs.spicetify = lib.mkIf userConfig.machineConfig.workstation.enable (
+  programs.spicetify = mkIf userConfig.machineConfig.workstation.enable (
     let
       spicePkgs = inputs.spicetify.legacyPackages.${pkgs.stdenv.hostPlatform.system};
     in

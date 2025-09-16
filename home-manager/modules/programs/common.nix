@@ -5,6 +5,7 @@
   ...
 }:
 let
+  inherit (lib) optionals;
   isWorkstation = userConfig.machineConfig.workstation.enable;
 in
 {
@@ -28,7 +29,7 @@ in
       lua-language-server
       nil
     ]
-    ++ lib.optionals isWorkstation [
+    ++ optionals isWorkstation [
       # Desk App
       (callPackage ./notion-app { })
     ];

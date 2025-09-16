@@ -4,9 +4,11 @@
   pkgs,
   ...
 }:
-
+let
+  inherit (lib) mkIf;
+in
 {
-  config = lib.mkIf userConfig.devStack.monitoring.enable {
+  config = mkIf userConfig.devStack.monitoring.enable {
     home.packages = with pkgs; [
       # Recon & Scanning
       amass # DNS subdomain enumeration
