@@ -17,12 +17,12 @@
     };
 
     devStack = {
-      ollama.enable = true;
+      ollama.enable = false;
       tabby.enable = false;
       virtualisation.enable = false; # VM
       monitoring.enable = false; # Monitoring grouped tools
       container = "podman"; # Options = "docker" | "podman"
-      sql.enable = true; # Mysql - DBMS
+      sql.enable = false; # Mysql - DBMS
     };
   };
 }

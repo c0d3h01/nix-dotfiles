@@ -1,9 +1,9 @@
 {
   boot.kernel.sysfs = {
     kernel.mm.transparent_hugepage = {
-      enabled = "always";
-      defrag = "defer";
-      shmem_enabled = "within_size";
+      enabled = "madvise";
+      defrag = "never";
+      shmem_enabled = "never";
     };
   };
 }

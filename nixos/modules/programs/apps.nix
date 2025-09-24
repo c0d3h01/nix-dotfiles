@@ -15,10 +15,10 @@
 
     environment.systemPackages = with pkgs; [
       firefox
+      code-cursor
       ghostty
       android-studio
       vscode-fhs
-      jetbrains.webstorm
       postman
       github-desktop
       drawio

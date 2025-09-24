@@ -15,7 +15,7 @@ in
         enable = true;
 
         # auto magically change the profile based on the battery charging state
-        ppdSettings.main.battery_detection = true;
+        # ppdSettings.main.battery_detection = true;
       };
     };
   };
