@@ -26,7 +26,7 @@ in
       systemPackages = with pkgs; [
         gnome-tweaks
         gnome-photos
-        # thunderbird
+        thunderbird
         rhythmbox
       ];
 

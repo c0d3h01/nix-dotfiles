@@ -16,6 +16,10 @@ in
 
         # auto magically change the profile based on the battery charging state
         ppdSettings.main.battery_detection = true;
+
+        settings = {
+          dynamic_tuning = true;
+        };
       };
     };
   };

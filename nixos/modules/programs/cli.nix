@@ -28,6 +28,7 @@
     uv
     poetry
     strace
+    ltrace
     bandwhich
     man-pages
     netcat

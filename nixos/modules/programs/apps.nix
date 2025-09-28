@@ -17,25 +17,18 @@
       firefox
       code-cursor
       ghostty
-      android-studio
       vscode-fhs
       postman
       github-desktop
       drawio
       slack
-      discord
+      vesktop
       telegram-desktop
       zoom-us
       libreoffice
       obsidian
       anydesk
-      qbittorrent
-      element-desktop
-      signal-desktop
-      ledger-live-desktop
       arduino
-      rpi-imager
-      wineWowPackages.stableFull
     ];
   };
 }

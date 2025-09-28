@@ -23,7 +23,6 @@ in
         intel-media-driver
         libva-vdpau-driver
         intel-compute-runtime
-        vpl-gpu-rt # Quick Sync Video
       ];
 
       enable32Bit = true;
@@ -34,21 +33,12 @@ in
       ];
     };
 
-    # Essential GPU utilities
-    environment.systemPackages = with pkgs; [
-      glxinfo
-      vulkan-tools
-      vulkan-loader
-      libva-utils
-      clinfo
-      intel-gpu-tools
-    ];
-
     # Environment variables for optimal GPU performance
     environment.sessionVariables = {
       LIBVA_DRIVER_NAME = "iHD";
       VDPAU_DRIVER = "iHD";
       OCL_ICD_VENDORS = "intel";
+      MOZ_X11_EGL = "1"; # For Firefox
     };
   };
 }

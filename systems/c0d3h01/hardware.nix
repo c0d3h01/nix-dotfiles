@@ -16,7 +16,10 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = ["defaults" "umask=0077"];
+                mountOptions = [
+                  "defaults"
+                  "umask=0077"
+                ];
               };
             };
             # Swap partition
@@ -35,7 +38,7 @@
               size = "100%";
               content = {
                 type = "btrfs";
-                extraArgs = ["-f"];
+                extraArgs = [ "-f" ];
                 subvolumes = {
                   # Root subvolume
                   "/@" = {

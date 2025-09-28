@@ -42,15 +42,6 @@ in
       dynamicBoost.enable = true;
     };
 
-    # Essential GPU utilities
-    environment.systemPackages = with pkgs; [
-      glxinfo
-      vulkan-tools
-      vulkan-loader
-      libva-utils
-      vdpauinfo
-    ];
-
     boot = {
       kernelParams = [
         "nvidia-drm.modeset=1"
@@ -62,6 +53,7 @@ in
     environment.sessionVariables = {
       LIBVA_DRIVER_NAME = "nvidia";
       VDPAU_DRIVER = "nvidia";
+      MOZ_X11_EGL = "1"; # For Firefox
     };
   };
 }

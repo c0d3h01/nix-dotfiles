@@ -23,8 +23,6 @@ in
         mesa
         amdvlk
         libva-vdpau-driver
-        rocmPackages.clr
-        rocmPackages.clr.icd
       ];
 
       enable32Bit = true;
@@ -35,23 +33,11 @@ in
       ];
     };
 
-    # Essential GPU utilities
-    environment.systemPackages = with pkgs; [
-      glxinfo
-      vulkan-tools
-      vulkan-loader
-      libva-utils
-      clinfo
-    ];
-
     # Environment variables
     environment.sessionVariables = {
-      # VA-API: Use the Gallium driver (modern) or radeonsi
-      # Note: Newer systems use `radeonsi` or `venus` (for AV1), but `radeonsi` is safe default
       LIBVA_DRIVER_NAME = "radeonsi";
-
-      # VDPAU driver selection
       VDPAU_DRIVER = "radeonsi";
+      MOZ_X11_EGL = "1"; # For Firefox
     };
   };
 }
