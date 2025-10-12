@@ -131,7 +131,7 @@ in
   # Network configuration
   networking.useDHCP = mkDefault true;
   networking.dhcpcd.enable = mkDefault true;
-  
+
   networking.interfaces.enp2s0.useDHCP = lib.mkDefault true;
   networking.interfaces.wlp3s0.useDHCP = lib.mkDefault true;
 

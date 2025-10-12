@@ -38,15 +38,9 @@ in
         substitutions = {
           "󰋞 /Documents" = "󰈙 ";
           "󰋞 /Downloads" = " ";
-          "󰋞 /media/music" = " ";
-          "󰋞 /media/pictures" = " ";
-          "󰋞 /media/videos" = " ";
           "󰋞 /Music" = " ";
           "󰋞 /Pictures" = " ";
           "󰋞 /Videos" = " ";
-          "󰋞 /dev" = "󱌢 ";
-          "󰋞 /skl" = "󰑴 ";
-          "󰋞 /.config" = " ";
         };
       };
 

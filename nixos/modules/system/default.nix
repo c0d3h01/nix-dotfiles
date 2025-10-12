@@ -17,6 +17,7 @@
     ./kde.nix
     ./libvirt.nix
     ./locale.nix
+    ./location.nix
     ./logind.nix
     ./logs.nix
     ./oomd.nix

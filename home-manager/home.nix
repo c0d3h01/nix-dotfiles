@@ -6,6 +6,7 @@
 
 {
   imports = [
+    ./environment.nix
     ./modules
     ./secrets.nix
   ];
