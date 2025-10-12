@@ -11,7 +11,6 @@ in
 {
   imports = [
     ./hardware.nix
-    ./tmpfs.nix
   ];
 
   users.users = lib.mkIf isC0d3h01 {

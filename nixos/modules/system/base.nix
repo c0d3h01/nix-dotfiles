@@ -20,6 +20,9 @@ in
   # Zsh program enabled as default user
   programs.zsh.enable = true;
 
+  # configure a setcap wrapper
+  programs.mtr.enable = true;
+
   # Create the main user
   users.users.${userConfig.username} = {
     uid = mkDefault 1000;
@@ -28,19 +31,12 @@ in
     shell = "/run/current-system/sw/bin/zsh";
     extraGroups = [
       "wheel"
-      "nix"
       "networkmanager"
-      "systemd-journal"
       "audio"
       "pipewire"
       "video"
-      "render"
-      "input"
-      "plugdev"
-      "power"
       "wireshark"
       "mysql"
-      "cloudflared"
       "libvirtd"
       "kvm"
     ];

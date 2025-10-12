@@ -124,6 +124,10 @@ in
     };
   };
 
+  # Use tmpfs for /tmp
+  boot.tmp.useTmpfs = mkDefault true;
+  boot.tmp.tmpfsSize = mkDefault "50%";
+
   # Network configuration
   networking.useDHCP = mkDefault false;
   networking.dhcpcd.enable = mkDefault false;
