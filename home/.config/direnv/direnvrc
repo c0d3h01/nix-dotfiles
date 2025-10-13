@@ -1,5 +1,3 @@
-# ~/.config/direnv/direnvrc
-
 # Silence direnv warnings
 export DIRENV_SILENT=true
 
