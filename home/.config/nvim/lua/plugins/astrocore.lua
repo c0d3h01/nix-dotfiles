@@ -11,7 +11,7 @@ return {
       cursorline = true,
       cursorlineopt = "number", -- Only highlight line number, not entire line
       signcolumn = "yes:1", -- Fixed width signcolumn for stability
-      wrap = false,
+      wrap = true,
       termguicolors = true,
       lazyredraw = true, -- Don't redraw while executing macros
 
