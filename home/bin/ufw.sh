@@ -18,6 +18,5 @@ sudo ufw --force enable
 # Enable UFW systemd service to start on boot
 sudo systemctl enable ufw
 
-# Turn on Docker protections
-sudo ufw-docker install
+# Reload firewall
 sudo ufw reload
