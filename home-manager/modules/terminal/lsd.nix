@@ -1,3 +1,6 @@
 {
-  programs.lsd.enable = true;
+  programs.lsd = {
+    enable = true;
+    enableAliases = false;
+  };
 }
