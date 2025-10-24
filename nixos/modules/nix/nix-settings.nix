@@ -36,7 +36,6 @@
       http-connections = 50; # More parallel narinfo fetches
       connect-timeout = 10;
       download-attempts = 4;
-      trusted-substituters = [ ]; # (Reserved; use substituters below)
 
       # Substituters (Caches)
       substituters = [
@@ -56,17 +55,14 @@
       keep-derivations = true;
       keep-outputs = true;
 
+      # Suppress dirty Git warnings
+      warn-dirty = false;
+
       # Security / Trust
       trusted-users = [
         "root"
         "@wheel"
       ];
-      warn-dirty = false; # Suppress dirty Git warnings (set true if you want safety)
-
-      # Misc
-      # Lower default narinfo TTL can make you see updates quickly; defaults are fine.
-      narinfo-cache-positive-ttl = 600;
-      narinfo-cache-negative-ttl = 60;
     };
   };
 }
