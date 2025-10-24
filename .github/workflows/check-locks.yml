@@ -25,5 +25,8 @@ jobs:
                   ref: ${{ inputs.ref && inputs.ref || github.ref_name }}
                   persist-credentials: false
 
+            - name: Install Nix
+              uses: DeterminateSystems/nix-installer-action@v15
+
             - name: Check flake.lock
               run: nix run github:tgirlcloud/pkgs#locker

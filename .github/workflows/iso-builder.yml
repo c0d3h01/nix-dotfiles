@@ -29,6 +29,9 @@ jobs:
               with:
                   persist-credentials: false
 
+            - name: Install Nix
+              uses: DeterminateSystems/nix-installer-action@v15
+
             - name: Build eva Iso
               continue-on-error: false
               run: nix build -L .#nixosConfigurations.eva.config.system.build.isoImage
