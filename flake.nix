@@ -15,7 +15,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-    jovian.follows = "chaotic/jovian";
+    # jovian.follows = "chaotic/jovian";
 
     systems = {
       type = "github";
