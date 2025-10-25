@@ -14,17 +14,16 @@
     };
 
     environment.systemPackages = with pkgs; [
-      # firefox
       code-cursor
       ghostty
       vscode-fhs
       postman
       github-desktop
       drawio
-      # slack
-      # vesktop
-      # telegram-desktop
-      # zoom-us
+      slack
+      discord-ptb
+      telegram-desktop
+      zoom-us
       libreoffice
       obsidian
       anydesk
