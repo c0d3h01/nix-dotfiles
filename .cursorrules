@@ -1,0 +1,192 @@
+# Cursor Rules for NixOS Dotfiles Project
+
+## Project Overview
+This is a NixOS dotfiles repository using flakes, Home Manager, and a modular configuration structure. The project manages system configurations, user environments, and development tools.
+
+## Architecture
+- **NixOS System Config**: `nixos/` - System-level configurations
+- **Home Manager**: `home-manager/` - User-level configurations  
+- **Systems**: `systems/` - Machine-specific configurations
+- **Flake**: `flake/` - Flake configuration and utilities
+- **Secrets**: `secrets/` - Encrypted secrets using sops-nix
+
+## Key Technologies
+- NixOS with flakes
+- Home Manager
+- Disko for disk partitioning
+- SOPS for secrets management
+- Chaotic-nyx for additional packages
+- Spicetify for Spotify customization
+
+## Code Style & Conventions
+
+### Nix Language
+- Use `lib.mkDefault` for optional configurations
+- Prefer `optionals` for conditional package lists
+- Use `inherit` for clean variable passing
+- Follow functional programming principles
+- Use descriptive variable names with camelCase
+
+### File Organization
+- Group related configurations in modules
+- Use `default.nix` for module aggregation
+- Keep machine-specific configs in `systems/`
+- Separate concerns: hardware, networking, services, etc.
+
+### Import Structure
+```nix
+{
+  imports = [
+    ./module1.nix
+    ./module2.nix
+  ];
+}
+```
+
+### Conditional Logic
+```nix
+# Use optionals for conditional packages
+home.packages = optionals userConfig.machineConfig.workstation.enable [
+  pkgs.package1
+  pkgs.package2
+];
+
+# Use mkIf for conditional configurations
+services.xyz.enable = mkIf (condition) true;
+```
+
+## Common Patterns
+
+### Package Management
+- Use `pkgs.package-name` for packages
+- Group packages by category in separate files
+- Use `optionals` for conditional package installation
+
+### Service Configuration
+- Enable services with boolean flags
+- Use `mkDefault` for optional settings
+- Group related services in modules
+
+### Hardware Configuration
+- Use Disko for disk partitioning
+- Separate GPU configurations by type (AMD, Intel, NVIDIA)
+- Use conditional logic for hardware-specific settings
+
+### Security
+- Use SOPS for secrets management
+- Follow principle of least privilege
+- Use proper file permissions (755 for directories, 644 for files)
+
+## Development Workflow
+
+### Testing Changes
+1. Use `nix flake check` to validate syntax
+2. Test with `nixos-rebuild switch --flake .#hostname`
+3. Use `home-manager switch --flake .#username@hostname` for user configs
+
+### Common Commands
+```bash
+# Rebuild system
+just rebuild c0d3h01
+
+# Check flake
+nix flake check
+
+# Update inputs
+nix flake update
+
+# Enter dev shell
+nix develop
+```
+
+### Debugging
+- Use `nix repl` for interactive evaluation
+- Check logs with `journalctl -u service-name`
+- Use `nix why-depends` for dependency analysis
+
+## File-Specific Guidelines
+
+### Flake Files
+- Keep inputs organized by category
+- Use `follows` for input version consistency
+- Document special configurations
+
+### Hardware Files
+- Use Disko for declarative disk management
+- Separate by hardware type (laptop, desktop, server)
+- Include proper mount options for security
+
+### Home Manager Modules
+- Group by program/functionality
+- Use consistent naming conventions
+- Include proper desktop entries for GUI apps
+
+### Service Configurations
+- Enable only necessary services
+- Use proper systemd service configurations
+- Include proper user/group assignments
+
+## Security Considerations
+- Never commit secrets to git
+- Use SOPS for encrypted secrets
+- Set proper file permissions
+- Use tmpfs with correct modes (755, not 1777)
+- Follow NixOS security guidelines
+
+## Performance Tips
+- Use `auto-optimise-store = true` for Nix
+- Enable parallel builds with `max-jobs = "auto"`
+- Use appropriate compression for Btrfs subvolumes
+- Configure swap and zswap properly
+
+## Common Issues & Solutions
+
+### Build Failures
+- Check for missing dependencies
+- Verify package names and versions
+- Use `nix why-depends` for dependency issues
+
+### Permission Issues
+- Check file ownership and permissions
+- Verify service user assignments
+- Use proper tmpfs mount options
+
+### Import Errors
+- Verify file paths are correct
+- Check for circular dependencies
+- Ensure all required arguments are provided
+
+## Best Practices
+1. Keep configurations modular and reusable
+2. Use descriptive names for modules and variables
+3. Document complex configurations
+4. Test changes in a VM before applying to main system
+5. Keep secrets encrypted and separate
+6. Use version control for all configurations
+7. Follow the principle of least privilege
+8. Regular updates and security patches
+
+## Tools Integration
+- Use `just` for common tasks (see justfile)
+- Use `direnv` for development environments
+- Use `nix-your-shell` for shell integration
+- Use `home-manager` for user environment management
+
+## Module Structure Example
+```nix
+{ lib, pkgs, config, userConfig, ... }:
+
+let
+  inherit (lib) optionals mkIf mkDefault;
+in
+{
+  # Configuration here
+  services.example.enable = mkDefault true;
+  
+  home.packages = optionals userConfig.machineConfig.workstation.enable [
+    pkgs.example-package
+  ];
+}
+```
+
+Remember: This is a living configuration that evolves with your needs. Keep it clean, documented, and maintainable.
