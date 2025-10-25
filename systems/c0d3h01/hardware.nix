@@ -17,7 +17,6 @@
                 format = "vfat";
                 mountpoint = "/boot";
                 mountOptions = [
-                  "defaults"
                   "umask=0077"
                 ];
               };
@@ -100,15 +99,6 @@
             };
           };
         };
-      };
-    };
-    nodev = {
-      "/var/tmp" = {
-        fsType = "tmpfs";
-        mountOptions = [
-          "size=1G"
-          "mode=1777"
-        ];
       };
     };
   };

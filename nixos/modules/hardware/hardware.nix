@@ -124,9 +124,12 @@ in
     };
   };
 
-  # Use tmpfs for /tmp
-  # boot.tmp.useTmpfs = mkDefault true;
-  # boot.tmp.tmpfsSize = mkDefault "50%";
+  # Use tmpfs
+  fileSystems."/tmp" = {
+    device = "tmpfs";
+    fsType = "tmpfs";
+    options = [ "mode=1777" "size=4G" ];
+  };
 
   # Network configuration
   networking.useDHCP = mkDefault true;
