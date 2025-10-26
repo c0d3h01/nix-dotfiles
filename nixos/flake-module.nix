@@ -31,7 +31,7 @@ let
               inherit (inputs) self;
             };
             users.${userConfig.username} = {
-              imports = [ ../home-manager/home.nix ];
+              imports = [ ../home-manager/modules/home.nix ];
             };
           };
         }
