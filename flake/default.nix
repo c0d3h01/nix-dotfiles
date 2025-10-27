@@ -1,8 +1,5 @@
 {
   imports = [
-    ./args.nix
-    ./checks.nix
-    ./devshell.nix
-    ./formatter.nix
+    ./modules/default.nix
   ];
 }
