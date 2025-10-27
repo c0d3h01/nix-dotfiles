@@ -5,4 +5,5 @@ repos:
         name: treefmt
         entry: nix develop -c treefmt --fail-on-change
         language: system
-        types: [file, nix]
+        pass_filenames: false
+        always_run: true
