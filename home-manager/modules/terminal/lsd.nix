@@ -1,5 +1,0 @@
-{
-  programs.lsd = {
-    enable = true;
-  };
-}

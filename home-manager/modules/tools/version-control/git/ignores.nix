@@ -1,0 +1,34 @@
+{
+  programs.git.ignores = [
+    ".cache/"
+    ".DS_Store"
+    ".Trashes"
+    ".Trash-*"
+    "*.bak"
+    "*.swp"
+    "*.swo"
+    "*.elc"
+    ".~lock*"
+    "tmp/"
+    "target/"
+    "result"
+    "result-*"
+    "*.exe"
+    "*.exe~"
+    "*.dll"
+    "*.so"
+    "*.dylib"
+    ".direnv/"
+    "node_modules"
+    "vendor"
+    "*.log"
+    ".env"
+    ".env.*"
+    ".idea/"
+    ".vscode/"
+    "dist/"
+    "coverage/"
+  ];
+}
+
+

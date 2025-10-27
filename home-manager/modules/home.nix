@@ -6,9 +6,10 @@
 
 {
   imports = [
+    ./tools
+    ./editors
     ./programs
     ./system
-    ./terminal
   ];
 
   # Let Home Manager install and manage itself.
@@ -20,6 +21,7 @@
   home = {
     inherit (userConfig) username;
     shell.enableShellIntegration = false;
+    shell.enableIonIntegration = true;
     homeDirectory = "/home/${userConfig.username}";
     stateVersion = lib.trivial.release;
     sessionVariables = {
