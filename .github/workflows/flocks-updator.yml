@@ -52,7 +52,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@v20
 
       - name: Validate Flake
-        run: nix flake check
+        run: nix flake check --all-systems
 
       - name: Validate Flake (no IFD)
         run: nix flake check --no-allow-import-from-derivation
@@ -72,7 +72,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@v20
 
       - name: Validate flake.lock
-        run: nix flake check
+        run: nix flake check --all-systems
 
   merge:
     name: Merge Pull Request

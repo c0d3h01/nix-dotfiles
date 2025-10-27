@@ -26,7 +26,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@v20
 
       - name: Validate flake.lock
-        run: nix flake check
+        run: nix flake check --all-systems
 
       - name: Check flake lock integrity
         run: nix run github:tgirlcloud/pkgs#locker
