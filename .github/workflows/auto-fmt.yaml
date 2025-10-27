@@ -40,7 +40,7 @@ jobs:
 
       - name: Format files
         run: |
-          nix fmt --all-systems
+          nix fmt
 
       - name: Check for changes
         id: check_changes
