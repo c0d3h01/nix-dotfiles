@@ -1,9 +1,9 @@
 {
   imports = [
-    ./ctl.nix
-    ./misc.nix
-    ./params.nix
-    ./sysfs.nix
-    ./version.nix
+    ./sysctl.nix
+    ./security.nix
+    ./boot-params.nix
+    ./sysfs-tunables.nix
+    ./kernel-version.nix
   ];
 }

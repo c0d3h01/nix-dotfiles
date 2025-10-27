@@ -1,32 +1,12 @@
 {
   imports = [
     ./media
-    ./appImage.nix
-    ./automount.nix
-    ./base.nix
-    ./console.nix
-    ./dbus.nix
-    ./diff.nix
-    ./docs.nix
-    ./fhs-compact.nix
-    ./firmware.nix
-    ./flatpak.nix
-    ./fonts.nix
-    ./gnome.nix
-    ./gnupg.nix
-    ./kde.nix
-    ./libvirt.nix
-    ./locale.nix
-    ./location.nix
-    ./logind.nix
-    ./logs.nix
-    ./oomd.nix
-    ./printing.nix
-    ./scheduler.nix
-    ./secrets.nix
-    ./serial.nix
-    ./touchpad.nix
-    ./xdg-portals.nix
-    ./xserver.nix
+    ./base
+    ./desktop
+    ./virtualization
+    ./services
+    ./apps
+    ./input
+    ./tools
   ];
 }

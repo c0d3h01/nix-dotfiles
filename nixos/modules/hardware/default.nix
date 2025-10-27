@@ -1,7 +1,7 @@
 {
   imports = [
-    ./filesys
-    ./GPU
+    ./filesystems
+    ./gpu
     ./kernel
     ./power
     ./bootloader.nix

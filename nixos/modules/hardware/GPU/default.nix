@@ -1,7 +1,7 @@
 {
   imports = [
-    ./amdGPU.nix
-    ./intelGPU.nix
-    ./nvidiaGPU.nix
+    ./amd.nix
+    ./intel.nix
+    ./nvidia.nix
   ];
 }
