@@ -58,7 +58,7 @@ jobs:
 
       - name: Open PR
         if: env.NO_CHANGES != '1'
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore: auto-format files"
