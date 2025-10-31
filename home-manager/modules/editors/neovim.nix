@@ -90,7 +90,7 @@ in
   };
 
   xdg.configFile."nvim" = {
-    source = ./nvim;
+    source = ../../../home/.config/nvim;
     recursive = true;
   };
 }

@@ -65,7 +65,7 @@
 
 [merge]
     tool = nvim
-    conflictstyle = zdiff3
+    conflictstyle = diff3
     keepBackup = false
     log = true
 
