@@ -3,21 +3,19 @@
     disk.main = {
       type = "disk";
       device = "/dev/nvme0n1";
+
       content = {
         type = "gpt";
         partitions = {
           ESP = {
             label = "nixos-boot";
-            priority = 1;
             size = "1G";
             type = "EF00";
             content = {
               type = "filesystem";
               format = "vfat";
               mountpoint = "/boot";
-              mountOptions = [
-                "umask=0077"
-              ];
+              mountOptions = [ "umask=0077" ];
             };
           };
 
@@ -38,13 +36,13 @@
               type = "luks";
               name = "crypted";
               settings = {
-                allowDiscards = true;
                 bypassWorkqueues = true;
               };
               content = {
                 type = "btrfs";
                 extraArgs = [ "-f" ];
                 subvolumes = {
+
                   "/@" = {
                     mountpoint = "/";
                     mountOptions = [
@@ -75,8 +73,8 @@
                     ];
                   };
 
-                  "/@log" = {
-                    mountpoint = "/var/log";
+                  "/@tmp" = {
+                    mountpoint = "/var/tmp";
                     mountOptions = [
                       "noatime"
                       "compress=zstd:3"
@@ -85,8 +83,8 @@
                     ];
                   };
 
-                  "/@cache" = {
-                    mountpoint = "/var/cache";
+                  "/@log" = {
+                    mountpoint = "/var/log";
                     mountOptions = [
                       "noatime"
                       "compress=zstd:3"
@@ -100,14 +98,6 @@
           };
         };
       };
-    };
-
-    nodev."/var/tmp" = {
-      fsType = "tmpfs";
-      mountOptions = [
-        "size=4G"
-        "mode=755"
-      ];
     };
   };
 }
