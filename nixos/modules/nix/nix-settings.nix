@@ -34,7 +34,7 @@
       sandbox = pkgs.stdenv.hostPlatform.isLinux;
 
       # Avoid tmpfs exhaustion
-      build-dir = "/var/tmp";
+      # build-dir = "/var/tmp";
 
       # Hard-link identical paths immediately
       auto-optimise-store = true;
