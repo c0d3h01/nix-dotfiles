@@ -14,8 +14,8 @@
 
 ```bash
 # Run Home Manager switch configs
-$ nix run github:nix-community/home-manager -- switch \
-  --flake 'github:c0d3h01/dotfiles#c0d3h01@firus'
+$> nix run github:nix-community/home-manager -- switch \
+  --flake 'github:c0d3h01/dotfiles#harshal@firuslab'
 ```
 
 ---
@@ -24,20 +24,13 @@ $ nix run github:nix-community/home-manager -- switch \
 
 ```bash
 # Partition and format disk with Disko
-$ sudo nix --experimental-features "nix-command flakes" run \
+$> sudo nix --experimental-features "nix-command flakes" run \
   github:nix-community/disko/latest -- \
   --mode destroy,format,mount \
   --yes-wipe-all-disks \
   --flake github:c0d3h01/dotfiles#laptop
 
 # Install NixOS
-$ sudo nixos-install --flake github:c0d3h01/dotfiles#laptop \
+$> sudo nixos-install --flake github:c0d3h01/dotfiles#laptop \
   --no-root-passwd
-
-# OR
-
-# Chaotic Nix Substituter Installation (Optional)
-$ sudo nixos-install --flake github:c0d3h01/dotfiles#laptop --no-root-passwd \
-  --option extra-substituters https://chaotic-nyx.cachix.org \
-  --option extra-trusted-public-keys "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
 ```

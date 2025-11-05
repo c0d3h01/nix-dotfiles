@@ -87,7 +87,7 @@ services.xyz.enable = mkIf (condition) true;
 ### Common Commands
 ```bash
 # Rebuild system
-just rebuild c0d3h01
+just rebuild laptop
 
 # Check flake
 nix flake check
