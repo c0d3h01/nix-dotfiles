@@ -23,6 +23,9 @@ in
   # configure a setcap wrapper
   programs.mtr.enable = true;
 
+  # Install browser for usr.
+  programs.firefox.enable = true;
+
   # Create the main user
   users.users.${userConfig.username} = {
     uid = mkDefault 1000;
