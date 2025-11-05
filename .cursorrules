@@ -15,7 +15,6 @@ This is a NixOS dotfiles repository using flakes, Home Manager, and a modular co
 - Home Manager
 - Disko for disk partitioning
 - SOPS for secrets management
-- Chaotic-nyx for additional packages
 - Spicetify for Spotify customization
 
 ## Code Style & Conventions
