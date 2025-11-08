@@ -11,29 +11,30 @@ in
 {
   config = mkIf (userConfig.devStack.container == "docker") {
     users.users.${userConfig.username}.extraGroups = [ "docker" ];
-
     # Configure Docker
     virtualisation.docker = {
       enable = true;
-      enableOnBoot = false;
+      enableOnBoot = true;
+
+      # Docker filesystem
+      storageDriver = "btrfs";
+
+      # Auto cleaner
       autoPrune = {
         enable = true;
         dates = "weekly";
         flags = [ "--all" ];
       };
-      # Better daemon configuration
+
+      # Daemon configuration
       daemon.settings = {
-        log-driver = "json-file";
-        log-opts = {
-          max-size = "10m";
-          max-file = "3";
-        };
-        default-shm-size = "2g";
-        # Enable experimental features for buildx
-        experimental = true;
-        features = {
-          buildkit = true;
-        };
+        dns = [
+          "1.1.1.1"
+          "8.8.8.8"
+        ];
+        registry-mirrors = [ "https://mirror.gcr.io" ];
+        storage-driver = "overlay2";
+        log-driver = "journald";
       };
     };
 
@@ -49,8 +50,5 @@ in
       kind # Kubernetes in Docker
       helm # Kubernetes package manager
     ];
-
-    # Enable Docker socket activation (start on first use)
-    systemd.sockets.docker.wantedBy = lib.mkForce [ ];
   };
 }
