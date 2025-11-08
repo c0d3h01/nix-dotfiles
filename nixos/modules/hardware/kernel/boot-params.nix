@@ -22,22 +22,22 @@
 
     # Sometimes certain kernel exploits will cause what is called an "oops" which is a kernel panic
     # that is recoverable. This will make it unrecoverable, and therefore safe to those attacks
-    # "oops=panic"
+    "oops=panic"
 
     # only allow signed modules
     "module.sig_enforce=1"
 
     # blocks access to all kernel memory, even preventing administrators from being able to inspect and probe the kernel
-    # "lockdown=confidentiality"
+    "lockdown=confidentiality"
 
     # enable buddy allocator free poisoning
-    # "page_poison=on"
+    "page_poison=on"
 
     # performance improvement for direct-mapped memory-side-cache utilization, reduces the predictability of page allocations
     "page_alloc.shuffle=1"
 
     # for debugging kernel-level slab issues
-    # "slub_debug=FZP"
+    "slub_debug=FZP"
 
     # disable sysrq keys. sysrq is seful for debugging, but also insecure
     "sysrq_always_enabled=0" # 0 | 1 # 0 means disabled
