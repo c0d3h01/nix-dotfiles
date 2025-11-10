@@ -1,5 +1,6 @@
 {
   config,
+  userConfig,
   pkgs,
   nixgl,
   lib,
@@ -8,11 +9,10 @@
 let
   inherit (lib) mkIf mkEnableOption;
   inherit (config.lib.nixGL) wrap;
+  cfg = userConfig.machineConfig;
 in
 {
-  options.programs.custom.glApps.enable = mkEnableOption "Enable GL wrapped apps";
-
-  config = mkIf config.programs.custom.glApps.enable {
+  config = mkIf cfg.glApps {
     # NixGL configuration for GPU support
     nixGL = {
       vulkan.enable = true;

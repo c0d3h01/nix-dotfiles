@@ -1,30 +1,37 @@
 {
+  userConfig,
+  lib,
   pkgs,
   ...
 }:
-
+let
+  inherit (lib) mkIf;
+in
 {
-  home.packages = with pkgs; [
-    dejavu_fonts
-    noto-fonts-color-emoji
-  ];
+  config = mkIf userConfig.machineConfig.theme {
 
-  fonts.fontconfig = {
-    enable = true;
+    home.packages = with pkgs; [
+      dejavu_fonts
+      noto-fonts-color-emoji
+    ];
 
-    defaultFonts = {
-      serif = [
-        "DejaVu Sans"
-      ];
-      sansSerif = [
-        "DejaVu Serif"
-      ];
-      monospace = [
-        "DejaVu Sans Mono"
-      ];
-      emoji = [
-        "Noto Color Emoji"
-      ];
+    fonts.fontconfig = {
+      enable = true;
+
+      defaultFonts = {
+        serif = [
+          "DejaVu Sans"
+        ];
+        sansSerif = [
+          "DejaVu Serif"
+        ];
+        monospace = [
+          "DejaVu Sans Mono"
+        ];
+        emoji = [
+          "Noto Color Emoji"
+        ];
+      };
     };
   };
 }

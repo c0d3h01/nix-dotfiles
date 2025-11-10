@@ -6,7 +6,7 @@
 }:
 let
   inherit (lib) optionals;
-  isWorkstation = userConfig.machineConfig.workstation.enable;
+  isWorkstation = userConfig.machineConfig.montools;
 in
 {
   home.packages =

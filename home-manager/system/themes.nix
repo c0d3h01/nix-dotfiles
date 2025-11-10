@@ -8,7 +8,7 @@ let
   inherit (lib) mkIf;
 in
 {
-  config = mkIf userConfig.machineConfig.workstation.enable {
+  config = mkIf userConfig.machineConfig.theme {
     home.pointerCursor = {
       gtk.enable = true;
       x11.enable = true;

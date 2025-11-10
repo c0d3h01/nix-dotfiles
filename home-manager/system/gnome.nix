@@ -6,9 +6,10 @@
 }:
 let
   inherit (lib) mkIf;
+  cfg = userConfig.machineConfig;
 in
 {
-  config = mkIf (userConfig.machineConfig.windowManager == "gnome") {
+  config = mkIf (cfg.windowManager == "gnome" && cfg.theme) {
 
     programs.gnome-shell = {
       enable = true;
