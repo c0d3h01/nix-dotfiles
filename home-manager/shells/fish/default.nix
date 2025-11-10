@@ -4,7 +4,7 @@ let
 in
 {
   programs.fish = {
-    enable = true;
+    enable = false;
 
     plugins = [ ];
 

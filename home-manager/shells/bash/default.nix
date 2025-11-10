@@ -1,7 +1,7 @@
 { config, ... }:
 {
   programs.bash = {
-    enable = true;
+    enable = false;
     enableCompletion = true;
 
     historyFile = "${config.xdg.stateHome}/bash/history";
