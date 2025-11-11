@@ -26,13 +26,11 @@ in
       enable = true;
       enable32Bit = true;
 
-      extraPackages = with pkgs; [
-        amdvlk
-      ];
+      # extraPackages = with pkgs; [
+      # ];
 
-      extraPackages32 = with pkgs.pkgsi686Linux; [
-        amdvlk
-      ];
+      # extraPackages32 = with pkgs.pkgsi686Linux; [
+      # ];
     };
 
     # LACT - Linux AMDGPU Controller
