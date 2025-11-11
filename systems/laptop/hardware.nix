@@ -8,7 +8,7 @@
         partitions = {
           plainSwap = {
             label = "nixos-swap";
-            size = "100%";
+            size = "8024M";
             content = {
               type = "swap";
               discardPolicy = "both";
@@ -18,7 +18,7 @@
           };
           ESP = {
             name = "ESP";
-            size = "512M";
+            size = "1024M";
             type = "EF00";
             content = {
               type = "filesystem";
