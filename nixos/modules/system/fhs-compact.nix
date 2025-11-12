@@ -20,7 +20,7 @@ let
     xz
     zstd
     openssl
-    curl # libcurl
+    curl
     expat
     libxml2
     icu
@@ -46,6 +46,8 @@ let
 
   # Extra generic libs frequently required but not always necessary.
   extendedLibs = with pkgs; [
+    # System deamon
+    systemd
     # Compression / archiving already mostly covered.
     fuse3
     libsodium
@@ -99,35 +101,11 @@ let
     pipewire
   ];
 
-  optionalSystemdLibs = with pkgs; [
-    systemd
-  ];
-
-  finalLibs =
-    baseLibs
-    ++ extendedLibs
-    ++ optionals (
-      config.services.xserver.enable || config.programs.hyprland.enable || config.programs.sway.enable
-    ) graphicsLibs
-    ++ optionalSystemdLibs;
-
+  finalLibs = baseLibs ++ extendedLibs ++ optionals config.services.xserver.enable graphicsLibs;
 in
 {
   programs.nix-ld = {
     enable = true;
-    # Only runtime libraries. Avoid build tools here.
     libraries = finalLibs;
   };
-
-  # A quick way to inspect what nix-ld will expose
-  # (purely informational; remove if you don't want the derivation).
-  environment.systemPackages = [
-    (pkgs.writeShellScriptBin "show-nix-ld-libs" ''
-      echo "Effective nix-ld runtime library path:"
-      echo "${lib.makeLibraryPath finalLibs}"
-    '')
-  ];
-
-  # Foreign binaries frequently and want clearer diagnostics:
-  # environment.variables.LD_DEBUG = "libs"; # Uncomment temporarily for troubleshooting missing libs.
 }

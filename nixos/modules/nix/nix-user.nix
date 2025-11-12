@@ -43,17 +43,22 @@ in
     uid = mkDefault 1000;
     isNormalUser = true;
     description = userConfig.fullName;
+
+    # z - shell default for users
     shell = "/run/current-system/sw/bin/zsh";
+
+    # only add groups that exist
     extraGroups = [
       "wheel"
+      "nix"
       "networkmanager"
+      "systemd-journal"
       "audio"
       "pipewire"
       "video"
-      "wireshark"
-      "mysql"
-      "libvirtd"
-      "kvm"
+      "input"
+      "plugdev"
+      "power"
     ];
   };
 }

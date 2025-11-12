@@ -20,10 +20,6 @@ in
           package = pkgs.gnomeExtensions.gsconnect;
         }
         {
-          id = "dash-to-dock@micxgx.gmail.com";
-          package = pkgs.gnomeExtensions.dash-to-dock;
-        }
-        {
           id = "appindicatorsupport@rgcjonas.gmail.com";
           package = pkgs.gnomeExtensions.appindicator;
         }
@@ -31,29 +27,27 @@ in
           id = "clipboard-indicator@tudmotu.com";
           package = pkgs.gnomeExtensions.clipboard-indicator;
         }
-        # {
-        #   id = "dash2dock-lite@icedman.github.com";
-        #   package = pkgs.gnomeExtensions.dash2dock-lite;
-        # }
+        {
+          id = "dash2dock-lite@icedman.github.com";
+          package = pkgs.gnomeExtensions.dash2dock-lite;
+        }
       ];
     };
 
     dconf.settings = {
-      # Power settings
       "org/gnome/settings-daemon/plugins/power" = {
         power-button-action = "interactive";
       };
 
-      # "org/gnome/shell/extensions/dash2dock-lite" = {
-      #   calendar-icon = true;
-      #   clock-icon = true;
-      #   mounted-icon = true;
-      #   open-app-animation = true;
-      #   edge-distance = 0.4;
-      #   running-indicator-style = 1;
-      # };
+      "org/gnome/shell/extensions/dash2dock-lite" = {
+        calendar-icon = true;
+        clock-icon = true;
+        mounted-icon = true;
+        open-app-animation = true;
+        edge-distance = 0.4;
+        running-indicator-style = 1;
+      };
 
-      # interface
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
         enable-hot-corners = true;
@@ -64,7 +58,6 @@ in
         show-battery-percentage = true;
       };
 
-      # touchpad
       "org/gnome/desktop/peripherals/touchpad" = {
         tap-to-click = true;
         two-finger-scrolling-enabled = true;
@@ -72,12 +65,10 @@ in
         disable-while-typing = true;
       };
 
-      # keyboard
       "org/gnome/desktop/peripherals/keyboard" = {
         numlock-state = true;
       };
 
-      # workspaces
       "org/gnome/mutter" = {
         dynamic-workspaces = true;
         edge-tiling = false;

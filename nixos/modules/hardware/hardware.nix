@@ -73,11 +73,13 @@ let
 
   commonKernelParams = [
     "nowatchdog"
-    "loglevel=3"
-    "udev.log_level=3"
-    "rd.udev.log_level=3"
+    "loglevel=7"
     "pti=auto"
     "transparent_hugepage=madvise"
+
+    # Performance
+    "pcie_aspm.policy=performance"
+    "nvme_core.default_ps_max_latency_us=0"
   ];
 
   laptopKernelParams = optionals isLaptop [
@@ -86,7 +88,6 @@ let
   ];
 
   desktopKernelParams = optionals (!isLaptop) [
-    "pcie_aspm=performance"
   ];
 
 in
@@ -94,7 +95,16 @@ in
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot = {
-    tmp.cleanOnBoot = true;
+    # load kernel modules for all detected hardware
+    hardwareScan = true;
+
+    # Tmpfs
+    tmp = {
+      useTmpfs = true;
+      cleanOnBoot = true;
+      tmpfsSize = mkDefault "75%";
+      tmpfsHugeMemoryPages = "within_size";
+    };
 
     kernelModules = commonKernelModules ++ cpu.kernelModules or [ ] ++ gpu.kernelModules or [ ];
 
@@ -107,13 +117,16 @@ in
       "ntfs"
       "cifs"
       "nfs"
+      "exfat"
+      "vfat"
     ];
 
     kernelParams =
       commonKernelParams ++ cpu.kernelParams or [ ] ++ laptopKernelParams ++ desktopKernelParams;
 
     initrd = {
-      verbose = false;
+      verbose = true;
+      systemd.enable = true;
       compressor = "zstd";
       compressorArgs = [
         "-3"
@@ -130,6 +143,8 @@ in
         "sd_mod"
         "dm_mod"
         "sr_mod"
+        "usbhid"
+        "uas"
       ];
     };
   };

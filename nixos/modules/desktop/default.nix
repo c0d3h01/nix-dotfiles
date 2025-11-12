@@ -1,10 +1,12 @@
 {
   imports = [
+    ./media
+    ./fonts.nix
     ./gnome.nix
     ./kde.nix
-    ./xserver.nix
+    ./touchpad.nix
     ./xdg-portals.nix
     ./xfce.nix
-    ./fonts.nix
+    ./xserver.nix
   ];
 }

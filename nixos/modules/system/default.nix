@@ -1,11 +1,25 @@
 {
   imports = [
-    ./media
-    ./base
-    ./desktop
-    ./services
-    ./apps
-    ./input
-    ./tools
+    ./appImage.nix
+    ./automount.nix
+    ./console.nix
+    ./dbus.nix
+    ./diff.nix
+    ./docs.nix
+    ./earlyoom.nix
+    ./fhs-compact.nix
+    ./firmware.nix
+    ./flatpak.nix
+    ./gnupg.nix
+    ./irqbalance.nix
+    ./libvirt.nix
+    ./locale.nix
+    ./logind.nix
+    ./logs.nix
+    ./oomd.nix
+    ./printing.nix
+    ./scheduler.nix
+    ./secrets.nix
+    ./serial.nix
   ];
 }

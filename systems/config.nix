@@ -26,7 +26,6 @@
       flutterdevEnable = false;
       virtualisation.enable = false; # VM
       container = "docker"; # Options = "docker" | "podman"
-      sql.enable = true; # Mysql - DBMS
     };
   };
 }

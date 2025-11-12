@@ -14,9 +14,9 @@ in
   environment.systemPackages = lib.mkIf isBtrfs (
     with pkgs;
     [
-      # btrfs-assistant
-      btrfs-progs # Essential Btrfs utilities
-      compsize # Check compression ratios
+      btrfs-assistant
+      btrfs-progs
+      compsize
     ]
   );
 
