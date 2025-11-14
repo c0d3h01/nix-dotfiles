@@ -8,17 +8,13 @@
 }:
 {
   imports = [
-    ./direnv.nix
-    ./ghostty.nix
     ./gnome.nix
     ./htop.nix
-    ./integration.nix
     ./nix-your-shell.nix
     ./nixgl.nix
     ./packages.nix
     ./secrets.nix
     ./spicetify.nix
-    ./starship.nix
     ./themes.nix
     ./variables.nix
   ];
