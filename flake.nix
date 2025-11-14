@@ -8,8 +8,6 @@
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    wezterm.url = "github:wezterm/wezterm?dir=nix";
-
     nixgl.url = "github:nix-community/nixGL";
     nixgl.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -24,11 +22,6 @@
 
     spicetify.url = "github:Gerg-L/spicetify-nix";
     spicetify.inputs.nixpkgs.follows = "nixpkgs";
-
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =

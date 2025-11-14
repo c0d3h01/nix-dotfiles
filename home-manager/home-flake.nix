@@ -23,7 +23,7 @@ let
           self
           ;
       };
-      modules = [ (self + /home-manager/home.nix) ];
+      modules = [ (self + /home-manager/modules/home.nix) ];
     };
 
   # Generate homeConfigurations for all hosts

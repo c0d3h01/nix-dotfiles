@@ -8,14 +8,18 @@
 }:
 {
   imports = [
-    inputs.stylix.homeModules.stylix
-
-    ./git
-    ./programs
-    ./shells
-    ./system
-    ./terminal
-    ./stylix.nix
+    ./direnv.nix
+    ./ghostty.nix
+    ./gnome.nix
+    ./htop.nix
+    ./integration.nix
+    ./nix-your-shell.nix
+    ./nixgl.nix
+    ./packages.nix
+    ./secrets.nix
+    ./spicetify.nix
+    ./starship.nix
+    ./themes.nix
     ./variables.nix
   ];
 
@@ -24,7 +28,6 @@
 
   home = {
     inherit (userConfig) username;
-    # homeDirectory = "/home/${userConfig.username}";
     homeDirectory =
       if pkgs.stdenv.isDarwin then "/Users/${config.home.username}" else "/home/${config.home.username}";
     stateVersion = lib.trivial.release;

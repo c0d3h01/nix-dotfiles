@@ -42,7 +42,7 @@ let
                 ;
             };
             users.${userConfig.username} = {
-              imports = [ (self + /home-manager/home.nix) ];
+              imports = [ (self + /home-manager/modules/home.nix) ];
             };
           };
         }

@@ -37,6 +37,7 @@ let
     openjdk17
     lld
     nasm
+    gitFull
 
     # System Utilities
     ouch

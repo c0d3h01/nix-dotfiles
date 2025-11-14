@@ -1,7 +1,7 @@
 {
   imports = [
     ./media
-    # ./fonts.nix
+    ./fonts.nix
     ./gnome.nix
     ./kde.nix
     ./touchpad.nix

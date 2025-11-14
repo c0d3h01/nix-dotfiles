@@ -33,7 +33,7 @@
           excludes = [
             "secrets/*"
             "gdb/*"
-            "home/.config/zsh/*"
+            "plugins/*"
             ".envrc"
             "*.lock"
             "*.patch"
