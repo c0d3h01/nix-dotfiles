@@ -4,52 +4,30 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    systems = {
-      type = "github";
-      owner = "nix-systems";
-      repo = "default";
-    };
+    systems.url = "github:nix-systems/default";
 
-    nixgl = {
-      type = "github";
-      owner = "nix-community";
-      repo = "nixGL";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
+    wezterm.url = "github:wezterm/wezterm?dir=nix";
+
+    nixgl.url = "github:nix-community/nixGL";
+    nixgl.inputs.nixpkgs.follows = "nixpkgs";
+
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    sops.url = "github:Mic92/sops-nix";
+    sops.inputs.nixpkgs.follows = "nixpkgs";
+
+    spicetify.url = "github:Gerg-L/spicetify-nix";
+    spicetify.inputs.nixpkgs.follows = "nixpkgs";
+
+    stylix = {
+      url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    disko = {
-      type = "github";
-      owner = "nix-community";
-      repo = "disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    flake-parts = {
-      type = "github";
-      owner = "hercules-ci";
-      repo = "flake-parts";
-    };
-
-    home-manager = {
-      type = "github";
-      owner = "nix-community";
-      repo = "home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    sops = {
-      type = "github";
-      owner = "Mic92";
-      repo = "sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    spicetify = {
-      type = "github";
-      owner = "Gerg-L";
-      repo = "spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "systems";
     };
   };
 
