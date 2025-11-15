@@ -10,9 +10,11 @@ let
 in
 {
   config = mkIf cfg.glApps {
-    # nix-gl-host configuration for GPU support
-    nixGL.packages = lib.nixGL.auto.nixGLDefault;
-    nixGL.defaultWrapper = "mesa";
-    nixGL.installScripts = [ "mesa" ];
+    # nix-gl configuration for GPU support
+    nixGL = {
+      packages = lib.nixGL.auto.nixGLDefault;
+      defaultWrapper = "mesa";
+      installScripts = [ "mesa" ];
+    };
   };
 }
