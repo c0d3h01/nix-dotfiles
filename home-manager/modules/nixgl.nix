@@ -2,6 +2,7 @@
   config,
   userConfig,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -12,7 +13,7 @@ in
   config = mkIf cfg.glApps {
     # nix-gl configuration for GPU support
     nixGL = {
-      packages = lib.nixGL.auto.nixGLDefault;
+      packages = pkgs.nixgl.auto.nixGLDefault;
       defaultWrapper = "mesa";
       installScripts = [ "mesa" ];
     };

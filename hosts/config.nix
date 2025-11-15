@@ -15,7 +15,7 @@
       networking.backend = "wpa_supplicant"; # Options = "iwd" | "wpa_supplicant"
       windowManager = "gnome"; # Options = "gnome" | "kde"
       theme = false;
-      glApps = true;
+      glApps = false;
     };
 
     devStack = {

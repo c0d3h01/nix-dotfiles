@@ -1,14 +1,17 @@
 {
+  userConfig,
   pkgs,
   config,
-  nixglLib,
-  nixglPackages,
   ...
 }:
+let
+  cfg = userConfig.machineConfig.glApps;
+  wrap = pkg: if cfg then config.lib.nixGL.wrap pkg else pkg;
+in
 {
   programs.wezterm = {
     enable = true;
-    package = nixglLib.wrap nixglPackages.wezterm;
+    package = wrap pkgs.wezterm;
   };
 
   home.packages = with pkgs; [
@@ -27,5 +30,6 @@
     mise
     direnv
     nix-direnv
+    (callPackage ./notion-app { })
   ];
 }
