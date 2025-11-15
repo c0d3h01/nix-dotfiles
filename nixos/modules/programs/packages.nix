@@ -11,15 +11,13 @@ let
 
   # DESKTOP APPLICATIONS
   desktopApps = with pkgs; [
+    google-chrome
     vscode-fhs
     postman
     github-desktop
     drawio
-    discord
-    telegram-desktop
     libreoffice-still
     arduino
-    obsidian
   ];
 
   # DEVELOPMENT & SYSTEM TOOLS

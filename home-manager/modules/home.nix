@@ -8,6 +8,7 @@
 }:
 {
   imports = [
+    ./firefox.nix
     ./gnome.nix
     ./htop.nix
     ./nix-your-shell.nix

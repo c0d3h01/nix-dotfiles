@@ -24,7 +24,7 @@ in
   programs.mtr.enable = true;
 
   # Install browser for usr.
-  programs.firefox.enable = true;
+  # programs.firefox.enable = true;
 
   # Image/video preview
   services.tumbler.enable = true;
@@ -59,6 +59,8 @@ in
       "input"
       "plugdev"
       "power"
+      "adbusers"
+      "git"
     ];
   };
 }
