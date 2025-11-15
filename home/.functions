@@ -47,9 +47,6 @@ if command -v bat &>/dev/null; then
     }
 fi
 
-# Disk usage
-dsize() { du -sh "${@:-.}" | sort -h; }
-
 # Fuzzy edit
 fe() {
     local file=$(fd --type f --hidden --exclude .git \

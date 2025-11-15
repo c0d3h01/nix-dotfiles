@@ -5,10 +5,10 @@ add_to_path() { [[ -d "$1" && ":$PATH:" != *":$1:"* ]] && path=("$1" $path) }
 ifsource() { [[ -f "$1" ]] && source "$1" }
 
 # Rust Build Environment
-export CARGO_HOME="$HOME/.cargo"
-ifsource "$HOME/.cargo/env"
-ifsource "$HOME/.cargo/bin"
-export CARGO_BUILD_JOBS=4
+export CARGO_HOME="$HOME/local/share/.cargo"
+ifsource "$HOME/local/share/.cargo/env"
+ifsource "$HOME/local/share/.cargo/bin"
+# export CARGO_BUILD_JOBS=4
 # export CARGO_INCREMENTAL=1
 # export RUSTFLAGS="-C link-arg=-fuse-ld=lld -C target-cpu=native"
 # export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=clang
@@ -58,39 +58,24 @@ export PYENV_ROOT="$HOME/.local/share/pyenv"
 export WORKON_HOME="$HOME/.local/share/virtual-envs"
 if [[ -d "$PYENV_ROOT" ]]; then
     add_to_path "$PYENV_ROOT/bin"
-    eval "$(pyenv init --path 2>/dev/null)"
+    eval "$(pyenv init - zsh)"
+    eval "$(pyenv virtualenv-init -)"
 fi
 
-# Node (lazy loaded)
+# nvm - node tool
 export NVM_DIR="$HOME/.local/nvm"
-[[ -s "$NVM_DIR/nvm.sh" ]] && nvm() {
-    unfunction nvm
-    source "$NVM_DIR/nvm.sh"
-    [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
-    nvm "$@"
-}
+ifsource "$NVM_DIR/nvm.sh"
+ifsource "$NVM_DIR/bash_completion"
 
 # Other tools
 add_to_path "$HOME/.local/share/solana/install/active_release/bin"
 
 # Local bins
 add_to_path "$HOME/.local/bin"
-for bin in random helpers utils backpocket git jj docker kubernetes music tmux ai; do
-    add_to_path "$HOME/.local/bin/$bin"
-done
 add_to_path "$HOME/.npm-global/bin"
 add_to_path "$HOME/bin"
 
 # Tool configs
-export TS_MAXFINISHED=13
 export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git --color=always'
 export FZF_DEFAULT_OPTS='--color=bg+:#3c3836,bg:#32302f,spinner:#fb4934,hl:#928374,fg:#ebdbb2,header:#928374,info:#8ec07c,pointer:#fb4934,marker:#fb4934,fg+:#ebdbb2,prompt:#fb4934,hl+:#fb4934'
-export DOCKER_BUILDKIT=1
-export DELVE_EDITOR=",emacs-no-wait"
-export AIDER_GITIGNORE=false
-export AIDER_CHECK_UPDATE=false
 export K9S_CONFIG_DIR="$HOME/.config/k9s"
-
-# Finalize
-typeset -U path
-export PATH
