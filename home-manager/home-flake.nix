@@ -11,6 +11,8 @@ let
       pkgs = import inputs.nixpkgs {
         inherit (userConfig) system;
         config.allowUnfree = true;
+        # Add nixGL overlay to provide nixgl packages
+        overlays = [ inputs.nixgl.overlay ];
       };
 
       extraSpecialArgs = {
