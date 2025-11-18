@@ -44,7 +44,7 @@ in
     installScripts = mkOption {
       type = types.listOf types.str;
       default = [ "mesa" ];
-      description = "Which nixGL scripts to install";
+      description = "Which nixGL scripts to install (reserved for future use)";
     };
   };
 
