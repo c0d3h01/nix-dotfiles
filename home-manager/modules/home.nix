@@ -17,6 +17,7 @@
     ./spicetify.nix
     ./themes.nix
     ./variables.nix
+    ./xdg.nix
   ];
 
   # Let Home Manager install and manage itself.
