@@ -3,8 +3,7 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   inherit (lib) optionals;
   isWorkstation = userConfig.machineConfig.workstation;
 
@@ -93,8 +92,6 @@ let
     cabextract
     mlocate
   ];
-
-in
-{
+in {
   environment.systemPackages = (optionals isWorkstation desktopApps) ++ devSystemTools;
 }

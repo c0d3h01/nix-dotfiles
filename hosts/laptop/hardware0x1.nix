@@ -15,7 +15,7 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [ "umask=0077" ];
+                mountOptions = ["umask=0077"];
               };
             };
 
@@ -39,10 +39,10 @@
                 mountpoint = "/";
                 mountOptions = [
                   "defaults"
-                  "noatime"        # Reduces unnecessary writes
-                  "inode64"        # Required for modern systems
-                  "logbsize=256k"  # Larger log buffer for better metadata performance
-                  "largeio"        # Optimizes I/O size for large, sequential operations
+                  "noatime" # Reduces unnecessary writes
+                  "inode64" # Required for modern systems
+                  "logbsize=256k" # Larger log buffer for better metadata performance
+                  "largeio" # Optimizes I/O size for large, sequential operations
                 ];
               };
             };
