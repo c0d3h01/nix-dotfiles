@@ -58,7 +58,7 @@ in {
     enable = true;
 
     # GPU acceleration
-    package = pkgs.ollama-${currentGpuConfig.acceleration};
+    package = if currentGpuConfig.acceleration == "cpu" then pkgs.ollama else pkgs.ollama-${currentGpuConfig.acceleration};
 
     # Network configuration
     openFirewall = true;
