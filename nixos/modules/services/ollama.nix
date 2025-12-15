@@ -24,8 +24,8 @@
 
     # Auto-load small models suitable for your hardware
     # loadModels = [
-      # "qwen2.5-coder:1.5b"
-      # "llama3.2:1b"
+    # "qwen2.5-coder:1.5b"
+    # "llama3.2:1b"
     # ];
   };
 }
