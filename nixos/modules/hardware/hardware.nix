@@ -1,7 +1,10 @@
-{ config, lib, modulesPath, ... }:
-
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  config,
+  lib,
+  modulesPath,
+  ...
+}: {
+  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
 
   # === BOOT CONFIGURATION ===
   boot = {
@@ -10,10 +13,15 @@
 
     # Kernel modules
     initrd.availableKernelModules = [
-      "nvme" "ahci" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"
+      "nvme"
+      "ahci"
+      "xhci_pci"
+      "usb_storage"
+      "sd_mod"
+      "rtsx_pci_sdmmc"
     ];
-    initrd.kernelModules = [ "amdgpu" ];
-    kernelModules = [ "kvm-amd" ];
+    initrd.kernelModules = ["amdgpu"];
+    kernelModules = ["kvm-amd"];
 
     # Kernel parameters
     kernelParams = [
@@ -26,7 +34,7 @@
     # Initrd optimization
     initrd.systemd.enable = true;
     initrd.compressor = "zstd";
-    initrd.compressorArgs = [ "-19" "-T0" ];
+    initrd.compressorArgs = ["-19" "-T0"];
 
     # Tmpfs
     tmp = {
@@ -35,7 +43,7 @@
     };
 
     # Filesystem support
-    supportedFilesystems = [ "ntfs" "exfat" "vfat" ];
+    supportedFilesystems = ["ntfs" "exfat" "vfat"];
   };
 
   # === HARDWARE FEATURES ===
@@ -87,8 +95,8 @@
 
     # Interface names from your system
     interfaces = {
-      enp2s0.useDHCP = lib.mkDefault true;  # Ethernet
-      wlp3s0.useDHCP = lib.mkDefault true;  # WiFi
+      enp2s0.useDHCP = lib.mkDefault true; # Ethernet
+      wlp3s0.useDHCP = lib.mkDefault true; # WiFi
     };
   };
 
@@ -102,6 +110,6 @@
   };
 
   # === THERMAL/BACKLIGHT ===
-  services.acpid.enable = true;         # ACPI event handling
-  hardware.acpilight.enable = true;     # Backlight control via /sys
+  services.acpid.enable = true; # ACPI event handling
+  hardware.acpilight.enable = true; # Backlight control via /sys
 }
