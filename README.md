@@ -1,19 +1,11 @@
-# **c0d3h01's dotfiles**
+# Installation
 
-## README
-
-- These are my personal dotfiles, managed with [Nix Flakes](https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-flake) and [Home Manager](https://nix-community.github.io/home-manager/).  
-
----
-
-## Installation
-
-### Apply Home Manager Configuration
+## Apply Home Manager Configuration
 
 ```bash
 # Run Home Manager switch configs
 $> nix run github:nix-community/home-manager -- switch \
-  --flake 'github:c0d3h01/dotfiles#harshal@firuslab'
+  --flake 'github:c0d3h01/nix-config#harshal@firuslab'
 ```
 
 ---
@@ -26,9 +18,9 @@ $> sudo nix --experimental-features "nix-command flakes" run \
   github:nix-community/disko/latest -- \
   --mode destroy,format,mount \
   --yes-wipe-all-disks \
-  --flake github:c0d3h01/dotfiles#laptop
+  --flake github:c0d3h01/nix-config#laptop
 
 # Install NixOS
-$> sudo nixos-install --flake github:c0d3h01/dotfiles#laptop \
+$> sudo nixos-install --flake github:c0d3h01/nix-config#laptop \
   --no-root-passwd
 ```
