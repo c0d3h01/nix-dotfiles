@@ -1,5 +1,12 @@
 name: Auto fmt with flake
 
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+
 permissions:
   contents: write
   pull-requests: write
@@ -10,20 +17,12 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: DeterminateSystems/nix-installer-action@v20
-      - run: nix fmt
-      - run: |
-          if ! git diff --cached --quiet; then
-            git config user.name "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add -A
-            git commit -m "style: auto fmt"
-          fi
-
+      - name: Run nix fmt
+        run: nix fmt
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
         with:
-          branch: ${{ github.head_ref }}
-          # force_with_lease: true
+          commit-message: "style: auto fmt"
+          title: "style: auto fmt"
+          branch: auto-fmt
+          delete-branch: true
