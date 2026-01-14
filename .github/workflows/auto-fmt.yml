@@ -1,16 +1,5 @@
 name: Auto fmt with flake
 
-on:
-  push:
-    branches: [master]
-    paths-ignore:
-      - "**/*.lock"
-      - "**/*.md"
-
-concurrency:
-  group: format-${{ github.ref }}
-  cancel-in-progress: true
-
 permissions:
   contents: write
   pull-requests: write
@@ -19,24 +8,22 @@ jobs:
   format:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: DeterminateSystems/nix-installer-action@v20
       - run: nix fmt
       - run: |
-          git add -A
           if ! git diff --cached --quiet; then
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -m 'style: auto fmt'
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "style: auto fmt"
           fi
 
-      - id: pr
+      - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8
-        with:
-          title: style:[Auto formatter with flake]
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - if: steps.pr.outputs.pull-request-number
-        run: gh pr merge ${{ steps.pr.outputs.pull-request-number }} --squash --auto
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          branch: ${{ github.head_ref }}
+          # force_with_lease: true

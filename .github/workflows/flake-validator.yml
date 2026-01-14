@@ -1,23 +1,19 @@
 name: Flake CI - checks, inputs
 
-on:
-  push:
-  pull_request:
-
 jobs:
   check:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: DeterminateSystems/nix-installer-action@v20
-      - name: Check Nix flake inputs
-        uses: DeterminateSystems/flake-checker-action@v2
+      - uses: DeterminateSystems/flake-checker-action@v2
         with:
           check-owner: true
           ignore-missing-flake-lock: false
           fail-mode: true
+
       - name: Check Flake
         run: nix flake check --all-systems --show-trace
