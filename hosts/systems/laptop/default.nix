@@ -7,7 +7,7 @@
 
   # Define your keys here to reuse them
   myKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDgTxUEL0BNaKsL0FXEBY9PJRO0itKILY2Z5Buxzb79N c0d3h01"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICSjL8HGjiSAnLHupMZin095bql7A8+UDfc7t9XCZs8l c0d3h01"
   ];
 in {
   imports = [
