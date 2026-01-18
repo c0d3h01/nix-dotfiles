@@ -9,8 +9,11 @@
 # https://sysctl-explorer.net/
 #
 # we disable sysctl tweaks on wsl since they don't work
-{ lib, options, ... }:
 {
+  lib,
+  options,
+  ...
+}: {
   boot.kernel.sysctl = {
     # The Magic SysRq key is a key combo that allows users connected to the
     # system console of a Linux kernel to perform some low-level commands.
