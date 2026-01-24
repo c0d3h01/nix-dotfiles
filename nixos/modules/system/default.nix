@@ -1,14 +1,21 @@
 {
   imports = [
     ./appImage.nix
+    ./auto-cpufreq.nix
+    ./automount.nix
     ./diff.nix
+    ./earlyoom.nix
+    ./flatpak.nix
     ./fonts.nix
+    ./gnome.nix
     ./libvirt.nix
     ./nix-ld.nix
-    ./oomd.nix
     ./pipewire.nix
+    ./plasma.nix
     ./printing.nix
     ./scheduler.nix
+    ./secrets.nix
+    ./xfce.nix
     ./xserver.nix
   ];
 }
