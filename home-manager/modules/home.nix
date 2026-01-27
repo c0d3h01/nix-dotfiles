@@ -1,13 +1,12 @@
 {
   config,
   userConfig,
-  lib,
   pkgs,
   ...
 }: {
   imports = [
     ./direnv.nix
-    ./dotfiles.nix
+    # ./dotfiles.nix
     ./packages.nix
     ./secrets.nix
     ./spicetify.nix
