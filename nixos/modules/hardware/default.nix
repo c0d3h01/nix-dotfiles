@@ -1,5 +1,6 @@
 {
   imports = [
+    ./udev-rules
     ./bootloader.nix
     ./filesystem.nix
     ./graphics.nix
