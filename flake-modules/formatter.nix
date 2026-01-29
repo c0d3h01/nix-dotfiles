@@ -28,6 +28,7 @@
         tree-root-file = "flake.nix";
 
         excludes = [
+          ".github"
           "secrets/*"
           ".envrc"
           "*.lock"
