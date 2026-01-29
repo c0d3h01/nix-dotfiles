@@ -11,7 +11,7 @@
   ];
 in {
   imports = [
-    ../../disko/hardware0x0.nix
+    ./hardware-configuration.nix
   ];
 
   users.users = lib.mkIf isUsr {
