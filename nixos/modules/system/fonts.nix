@@ -1,14 +1,13 @@
 {pkgs, ...}: {
   fonts.packages = with pkgs; [
     corefonts
-    dejavu_fonts
     noto-fonts
     noto-fonts-color-emoji
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
-    jetbrains-mono
+    nerd-fonts.fira-code
+    nerd-fonts.hack
     nerd-fonts.jetbrains-mono
-    inter
   ];
 
   fonts.fontconfig = {
@@ -20,9 +19,9 @@
       style = "slight";
     };
     defaultFonts = {
-      sansSerif = ["DejaVu Sans"];
-      serif = ["DejaVu Serif"];
-      monospace = ["DejaVu Sans Mono"];
+      sansSerif = ["Noto Sans"];
+      serif = ["Noto Serif"];
+      monospace = ["Noto Sans Mono"];
       emoji = ["Noto Color Emoji"];
     };
   };
