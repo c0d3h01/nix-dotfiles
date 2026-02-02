@@ -34,7 +34,7 @@ jobs:
           branch: nixfmt
 
       - name: Merge Pull Request
-        run: gh pr merge --rebase --auto --delete-branch "$PR"
+        if: ${{ steps.pr.outputs.pull-request-url != '' }}
+        run: gh pr merge --rebase --auto --delete-branch "${{ steps.pr.outputs.pull-request-url }}"
         env:
           GH_TOKEN: ${{ github.token }}
-          PR: ${{ steps.pr.outputs.pull-request-url }}
