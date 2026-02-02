@@ -21,6 +21,7 @@
     zoom-us
     drawio
     libreoffice-still
+    librewolf-bin
     wezterm
   ];
 

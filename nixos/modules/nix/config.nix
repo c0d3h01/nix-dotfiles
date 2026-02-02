@@ -1,18 +1,13 @@
 {
   nixpkgs.config = {
-    # Unfree: allowed
     allowUnfree = true;
-
-    # Narrow unfree scope.
-    allowUnfreePredicate = true;
-
-    # DO NOT allow all insecure packages globally.
+    allowBroken = false;
     allowInsecure = true;
-
-    # Accept Android SDK license
+    allowUnsupportedSystem = false;
     android_sdk.accept_license = true;
-
-    # Usually leave false; enabling hides unsupported attrpaths that may break differently.
-    allowUnsupportedSystem = true;
+    permittedInsecurePackages = [
+      "librewolf-bin-147.0.1-3"
+      "librewolf-bin-unwrapped-147.0.1-3"
+    ];
   };
 }
