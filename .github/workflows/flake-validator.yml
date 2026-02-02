@@ -50,7 +50,7 @@ jobs:
       - name: Check Nix flake inputs
         uses: DeterminateSystems/flake-checker-action@main
         with:
-          flake-lock-path: ../../flake.lock
+          flake-lock-path: ../../../flake.lock
           check-owner: false
           ignore-missing-flake-lock: false
           fail-mode: true
