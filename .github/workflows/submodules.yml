@@ -19,11 +19,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update submodules
+        id: pr
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git submodule update --remote --recursive
-          git diff --quiet || (git add -A && git commit -m "chore: update submodules" && git push)
+          git diff --quiet || (git add -A && git commit -m "chore: update submodules" && git push origin master)
 
       - name: Merge Pull Request
         run: gh pr merge --rebase --auto --delete-branch "$PR"

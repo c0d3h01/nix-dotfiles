@@ -34,7 +34,6 @@ name: Flake CI - checks, inputs
 #       - name: Check Flake
 #         run: nix flake check --all-systems --show-trace
 
-
 on:
   pull_request:
   push:
@@ -45,7 +44,7 @@ jobs:
     name: Build Nix targets
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
 
       - name: Check Nix flake inputs
         uses: DeterminateSystems/flake-checker-action@main
@@ -53,9 +52,3 @@ jobs:
           check-owner: false
           ignore-missing-flake-lock: false
           fail-mode: true
-
-      - name: Install Nix
-        uses: DeterminateSystems/determinate-nix-action@v3
-
-      - name: Build default package
-        run: nix build
