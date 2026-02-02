@@ -24,3 +24,9 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git submodule update --remote --recursive
           git diff --quiet || (git add -A && git commit -m "chore: update submodules" && git push)
+
+      - name: Merge Pull Request
+        run: gh pr merge --rebase --auto --delete-branch "$PR"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ steps.pr.outputs.pull-request-url }}

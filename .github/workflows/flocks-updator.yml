@@ -12,10 +12,19 @@ jobs:
       id-token: write
       issues: write
       pull-requests: write
+
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/determinate-nix-action@v3
+
       - uses: DeterminateSystems/update-flake-lock@main
         with:
           pr-title: "Update Nix flake inputs"
+
+      - name: Merge Pull Request
+        run: gh pr merge --rebase --auto --delete-branch "$PR"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ steps.pr.outputs.pull-request-url }}

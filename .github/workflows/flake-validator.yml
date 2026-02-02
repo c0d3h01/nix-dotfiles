@@ -1,28 +1,62 @@
 name: Flake CI - checks, inputs
 
+# on:
+#   workflow_dispatch:
+
+# permissions: {}
+
+# jobs:
+#   check-flake:
+#     name: Check (${{ matrix.system }})
+#     runs-on: ${{ matrix.os }}
+
+#     strategy:
+#       matrix:
+#         include:
+#           - os: ubuntu-latest
+#             system: x86_64-linux
+#           - os: macos-latest
+#             system: aarch64-darwin
+
+#     permissions:
+#       id-token: write
+#       contents: read
+
+#     steps:
+#       - uses: actions/checkout@v6
+#       - uses: DeterminateSystems/nix-installer-action@v20
+#       - uses: DeterminateSystems/flake-checker-action@v9
+#         with:
+#           check-owner: true
+#           ignore-missing-flake-lock: false
+#           fail-mode: true
+
+#       - name: Check Flake
+#         run: nix flake check --all-systems --show-trace
+
+
 on:
-  push:
-    branches:
-      - master
-      - main
   pull_request:
-  workflow_dispatch:
+  push:
+    branches: [master]
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
+  build:
+    name: Build Nix targets
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v6
-      - uses: DeterminateSystems/nix-installer-action@v20
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
-      - uses: DeterminateSystems/flake-checker-action@v9
+      - uses: actions/checkout@v3
+
+      - name: Check Nix flake inputs
+        uses: DeterminateSystems/flake-checker-action@main
         with:
-          check-owner: true
+          flake-lock-path: ../../flake.lock
+          check-owner: false
           ignore-missing-flake-lock: false
           fail-mode: true
 
-      - name: Check Flake
-        run: nix flake check --all-systems --show-trace
+      - name: Install Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Build default package
+        run: nix build

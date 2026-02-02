@@ -1,28 +1,40 @@
-name: Auto fmt with flake
+name: Auto fmt *.nix src
 
 on:
   push:
     branches:
       - master
-      - main
   pull_request:
+    branches:
+      - master
 
-permissions:
-  contents: write
-  pull-requests: write
+permissions: {}
 
 jobs:
   format:
     runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: write
+      contents: write
+
     steps:
       - uses: actions/checkout@v6
       - uses: DeterminateSystems/nix-installer-action@v20
+
       - name: Run nix fmt
         run: nix fmt
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "style: auto fmt"
-          title: "style: auto fmt"
+          title: "nix fmt: workflow auto format"
           branch: auto-fmt
           delete-branch: true
+
+      - name: Merge Pull Request
+        run: gh pr merge --rebase --auto --delete-branch "$PR"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ steps.pr.outputs.pull-request-url }}
