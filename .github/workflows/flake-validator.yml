@@ -1,50 +1,24 @@
 name: Flake CI - checks, inputs
 
-# on:
-#   workflow_dispatch:
-
-# permissions: {}
-
-# jobs:
-#   check-flake:
-#     name: Check (${{ matrix.system }})
-#     runs-on: ${{ matrix.os }}
-
-#     strategy:
-#       matrix:
-#         include:
-#           - os: ubuntu-latest
-#             system: x86_64-linux
-#           - os: macos-latest
-#             system: aarch64-darwin
-
-#     permissions:
-#       id-token: write
-#       contents: read
-
-#     steps:
-#       - uses: actions/checkout@v6
-#       - uses: DeterminateSystems/nix-installer-action@v20
-#       - uses: DeterminateSystems/flake-checker-action@v9
-#         with:
-#           check-owner: true
-#           ignore-missing-flake-lock: false
-#           fail-mode: true
-
-#       - name: Check Flake
-#         run: nix flake check --all-systems --show-trace
-
 on:
   pull_request:
   push:
     branches: [master]
 
+permissions: {}
+
 jobs:
-  build:
-    name: Build Nix targets
+  check-flake:
+    name: Check flake
     runs-on: ubuntu-22.04
+
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
       - uses: actions/checkout@v6
+      - uses: DeterminateSystems/nix-installer-action@v20
 
       - name: Check Nix flake inputs
         uses: DeterminateSystems/flake-checker-action@main
@@ -52,3 +26,6 @@ jobs:
           check-owner: false
           ignore-missing-flake-lock: false
           fail-mode: true
+
+      - name: Nix flake check
+        run: nix flake check --show-trace
