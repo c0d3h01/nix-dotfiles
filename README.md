@@ -1,4 +1,17 @@
-# Installation
+# Nix Config
+
+Personal NixOS + Home Manager configuration with a focus on developer tooling.
+
+## Highlights
+
+- Home Manager module for core CLI/dev tools with optional workstation extras.
+- LSP/language tooling module for editors.
+
+## Home Manager Module Notes
+
+- Base dev tools are always installed via `modules/home/dev.nix`.
+- Workstation-only tools (compilers, toolchains, Docker, DBs, GUI helpers) are gated behind `userConfig.workstation = true`.
+- Language servers and related tooling live in `modules/home/lsp.nix`.
 
 ## Apply Home Manager Configuration
 
