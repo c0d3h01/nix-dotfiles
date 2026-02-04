@@ -25,8 +25,13 @@ jobs:
       - name: Run nix fmt
         run: nix fmt
 
+      - name: Check formatting (PR only)
+        if: ${{ github.event_name == 'pull_request' }}
+        run: git diff --exit-code
+
       - name: Create Pull Request
         id: pr
+        if: ${{ github.event_name == 'push' }}
         uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "style: auto fmt"
@@ -34,7 +39,7 @@ jobs:
           branch: nixfmt
 
       - name: Merge Pull Request
-        if: ${{ steps.pr.outputs.pull-request-url != '' }}
+        if: ${{ github.event_name == 'push' && steps.pr.outputs.pull-request-url != '' }}
         run: gh pr merge --rebase --auto --delete-branch "${{ steps.pr.outputs.pull-request-url }}"
         env:
           GH_TOKEN: ${{ github.token }}
