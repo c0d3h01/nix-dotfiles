@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   update-submodules:
@@ -19,14 +20,18 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update submodules
+        run: git submodule update --remote --recursive
+
+      - name: Create Pull Request
         id: pr
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git submodule update --remote --recursive
-          git diff --quiet || (git add -A && git commit -m "chore: update submodules" && git push origin master)
+        uses: peter-evans/create-pull-request@v8
+        with:
+          commit-message: "chore: update submodules"
+          title: "chore: update submodules"
+          branch: submodule-updates
 
       - name: Merge Pull Request
+        if: ${{ steps.pr.outputs.pull-request-url != '' }}
         run: gh pr merge --rebase --auto --delete-branch "$PR"
         env:
           GH_TOKEN: ${{ github.token }}
