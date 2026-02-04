@@ -17,7 +17,7 @@
       };
       modules = [
         # Import modules
-        (self + /nixos/modules)
+        (self + /modules/nixos)
         (self + /hosts)
 
         # Disko integration for disk partitioning
@@ -39,7 +39,7 @@
                 ;
             };
             users.${userConfig.username} = {
-              imports = [(self + /home-manager/modules/home.nix)];
+              imports = [(self + /modules/home/home.nix)];
             };
           };
         }

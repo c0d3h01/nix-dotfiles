@@ -19,7 +19,7 @@
           self
           ;
       };
-      modules = [(self + /home-manager/modules/home.nix)];
+      modules = [(self + /modules/home/home.nix)];
     };
 
   # Generate homeConfigurations for all hosts

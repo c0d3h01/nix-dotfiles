@@ -24,9 +24,7 @@
   outputs = inputs:
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
-        ./flake-modules
-        ./home-manager/home-flake.nix
-        ./nixos/nixos-flake.nix
+        ./flake/parts
       ];
     };
 }
