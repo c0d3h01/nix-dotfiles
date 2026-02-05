@@ -7,7 +7,7 @@
   inherit (lib) mkIf;
 in {
   # Add user to docker group for non-root access
-  users.users.${userConfig.username}.extraGroups = [ "docker" ];
+  users.users.${userConfig.username}.extraGroups = ["docker"];
 
   # Docker Configuration
   virtualisation.docker = {
