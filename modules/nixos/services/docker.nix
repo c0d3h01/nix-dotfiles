@@ -7,13 +7,12 @@
   inherit (lib) mkIf;
 in {
   # Add user to docker group for non-root access
-  users.users.${userConfig.username}.extraGroups = ["docker"];
+  users.users.${userConfig.username}.extraGroups = [ "docker" ];
 
   # Docker Configuration
   virtualisation.docker = {
     enable = true;
     enableOnBoot = true;
-    # Auto cleanup - runs weekly, removes all unused images
     autoPrune = {
       enable = true;
       dates = "weekly";
@@ -28,10 +27,15 @@ in {
     docker-buildx # Advanced build features
     lazydocker # Docker TUI (launch: lazydocker)
     dive # Image layer analyzer (usage: dive <image>)
+    hadolint # Dockerfile linter
+    trivy # Container security scanner
+
+    kubernetes
+    kompose # Convert docker-compose to
     kubectl # Kubernetes CLI
     k9s # Kubernetes TUI
     kind # Local K8s clusters
-    hadolint # Dockerfile linter
-    trivy # Container security scanner
+    kubernetes-helm # Kubernetes package manager
+    lens # Kubernetes IDE
   ];
 }

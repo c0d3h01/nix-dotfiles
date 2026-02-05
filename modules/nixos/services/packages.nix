@@ -23,6 +23,7 @@
     libreoffice-still
     librewolf-bin
     wezterm
+    burpsuite
   ];
 
   # DEVELOPMENT & SYSTEM TOOLS
@@ -46,6 +47,11 @@
     wget
     curl
     zstd
+    hashcat
+    nmap
+    metasploit
+    armitage
+    sqlmap
   ];
 in {
   environment.systemPackages =

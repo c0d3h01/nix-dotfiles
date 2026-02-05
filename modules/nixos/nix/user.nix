@@ -34,6 +34,9 @@
   # Zsh program enabled as default user
   programs.zsh.enable = true;
 
+  # Default browser
+  programs.firefox.enable = true;
+
   # Create the main user
   users.users.${userConfig.username} = {
     isNormalUser = true;
@@ -46,6 +49,7 @@
     extraGroups = [
       "wheel"
       "networkmanager"
+      "git"
     ];
   };
 }

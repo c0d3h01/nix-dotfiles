@@ -4,9 +4,9 @@
   pkgs,
   ...
 }: {
-  systemd.tmpfiles.rules = [
-    "d /var/tmp/nix-build 1777 root root - -"
-  ];
+  # systemd.tmpfiles.rules = [
+  #   "d /var/tmp/nix-build 1770 root nixbld - -"
+  # ];
 
   nix = {
     channel.enable = lib.mkDefault false;
@@ -66,7 +66,7 @@
       sandbox = pkgs.stdenv.hostPlatform.isLinux;
 
       # Avoid tmpfs exhaustion
-      build-dir = "/var/tmp/nix-build";
+      # build-dir = "/var/tmp/nix-build";
 
       # Hard-link identical paths immediately
       auto-optimise-store = true;
