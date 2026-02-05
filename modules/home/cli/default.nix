@@ -1,9 +1,9 @@
 {
   imports = [
-    ./shell/bash.nix
-    ./shell/zsh.nix
+    ./shell
     ./starship
     ./bat.nix
+    ./dircolors.nix
     ./direnv.nix
     ./eza.nix
     ./fzf.nix

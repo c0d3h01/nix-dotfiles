@@ -23,6 +23,7 @@ in {
       sapling
       watchman
       just
+      icdiff
       jq
       yq
       unzip

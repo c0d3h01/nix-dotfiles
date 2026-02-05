@@ -1,10 +1,8 @@
 keys:
-  - &harshal age164kg3fq0eaqjxtnc88zyyet5vj274epu3508sq2czfk8ae2wtgms0vj26t
-  - &eva age1slc5p3prmn8hsldxezvsaz29luuhsjxsj7gspk8p506d4xw9rstqeyy0ls
+  - &c0d3h01 age1gy4mys83v95r5cdgp2axgv0ma2yk4xhtxesdwjjfljtmxlclh94s896uy8
 
 creation_rules:
   - path_regex: .*
     key_groups:
       - age:
-          - *harshal
-          - *eva
+          - *c0d3h01
