@@ -8,6 +8,7 @@
     ./bin
     ./cli
     ./environment
+    ./programs
     ./service
   ];
 
