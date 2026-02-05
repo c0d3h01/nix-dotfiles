@@ -1,14 +1,4 @@
-{lib, ...}: {
-  # Network privacy defaults (balanced)
-  networking.networkmanager = {
-    dns = "systemd-resolved";
-    wifi = {
-      macAddress = "random";
-      scanRandMacAddress = true;
-    };
-    ethernet.macAddress = "random";
-  };
-
+{
   services.resolved = {
     enable = true;
     settings.Resolve = {
