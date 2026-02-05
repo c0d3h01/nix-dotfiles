@@ -11,6 +11,7 @@ in {
     [
       # Core CLI/dev tools
       gitFull
+      gh
       git-lfs
       git-crypt
       diffutils
@@ -31,8 +32,6 @@ in {
       just
       jq
       yq
-      gnupg
-      openssh
       unzip
       zip
       file
@@ -46,6 +45,7 @@ in {
       duf
       hyperfine
       tokei
+      gemini-cli
     ]
     ++ optionals isWorkstation [
       # Compilers/build tools
@@ -78,17 +78,4 @@ in {
       # GUI dev helpers
       insomnia
     ];
-
-  programs.ssh = {
-    enable = true;
-    enableDefaultConfig = false;
-    matchBlocks."*" = {
-      compression = true;
-      serverAliveInterval = 60;
-      serverAliveCountMax = 3;
-      addKeysToAgent = "yes";
-    };
-  };
-
-  programs.gpg.enable = true;
 }

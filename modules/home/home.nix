@@ -5,15 +5,10 @@
   ...
 }: {
   imports = [
-    ./direnv.nix
-    ./dev.nix
-    ./lsp.nix
-    ./packages.nix
-    ./secrets.nix
-    ./shell.nix
-    ./spicetify.nix
-    ./tmux.nix
-    ./xdg.nix
+    ./bin
+    ./cli
+    ./environment
+    ./service
   ];
 
   # Let Home Manager install and manage itself.
