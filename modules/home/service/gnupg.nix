@@ -1,3 +1,6 @@
-{
-  programs.gpg.enable = true;
+{config, ...}: {
+  programs.gpg = {
+    enable = true;
+    homedir = "${config.home.homeDirectory}/.gnupg";
+  };
 }
