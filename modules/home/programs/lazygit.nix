@@ -12,10 +12,12 @@
           args = "";
           manualCommit = false;
         };
-        paging = {
-          colorArg = "always";
-          useConfig = true;
-        };
+        pagers = [
+          {
+            colorArg = "always";
+            pager = "diff-so-fancy";
+          }
+        ];
       };
 
       gui = {
