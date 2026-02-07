@@ -49,6 +49,8 @@
     extraGroups = [
       "wheel"
       "networkmanager"
+      "video"
+      "audio"
       "git"
     ];
   };
