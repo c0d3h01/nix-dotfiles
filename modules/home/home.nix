@@ -5,7 +5,6 @@
   ...
 }: {
   imports = [
-    ./bin
     ./cli
     ./environment
     ./programs
