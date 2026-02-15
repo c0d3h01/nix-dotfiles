@@ -4,7 +4,6 @@ _: {
     enableCompletion = true;
 
     bashrcExtra = ''
-
       # Bash history configuration
       export HISTFILE="$HOME/.bash_history"
       export HISTSIZE=5000
@@ -21,32 +20,6 @@ _: {
       shopt -s dirspell
       shopt -s nocaseglob
       shopt -s checkwinsize
-
-      # Helper function
-      ifsource() { [ -f "$1" ] && source "$1"; }
-
-      # Fzf Key Bindings
-      if [ -f /usr/share/fzf/key-bindings.bash ]; then
-          source /usr/share/fzf/key-bindings.bash
-      elif [ -f "$HOME/.fzf/shell/key-bindings.bash" ]; then
-          source "$HOME/.fzf/shell/key-bindings.bash"
-      fi
-
-      # Common navigation aliases
-      alias ..='cd ..'
-      alias ...='cd ../..'
-
-      # System aliases
-      alias cp='cp -i'
-      alias mv='mv -i'
-      alias grep='grep --color=auto'
-      alias free='free -h'
-      alias df='df -hT'
-      alias du='du -hc'
-      alias ip='ip -color=auto'
-      alias diff='diff --color=auto'
-      alias dd='dd status=progress'
-      alias rm='rm -Iv --one-file-system --preserve-root'
 
       # Vi mode for Bash
       set -o vi
