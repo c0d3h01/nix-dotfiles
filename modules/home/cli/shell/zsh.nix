@@ -6,8 +6,8 @@
   programs.zsh = {
     enable = true;
     dotDir = "${config.xdg.configHome}/zsh";
-    initContent = ''
 
+    initContent = ''
       # zsh settings
       export DISABLE_AUTO_TITLE="true"
       export COMPLETION_WAITING_DOTS="false"
@@ -185,45 +185,6 @@
       # Source dir hashes
       ifsource "$HOME/.local/share/zsh/.zsh_dir_hashes"
 
-      # LAZY LOAD NVM - Node Version Manager
-      export NVM_DIR="$HOME/.local/share/nvm"
-      nvm() {
-          unset -f nvm node npm npx
-          [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
-          nvm "$@"
-      }
-      node() {
-          unset -f nvm node npm npx
-          [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
-          node "$@"
-      }
-      npm() {
-          unset -f nvm node npm npx
-          [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
-          npm "$@"
-      }
-      npx() {
-          unset -f nvm node npm npx
-          [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
-          npx "$@"
-      }
-
-      # LAZY LOAD PYENV
-      export PYENV_ROOT="$HOME/.pyenv"
-      if [[ -d "$PYENV_ROOT/bin" ]]; then
-          export PATH="$PYENV_ROOT/bin:$PATH"
-          pyenv() {
-              unset -f pyenv
-              if command -v pyenv >/dev/null 2>&1; then
-                  eval "$(pyenv init - zsh 2>/dev/null)"
-                  pyenv "$@"
-              else
-                  echo "pyenv not found"
-                  return 1
-              fi
-          }
-      fi
-
       # Vim mode
       autoload -Uz edit-command-line
       zle -N edit-command-line
@@ -242,9 +203,6 @@
       bindkey "''${terminfo[kcuu1]}" history-search-backward
       bindkey "''${terminfo[kcud1]}" history-search-forward
       export KEYTIMEOUT=1
-
-      # Prevent broken terminals
-      ttyctl -f
     '';
   };
 }
