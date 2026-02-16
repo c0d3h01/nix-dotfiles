@@ -33,7 +33,6 @@
 
   # Zsh program enabled as default user
   programs.zsh.enable = true;
-  environment.shells = with pkgs; [zsh];
   users.defaultUserShell = pkgs.zsh;
 
   # Default browser
