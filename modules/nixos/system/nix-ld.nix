@@ -1,107 +1,71 @@
 {
-  config,
-  lib,
   pkgs,
+  lib,
+  config,
   ...
-}: let
-  inherit
-    (lib)
-    optionals
-    ;
-  # Core runtime libraries needed by a large class of prebuilt binaries.
-  baseLibs = with pkgs; [
-    glibc # C runtime + ld-linux
-    stdenv.cc.cc.lib # libstdc++
-    zlib
-    bzip2
-    xz
-    zstd
-    openssl
-    curl
-    expat
-    libxml2
-    icu
-    libsodium
-    libunwind
-    libuuid
-    attr
-    acl
-    libffi
-    gmp
-    sqlite
-    libsecret
-    libssh
-    libusb1
-    nspr
-    nss
-    libnotify
-    fontconfig
-    freetype
-    harfbuzz
-    util-linux # for libblkid, libmount, libuuid
-  ];
+}:
+{
+  services.envfs.enable = lib.mkDefault true;
 
-  # Extra generic libs frequently required but not always necessary.
-  extendedLibs = with pkgs; [
-    # System deamon
-    systemd
-    # Compression / archiving already mostly covered.
-    fuse3
-    libsodium
-    # Image / media codecs often needed by GUI apps
-    libpng
-    libjpeg
-    libtiff
-    libwebp
-    # DBus at runtime
-    dbus
-  ];
-
-  # GUI/graphics stack.
-  graphicsLibs = with pkgs; [
-    # Core GTK / GL / X / Wayland relevant libs
-    glib
-    pango
-    cairo
-    gdk-pixbuf
-    atk
-    at-spi2-atk
-    at-spi2-core
-    gtk3
-    gtk4
-    libxkbcommon
-    mesa
-    libglvnd
-    vulkan-loader
-    vulkan-memory-allocator
-    libdrm
-    libva
-    libva-vdpau-driver
-    libappindicator-gtk3
-    # X11 libs commonly referenced
-    xorg.libX11
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXdamage
-    xorg.libXcomposite
-    xorg.libXrender
-    xorg.libXrandr
-    xorg.libXcursor
-    xorg.libXi
-    xorg.libXtst
-    xorg.libXScrnSaver
-    xorg.libxcb
-    xorg.libxkbfile
-    xorg.libxshmfence
-    # Audio
-    alsa-lib
-    pipewire
-  ];
-
-  finalLibs = baseLibs ++ extendedLibs ++ optionals config.services.xserver.enable graphicsLibs;
-in {
-  programs.nix-ld = {
-    enable = true;
-    libraries = finalLibs;
-  };
+  programs.nix-ld.enable = lib.mkDefault true;
+  programs.nix-ld.libraries =
+    with pkgs;
+    [
+      acl
+      attr
+      bzip2
+      dbus
+      expat
+      fontconfig
+      freetype
+      fuse3
+      icu
+      libnotify
+      libsodium
+      libssh
+      libunwind
+      libusb1
+      libuuid
+      nspr
+      nss
+      stdenv.cc.cc
+      util-linux
+      zlib
+      zstd
+    ]
+    ++ lib.optionals (config.hardware.graphics.enable) [
+      pipewire
+      cups
+      libxkbcommon
+      pango
+      mesa
+      libdrm
+      libglvnd
+      libpulseaudio
+      atk
+      cairo
+      alsa-lib
+      at-spi2-atk
+      at-spi2-core
+      gdk-pixbuf
+      glib
+      gtk3
+      libGL
+      libappindicator-gtk3
+      vulkan-loader
+      libx11
+      libxscrnsaver
+      libxcomposite
+      libxcursor
+      libxdamage
+      libxext
+      libxfixes
+      libxi
+      libxrandr
+      libxrender
+      libxtst
+      libxcb
+      libxkbfile
+      libxshmfence
+    ];
 }
