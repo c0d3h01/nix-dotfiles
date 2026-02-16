@@ -33,6 +33,8 @@
 
   # Zsh program enabled as default user
   programs.zsh.enable = true;
+  environment.shells = with pkgs; [ zsh ];
+  users.defaultUserShell = pkgs.zsh;
 
   # Default browser
   programs.firefox.enable = true;
@@ -40,6 +42,7 @@
   # Create the main user
   users.users.${userConfig.username} = {
     isNormalUser = true;
+    createHome = true;
     description = userConfig.fullName;
 
     # z - shell default for users
@@ -51,6 +54,9 @@
       "networkmanager"
       "video"
       "audio"
+      "input"
+      "dialout"
+      "render"
       "git"
     ];
   };
