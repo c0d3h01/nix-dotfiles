@@ -70,7 +70,7 @@
 
     # Developer ergonomics: watchers + file events (editors, build tools)
     "fs.inotify.max_user_watches" = lib.mkDefault 1048576;
-    "fs.inotify.max_user_instances" = lib.mkDefault 1024;
+    "fs.inotify.max_user_instances" = lib.mkForce 1024;
     "fs.inotify.max_queued_events" = lib.mkDefault 16384;
   };
 }
