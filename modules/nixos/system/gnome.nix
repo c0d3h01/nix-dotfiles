@@ -32,7 +32,7 @@ in {
     environment = {
       systemPackages = with pkgs; [
         gnome-tweaks
-        gnome-editor
+        gnome-text-editor
         gnome-console
         gnome-photos
         vlc
