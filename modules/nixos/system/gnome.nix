@@ -36,6 +36,7 @@ in {
         gnome-console
         gnome-photos
         vlc
+        libreoffice-still
         playerctl # gsconnect play/pause command
         pamixer # gcsconnect volume control
 
