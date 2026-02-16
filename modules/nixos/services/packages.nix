@@ -15,7 +15,6 @@
     drawio
     burpsuite
   ];
-
 in {
-  environment.systemPackages = (optionals isWorkstation desktopApps);
+  environment.systemPackages = optionals isWorkstation desktopApps;
 }
