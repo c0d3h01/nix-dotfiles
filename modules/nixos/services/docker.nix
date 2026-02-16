@@ -22,20 +22,9 @@ in {
 
   # Docker and container tools
   environment.systemPackages = with pkgs; [
-    docker # Docker CLI
-    docker-compose # Multi-container apps
-    docker-buildx # Advanced build features
-    lazydocker # Docker TUI (launch: lazydocker)
-    dive # Image layer analyzer (usage: dive <image>)
-    hadolint # Dockerfile linter
-    trivy # Container security scanner
-
-    kubernetes
-    kompose # Convert docker-compose to
-    kubectl # Kubernetes CLI
-    k9s # Kubernetes TUI
-    kind # Local K8s clusters
-    kubernetes-helm # Kubernetes package manager
-    lens # Kubernetes IDE
+    docker
+    docker-compose
+    docker-buildx
+    lazydocker
   ];
 }
