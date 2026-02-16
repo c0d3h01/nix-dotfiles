@@ -10,6 +10,7 @@ in {
     # GNOME desktop environment configuration
     services.desktopManager.gnome.enable = true;
     services.displayManager.gdm.enable = true;
+    services.displayManager.defaultSession = "gnome";
 
     # KDE Connect requires specific ports to be open
     networking.firewall = {
@@ -17,23 +18,26 @@ in {
       allowedUDPPorts = [1716];
     };
 
+    # gsconnect gnome extension
+    programs.kdeconnect = {
+      package = pkgs.gnomeExtensions.gsconnect;
+      enable = true;
+    };
+
     # Enable tuned service for performance tuning
     services.tuned.enable = true;
     services.tuned.settings.dynamic_tuning = true;
-
-    # To disable installing GNOME's suite of applications
-    # and only be left with GNOME shell.
-    services.gnome.core-apps.enable = true;
-    services.gnome.core-developer-tools.enable = false;
-    services.gnome.games.enable = false;
 
     # Exclude unwanted GNOME packages
     environment = {
       systemPackages = with pkgs; [
         gnome-tweaks
+        gnome-editor
         gnome-console
         gnome-photos
         vlc
+        playerctl # gsconnect play/pause command
+        pamixer # gcsconnect volume control
 
         # Gnome extensions
         gnomeExtensions.gsconnect
