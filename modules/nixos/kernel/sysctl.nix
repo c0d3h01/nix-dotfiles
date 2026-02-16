@@ -8,11 +8,7 @@
     # The sysctl swappiness parameter determines the kernel's preference for pushing anonymous pages or page cache to disk in memory-starved situations.
     # A low value causes the kernel to prefer freeing up open files (page cache), a high value causes the kernel to try to use swap space,
     # and a value of 100 means IO cost is assumed to be equal.
-    "vm.swappiness" = lib.mkDefault (
-      if (userConfig.workstation or false)
-      then 120
-      else 60
-    );
+    "vm.swappiness" = lib.mkDefault 100;
 
     # The value controls the tendency of the kernel to reclaim the memory which is used for caching of directory and inode objects (VFS cache).
     # Lowering it from the default value of 100 makes the kernel less inclined to reclaim VFS cache (do not set it to 0, this may produce out-of-memory conditions)
@@ -41,11 +37,7 @@
     "kernel.nmi_watchdog" = lib.mkDefault 0;
 
     # Enable the sysctl setting kernel.unprivileged_userns_clone to allow normal users to run unprivileged containers.
-    "kernel.unprivileged_userns_clone" = lib.mkDefault (
-      if (config.security.unprivilegedUsernsClone or false)
-      then 1
-      else 0
-    );
+    "kernel.unprivileged_userns_clone" = lib.mkDefault 1;
 
     # To hide any kernel messages from the console
     "kernel.printk" = lib.mkDefault "3 3 3 3";
@@ -67,10 +59,5 @@
 
     # Set size of file handles and inode cache
     "fs.file-max" = lib.mkDefault 2097152;
-
-    # Developer ergonomics: watchers + file events (editors, build tools)
-    "fs.inotify.max_user_watches" = lib.mkDefault 1048576;
-    "fs.inotify.max_user_instances" = lib.mkForce 1024;
-    "fs.inotify.max_queued_events" = lib.mkDefault 16384;
   };
 }
