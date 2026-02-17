@@ -2,6 +2,7 @@
   config,
   userConfig,
   pkgs,
+  lib,
   ...
 }: {
   imports = [
