@@ -13,25 +13,25 @@
       fd
       tree-sitter
 
-      # LSP servers
-      lua-language-server
-      nil
-      bash-language-server
-      pyright
-      typescript-language-server
-      nodePackages.typescript
-      vscode-langservers-extracted
-      gopls
-      rust-analyzer
-      zls
-      clang-tools
-      jdt-language-server
-      omnisharp-roslyn
-      phpactor
-      rubyPackages.solargraph
-      dockerfile-language-server
-      yaml-language-server
-      taplo
+      # # LSP servers
+      # lua-language-server
+      # nil
+      # bash-language-server
+      # pyright
+      # typescript-language-server
+      # nodePackages.typescript
+      # vscode-langservers-extracted
+      # gopls
+      # rust-analyzer
+      # zls
+      # clang-tools
+      # jdt-language-server
+      # omnisharp-roslyn
+      # phpactor
+      # rubyPackages.solargraph
+      # dockerfile-language-server
+      # yaml-language-server
+      # taplo
 
       # Debug adapters
       delve
