@@ -25,7 +25,7 @@
     sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
-      BROWSER = "google-chrome-stable";
+      BROWSER = "firefox";
       PAGER = "less -FR";
       DIFFTOOL = "icdiff";
       LC_ALL = "en_IN.UTF-8";
@@ -39,13 +39,7 @@
     };
 
     packages = with pkgs; [
-      freecad
-      openscad
-      kicad
-      cura-appimage
-      arduino-ide
-      graphviz
-
+      gdb
       # langservers
       nil
       nixd
