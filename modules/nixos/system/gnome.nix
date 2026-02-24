@@ -29,8 +29,8 @@ in {
     services.tuned.settings.dynamic_tuning = true;
 
     # Disable - useless services; trackers
-    services.gnome.tracker-miners.enable = mkForce false;
-    services.gnome.tracker.enable = mkForce false;
+    services.gnome.localsearch.enable = mkForce false;
+    services.gnome.tinysparql.enable = mkForce false;
     services.gnome.gnome-online-accounts.enable = mkForce false;
     services.gnome.gnome-initial-setup.enable = mkForce false;
 
