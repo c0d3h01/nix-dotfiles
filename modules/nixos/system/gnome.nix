@@ -4,7 +4,7 @@
   userConfig,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkForce;
 in {
   config = mkIf (userConfig.windowManager == "gnome") {
     # GNOME desktop environment configuration
@@ -27,6 +27,13 @@ in {
     # Enable tuned service for performance tuning
     services.tuned.enable = true;
     services.tuned.settings.dynamic_tuning = true;
+
+    # Disable - useless services; trackers
+    services.gnome.tracker-miners.enable = mkForce false;
+    services.gnome.tracker.enable = mkForce false;
+    services.gnome.gnome-online-accounts.enable = mkForce false;
+    services.gnome.gnome-online-miners.enable = mkForce false;
+    services.gnome.gnome-initial-setup.enable = mkForce false;
 
     # Exclude unwanted GNOME packages
     environment = {
