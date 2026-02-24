@@ -32,7 +32,6 @@ in {
     services.gnome.tracker-miners.enable = mkForce false;
     services.gnome.tracker.enable = mkForce false;
     services.gnome.gnome-online-accounts.enable = mkForce false;
-    services.gnome.gnome-online-miners.enable = mkForce false;
     services.gnome.gnome-initial-setup.enable = mkForce false;
 
     # Exclude unwanted GNOME packages
