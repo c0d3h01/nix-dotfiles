@@ -53,10 +53,6 @@
       "networkmanager"
       "video"
       "audio"
-      "input"
-      "dialout"
-      "render"
-      "git"
     ];
   };
 }
