@@ -1,9 +1,8 @@
 {
-  programs.eza = {
+  programs.starship = {
     enable = true;
     enableZshIntegration = true;
     enableBashIntegration = true;
-    git = true;
-    icons = "always";
+    settings = builtins.fromTOML (builtins.readFile ./starship.toml);
   };
 }

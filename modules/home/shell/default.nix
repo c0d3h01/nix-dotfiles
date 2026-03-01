@@ -1,8 +1,7 @@
 {
   imports = [
-    # keep-sorted start
     ./bash.nix
+    ./starship.nix
     ./zsh.nix
-    # keep-sorted end
   ];
 }

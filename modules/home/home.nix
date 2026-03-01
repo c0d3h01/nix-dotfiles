@@ -1,21 +1,30 @@
 {
   config,
-  userConfig,
-  inputs,
   pkgs,
-  lib,
+  userConfig,
   ...
 }: {
   imports = [
     # keep-sorted start
-    ./cli
-    ./programs
-    ./service
-    inputs.nix-openclaw.homeManagerModules.openclaw
+    ./git
+    ./shell
+    ./bat.nix
+    ./dircolors.nix
+    ./direnv.nix
+    ./fzf.nix
+    ./neovim.nix
+    ./openclaw.nix
+    ./ripgrep.nix
+    ./secrets.nix
+    ./spicetify.nix
+    ./tmux.nix
+    ./wezterm.nix
+    ./xdg.nix
+    ./yt-dlp.nix
+    ./zoxide.nix
     # keep-sorted end
   ];
 
-  # enable - Home Manager.
   programs.home-manager.enable = true;
   home = {
     inherit (userConfig) username;
@@ -23,34 +32,24 @@
       if pkgs.stdenv.isDarwin
       then "/Users/${config.home.username}"
       else "/home/${config.home.username}";
+
     stateVersion = "25.11";
     enableNixpkgsReleaseCheck = false;
 
     sessionVariables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
       BROWSER = "firefox";
-      PAGER = "less -FR";
       DIFFTOOL = "icdiff";
-      LC_ALL = "en_IN.UTF-8";
+      EDITOR = "nvim";
       LANG = "en_IN.UTF-8";
+      LC_ALL = "en_IN.UTF-8";
+      PAGER = "less -FR";
       TERM = "xterm-256color";
+      VISUAL = "nvim";
 
       XDG_CACHE_HOME = "${config.xdg.cacheHome}";
       XDG_CONFIG_HOME = "${config.xdg.configHome}";
       XDG_DATA_HOME = "${config.xdg.dataHome}";
       XDG_STATE_HOME = "${config.xdg.stateHome}";
-    };
-
-    # packages = with pkgs; [
-    # ];
-  };
-
-  xdg = lib.mkForce {
-    enable = true;
-    userDirs = {
-      enable = true;
-      createDirectories = true;
     };
   };
 }

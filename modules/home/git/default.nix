@@ -1,8 +1,13 @@
 {
   pkgs,
   lib,
+  userConfig,
   ...
 }: {
+  imports = [
+    ./lazygit.nix
+  ];
+
   programs.git = {
     enable = true;
     package = pkgs.gitFull;
@@ -15,46 +20,23 @@
 
     ignores =
       lib.filter (l: l != "" && !lib.hasPrefix "#" l)
-      (lib.splitString "\n" (builtins.readFile ./ignore));
+      (lib.splitString "\n" (builtins.readFile ./gitignore));
 
     attributes =
       lib.filter (l: l != "")
-      (lib.splitString "\n" (builtins.readFile ./attributes));
+      (lib.splitString "\n" (builtins.readFile ./gitattributes));
 
     settings = {
       user = {
         name = "Harshal Sawant";
         email = "harshalsawant.dev@gmail.com";
       };
-      alias = {
-        l = "log --oneline --decorate --graph --all";
-        lg = "log --graph --pretty=format:'%C(yellow)%h%Creset %C(cyan)%ad%Creset%C(red)%d%Creset %s %C(blue)[%an]%Creset' --date=short";
-        last = "log -1 HEAD --stat";
-        f = "fetch --prune";
-        fa = "fetch --all --prune --tags";
-        p = "push";
-        pl = "pull --rebase";
-        c = "commit";
-        cm = "commit --message";
-        ca = "commit --all --message";
-        amend = "commit --amend --no-edit";
-        fixup = "commit --fixup";
-        rb = "rebase --interactive --autosquash";
-        rbc = "rebase --continue";
-        rba = "rebase --abort";
-        cp = "cherry-pick";
-        unstage = "reset HEAD --";
-        co = "checkout";
-        sw = "switch";
-        sync = "!git fetch --all --prune --tags && git rebase --autostash --rebase-merges @{u}";
-        wt = "worktree";
-      };
       core = {
         editor = "nvim";
         excludesfile = "~/.config/git/ignore";
         attributesfile = "~/.config/git/attributes";
       };
-      init.defaultBranch = "main";
+      init.defaultBranch = "master";
       push = {
         default = "current";
         autoSetupRemote = true;

@@ -92,42 +92,11 @@
       	add_to_path "$FLUTTER_HOME/bin"
       fi
 
-      # Extract archives
-      extract() {
-          local file="$1" dir="''${2:-.}"
-          [[ ! -f "$file" ]] && { print -u2 "Error: '$file' not found"; return 1; }
-
-          case "''${file:l}" in
-              *.tar.bz2|*.tbz2) tar -xjf "$file" -C "$dir" ;;
-              *.tar.gz|*.tgz)   tar -xzf "$file" -C "$dir" ;;
-              *.tar.xz|*.txz)   tar -xJf "$file" -C "$dir" ;;
-              *.tar.zst|*.tzst) tar -xf "$file" -C "$dir" ;;
-              *.bz2)            bunzip2 -k "$file" ;;
-              *.gz)             gunzip -k "$file" ;;
-              *.tar)            tar -xf "$file" -C "$dir" ;;
-              *.zip)            unzip -q "$file" -d "$dir" ;;
-              *.7z)             7z x "$file" -o"$dir" ;;
-              *.xz)             unxz -k "$file" ;;
-              *.zst)            unzstd "$file" ;;
-              *) print -u2 "Error: Unknown format"; return 1 ;;
-          esac && print "✓ Extracted to '$dir'"
-      }
-
       # Make dir and cd
       mkcd() {
           [[ -z "$1" ]] && { print -u2 "Usage: mkcd <dir>"; return 1; }
           mkdir -p "$1" && cd "$1"
       }
-
-      # kubectl completion
-      if command -v kubectl >/dev/null 2>&1; then
-          source <(kubectl completion zsh)
-      fi
-
-      # Sops completion
-      if command -v sops >/dev/null 2>&1; then
-          source <(sops completion zsh)
-      fi
     '';
   };
 }
