@@ -1,21 +1,17 @@
 {
   imports = [
-    ./ananicy.nix
+    # keep-sorted start
     ./appImage.nix
-    ./automount.nix
+    ./audio.nix
     ./diff.nix
-    ./earlyoom.nix
     ./flatpak.nix
     ./fonts.nix
-    ./gnome.nix
     ./libvirt.nix
     ./nix-ld.nix
-    ./pipewire.nix
-    ./plasma.nix
     ./printing.nix
     ./scheduler.nix
     ./secrets.nix
-    ./xfce.nix
     ./xserver.nix
+    # keep-sorted end
   ];
 }

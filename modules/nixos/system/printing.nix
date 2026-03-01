@@ -5,13 +5,13 @@
 }: {
   services = lib.mkIf userConfig.workstation {
     printing = {
-      enable = true;
+      enable = false;
       openFirewall = true;
     };
 
     # Avahi (mDNS) for network printer discovery
     avahi = {
-      enable = true;
+      enable = false;
       nssmdns4 = true;
       nssmdns6 = true;
       openFirewall = true;

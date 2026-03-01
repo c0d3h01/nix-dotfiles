@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   userConfig,
@@ -13,15 +14,9 @@ in {
     services.displayManager.defaultSession = "gnome";
 
     # KDE Connect requires specific ports to be open
-    networking.firewall = {
+    networking.firewall = lib.mkIf (config.programs.firewall.enable) {
       allowedTCPPorts = [1716]; # KDE connect port
       allowedUDPPorts = [1716];
-    };
-
-    # gsconnect gnome extension
-    programs.kdeconnect = {
-      package = pkgs.gnomeExtensions.gsconnect;
-      enable = true;
     };
 
     # Enable tuned service for performance tuning

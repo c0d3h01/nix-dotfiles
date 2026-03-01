@@ -1,6 +1,7 @@
 {lib, ...}: let
   inherit (lib) mkForce;
 in {
+  services.resolved.enable = true;
   networking.networkmanager = {
     enable = true;
     dns = "systemd-resolved";

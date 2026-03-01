@@ -13,9 +13,7 @@ in
         enable = isWorkstation;
         scheduler = lib.mkDefault "scx_lavd";
         extraArgs = lib.mkDefault [
-          "--performance"
-          "--log-level"
-          "warn"
+          "--autopower"
         ];
       };
     }

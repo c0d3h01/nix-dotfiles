@@ -6,7 +6,11 @@
   userConfig,
   ...
 }: {
-  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
+  imports = [
+    # keep-sorted start
+    (modulesPath + "/installer/scan/not-detected.nix")
+    # keep-sorted end
+  ];
 
   boot = {
     initrd = {
@@ -38,7 +42,6 @@
     # kernel params
     kernelParams = lib.mkDefault [
       "mitigations=off"
-      "zswap.enabled=0"
     ];
 
     # Tmpfs settings

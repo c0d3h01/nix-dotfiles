@@ -1,11 +1,11 @@
 {
   imports = [
-    ./fail2ban.nix
+    # keep-sorted start
     ./firewall.nix
     ./gnupg.nix
     ./networkManager.nix
     ./openssh.nix
-    ./resolved.nix
     ./systemd.nix
+    # keep-sorted end
   ];
 }

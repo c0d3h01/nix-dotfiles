@@ -1,8 +1,9 @@
 {
   imports = [
     # keep-sorted start
-    ./sysctl.nix
-    ./version.nix
+    ./gnome.nix
+    ./plasma.nix
+    ./xfce.nix
     # keep-sorted end
   ];
 }

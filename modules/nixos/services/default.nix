@@ -1,8 +1,9 @@
 {
   imports = [
+    # keep-sorted start
     ./docker.nix
     ./ollama.nix
-    ./packages.nix
     ./wireshark.nix
+    # keep-sorted end
   ];
 }

@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   fonts.packages = with pkgs; [
     corefonts
     noto-fonts
@@ -10,7 +14,7 @@
     nerd-fonts.jetbrains-mono
   ];
 
-  fonts.fontconfig = {
+  fonts.fontconfig = lib.mkForce {
     enable = true;
     antialias = true;
     subpixel.rgba = "rgb";

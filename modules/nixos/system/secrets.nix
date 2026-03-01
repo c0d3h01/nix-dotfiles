@@ -3,7 +3,11 @@
   self,
   ...
 }: {
-  imports = [inputs.sops.nixosModules.sops];
+  imports = [
+    # keep-sorted start
+    inputs.sops.nixosModules.sops
+    # keep-sorted end
+  ];
 
   sops = {
     defaultSopsFile = "${self}/secrets/default.yaml";

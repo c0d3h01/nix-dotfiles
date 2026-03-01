@@ -1,12 +1,11 @@
 {
   imports = [
-    ./udev-rules
-    ./bootloader.nix
+    # keep-sorted start
+    ./bootloader
     ./filesystem.nix
     ./graphics.nix
     ./hardware.nix
-    ./touchpad.nix
-    ./upower.nix
     ./zram.nix
+    # keep-sorted end
   ];
 }

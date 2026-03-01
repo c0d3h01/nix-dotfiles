@@ -4,7 +4,7 @@
     allowBroken = false;
     allowInsecure = false;
     allowUnsupportedSystem = false;
-    permittedInsecurePackages = [
-    ];
+    # permittedInsecurePackages = [
+    # ];
   };
 }
