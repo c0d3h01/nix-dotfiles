@@ -1,9 +1,9 @@
 {
   lib,
-  userConfig,
+  hostProfile,
   ...
 }: let
-  selected = userConfig.bootloader or "systemd";
+  selected = hostProfile.bootloader;
 in {
   boot.loader = lib.mkIf (selected == "limine") {
     # Make Limine the active bootloader.

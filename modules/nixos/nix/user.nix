@@ -1,11 +1,11 @@
 {
   lib,
   pkgs,
-  userConfig,
+  hostConfig,
   ...
 }: {
   # Set hostname
-  networking.hostName = userConfig.hostname;
+  networking.hostName = hostConfig.hostname;
 
   # Set your time zone.
   time.timeZone = "Asia/Kolkata";
@@ -39,10 +39,10 @@
   programs.firefox.enable = true;
 
   # Create the main user
-  users.users.${userConfig.username} = {
+  users.users.${hostConfig.username} = {
     isNormalUser = true;
     createHome = true;
-    description = userConfig.fullName;
+    description = hostConfig.fullName;
 
     # z - shell default for users
     shell = pkgs.zsh;

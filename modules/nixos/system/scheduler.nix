@@ -1,9 +1,9 @@
 {
   lib,
-  userConfig,
+  hostProfile,
   ...
 }: let
-  isWorkstation = userConfig.workstation or false;
+  inherit (hostProfile) isWorkstation;
 in
   lib.mkMerge [
     {

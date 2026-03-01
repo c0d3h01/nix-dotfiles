@@ -1,9 +1,4 @@
-{
-  pkgs,
-  lib,
-  userConfig,
-  ...
-}: let
+{lib, ...}: let
   inherit (lib) mkForce;
 in {
   networking = {

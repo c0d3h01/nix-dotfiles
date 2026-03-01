@@ -1,12 +1,12 @@
 {
   pkgs,
   lib,
-  userConfig,
+  hostProfile,
   ...
 }: let
   inherit (lib) mkIf;
 in {
-  config = mkIf (userConfig.windowManager == "kde") {
+  config = mkIf (hostProfile.windowManager == "kde") {
     # Plasma desktop environment configuration
     services.desktopManager.plasma6.enable = true;
     services.displayManager.sddm.enable = true;

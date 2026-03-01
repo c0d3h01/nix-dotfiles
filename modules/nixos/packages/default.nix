@@ -1,17 +1,19 @@
 {
-  userConfig,
+  hostProfile,
   pkgs,
   lib,
   ...
 }: let
   inherit (lib) optionals;
-  isWorkstation = userConfig.workstation;
+  inherit (hostProfile) isWorkstation;
 
   # DESKTOP APPLICATIONS
   desktopApps = with pkgs; [
     vscode-fhs
+    antigravity-fhs
     postman
     github-desktop
+    slack
     element-desktop
     telegram-desktop
     discord

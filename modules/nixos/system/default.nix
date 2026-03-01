@@ -8,6 +8,7 @@
     ./fonts.nix
     ./libvirt.nix
     ./nix-ld.nix
+    ./oomd.nix
     ./printing.nix
     ./scheduler.nix
     ./secrets.nix

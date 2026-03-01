@@ -1,9 +1,9 @@
 {
   pkgs,
-  userConfig,
+  hostConfig,
   ...
 }: {
-  users.users.${userConfig.username}.extraGroups = ["wireshark"];
+  users.users.${hostConfig.username}.extraGroups = ["wireshark"];
   programs.wireshark = {
     enable = true;
     package = pkgs.wireshark;

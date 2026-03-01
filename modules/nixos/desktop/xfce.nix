@@ -1,11 +1,11 @@
 {
   lib,
-  userConfig,
+  hostProfile,
   ...
 }: let
   inherit (lib) mkIf;
 in {
-  config = mkIf (userConfig.windowManager == "xfce") {
+  config = mkIf (hostProfile.windowManager == "xfce") {
     # XFCE desktop environment
     services.xserver.desktopManager.xfce.enable = true;
     services.displayManager.defaultSession = "xfce";

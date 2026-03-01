@@ -1,12 +1,7 @@
-{
-  lib,
-  userConfig,
-  ...
-}: {
-  # Prefer ZRAM with zswap disabled to keep memory pressure predictable.
+{lib, ...}: {
   zramSwap = {
     enable = lib.mkDefault true;
-    algorithm = lib.mkDefault "laz4";
-    memoryPercent = lib.mkDefault 100;
+    algorithm = lib.mkDefault "lz4";
+    memoryPercent = lib.mkDefault 75;
   };
 }

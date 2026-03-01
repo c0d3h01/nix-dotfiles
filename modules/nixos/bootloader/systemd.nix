@@ -1,9 +1,9 @@
 {
   lib,
-  userConfig,
+  hostProfile,
   ...
 }: let
-  selected = userConfig.bootloader or "systemd";
+  selected = hostProfile.bootloader;
 in {
   boot.loader.systemd-boot = lib.mkIf (selected == "systemd") {
     enable = true;

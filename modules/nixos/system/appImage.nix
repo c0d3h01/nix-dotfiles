@@ -1,11 +1,7 @@
-{
-  userConfig,
-  lib,
-  ...
-}: {
+{hostProfile, ...}: {
   # AppImage support
   programs.appimage = {
-    enable = userConfig.workstation;
+    enable = hostProfile.isWorkstation;
     binfmt = true;
   };
 }

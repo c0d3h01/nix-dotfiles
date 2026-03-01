@@ -1,9 +1,9 @@
 {
   lib,
-  userConfig,
+  hostProfile,
   ...
 }: let
-  selected = userConfig.bootloader or "systemd";
+  selected = hostProfile.bootloader;
 in {
   boot.loader.grub = lib.mkIf (selected == "grub") {
     enable = true;

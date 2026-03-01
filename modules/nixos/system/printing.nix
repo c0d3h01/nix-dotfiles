@@ -1,9 +1,9 @@
 {
   lib,
-  userConfig,
+  hostProfile,
   ...
 }: {
-  services = lib.mkIf userConfig.workstation {
+  services = lib.mkIf hostProfile.isWorkstation {
     printing = {
       enable = false;
       openFirewall = true;

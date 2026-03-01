@@ -1,14 +1,14 @@
 {
   lib,
   pkgs,
-  userConfig,
+  hostProfile,
   ...
 }: {
   hardware.graphics = {
     enable = lib.mkDefault true;
-    enable32Bit = lib.mkDefault (userConfig.workstation or false);
+    enable32Bit = lib.mkDefault hostProfile.isWorkstation;
 
-    extraPackages = lib.mkIf (userConfig.workstation or false) (with pkgs; [
+    extraPackages = lib.mkIf hostProfile.isWorkstation (with pkgs; [
       rocmPackages.clr # Vulkan driver
       rocmPackages.clr.icd # OpenCL for parallel compute
     ]);

@@ -2,12 +2,12 @@
   config,
   pkgs,
   lib,
-  userConfig,
+  hostProfile,
   ...
 }: let
   inherit (lib) mkIf mkForce;
 in {
-  config = mkIf (userConfig.windowManager == "gnome") {
+  config = mkIf (hostProfile.windowManager == "gnome") {
     # GNOME desktop environment configuration
     services.desktopManager.gnome.enable = true;
     services.displayManager.gdm.enable = true;

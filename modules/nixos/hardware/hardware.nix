@@ -3,7 +3,6 @@
   lib,
   pkgs,
   modulesPath,
-  userConfig,
   ...
 }: {
   imports = [
