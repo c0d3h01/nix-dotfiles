@@ -1,9 +1,26 @@
 .PHONY: help home rebuild clean check
 
+# Never print dir entry's
+MAKEFLAGS += --no-print-directory
+
 DEFAULT_HOST ?= $(shell hostname)
 USER_NAME ?= $(shell whoami)
 
 .DEFAULT_GOAL := help
+
+# Allow `make home <host>` / `make rebuild <host>` as shorthand.
+CMD := $(firstword $(MAKECMDGOALS))
+ARG := $(word 2,$(MAKECMDGOALS))
+ifneq ($(filter home rebuild,$(CMD)),)
+  ifeq ($(HOST),)
+    HOST := $(ARG)
+  endif
+  ifneq ($(ARG),)
+    .PHONY: $(ARG)
+$(ARG):
+	@:
+  endif
+endif
 
 help:
 	@echo "Available commands:"
