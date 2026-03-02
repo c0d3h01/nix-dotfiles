@@ -1,3 +1,4 @@
+# Purpose: sops-nix secret management for home-manager
 {
   inputs,
   self,

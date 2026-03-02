@@ -1,3 +1,4 @@
+# Purpose: openclaw — AI agent framework
 {
   config,
   lib,
@@ -48,7 +49,6 @@ in {
       instances.default = {
         enable = true;
         plugins = [
-          # { source = "github:acme/hello-world"; }
         ];
       };
     };

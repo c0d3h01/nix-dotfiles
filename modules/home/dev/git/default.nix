@@ -1,3 +1,4 @@
+# Purpose: git configuration with signing, aliases, and lazygit
 {
   pkgs,
   lib,

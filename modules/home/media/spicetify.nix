@@ -1,3 +1,4 @@
+# Purpose: spicetify — themed Spotify client
 {
   config,
   lib,

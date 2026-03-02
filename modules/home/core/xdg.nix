@@ -1,3 +1,4 @@
+# Purpose: XDG base directory specification
 {lib, ...}: {
   xdg = lib.mkForce {
     enable = true;

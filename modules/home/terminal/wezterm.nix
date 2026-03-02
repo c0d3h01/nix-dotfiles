@@ -1,3 +1,4 @@
+# Purpose: wezterm — GPU-accelerated terminal emulator
 {
   programs.wezterm = {
     enable = true;

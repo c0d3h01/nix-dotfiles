@@ -1,3 +1,4 @@
+# Purpose: dircolors — colorized ls/dir output
 {
   programs.dircolors = {
     enable = true;

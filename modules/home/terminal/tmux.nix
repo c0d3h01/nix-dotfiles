@@ -1,3 +1,4 @@
+# Purpose: tmux — terminal multiplexer with vi keybindings
 {pkgs, ...}: {
   programs.tmux = {
     enable = true;

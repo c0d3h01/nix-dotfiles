@@ -1,3 +1,4 @@
+# Purpose: neovim editor with treesitter and language support
 {pkgs, ...}: {
   programs.neovim = {
     enable = true;
@@ -11,10 +12,5 @@
     extraPackages = with pkgs; [
       tree-sitter
     ];
-
-    # plugins = with pkgs.vimPlugins; [
-    # ];
-
-    # initLua = builtins.readFile ./init.lua;
   };
 }

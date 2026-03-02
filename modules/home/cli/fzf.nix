@@ -1,3 +1,4 @@
+# Purpose: fzf — fuzzy finder with gruvbox theme
 {
   programs.fzf = {
     enable = true;
