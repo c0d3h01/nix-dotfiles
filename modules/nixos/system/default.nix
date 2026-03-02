@@ -1,17 +1,16 @@
+# System — core system services, fonts, audio, packages, user management
 {
   imports = [
     # keep-sorted start
-    ./appImage.nix
     ./audio.nix
     ./diff.nix
-    ./flatpak.nix
     ./fonts.nix
-    ./libvirt.nix
     ./nix-ld.nix
     ./oomd.nix
+    ./packages.nix
     ./printing.nix
     ./scheduler.nix
-    ./secrets.nix
+    ./user.nix
     ./xserver.nix
     # keep-sorted end
   ];

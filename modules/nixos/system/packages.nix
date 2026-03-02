@@ -1,3 +1,4 @@
+# System — desktop application packages
 {
   hostProfile,
   pkgs,
@@ -7,7 +8,6 @@
   inherit (lib) optionals;
   inherit (hostProfile) isWorkstation;
 
-  # DESKTOP APPLICATIONS
   desktopApps = with pkgs; [
     vscode-fhs
     antigravity-fhs

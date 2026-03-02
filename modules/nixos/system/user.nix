@@ -1,18 +1,18 @@
+# System — user management, hostname, timezone, locale
 {
   lib,
   pkgs,
   hostConfig,
   ...
 }: {
-  # Set hostname
+  # Hostname from host registry
   networking.hostName = hostConfig.hostname;
 
-  # Set your time zone.
+  # Timezone
   time.timeZone = "Asia/Kolkata";
 
-  # Select internationalisation properties.
+  # Internationalisation
   i18n.defaultLocale = "en_IN";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_IN";
     LC_IDENTIFICATION = "en_IN";
@@ -31,23 +31,20 @@
   # Add ~/.local/bin to PATH
   environment.localBinInPath = true;
 
-  # Zsh program enabled as default user
+  # Default shell — zsh
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
   # Default browser
   programs.firefox.enable = true;
 
-  # Create the main user
+  # Main user account
   users.users.${hostConfig.username} = {
     isNormalUser = true;
     createHome = true;
     description = hostConfig.fullName;
-
-    # z - shell default for users
     shell = pkgs.zsh;
 
-    # Add global user groups
     extraGroups = [
       "wheel"
       "networkmanager"

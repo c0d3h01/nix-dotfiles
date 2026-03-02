@@ -1,11 +1,11 @@
+# Networking — connectivity, firewall, DNS, SSH
 {
   imports = [
     # keep-sorted start
     ./firewall.nix
-    ./gnupg.nix
-    ./networkManager.nix
+    ./network-manager.nix
     ./openssh.nix
-    ./systemd.nix
+    ./wait-online.nix
     # keep-sorted end
   ];
 }

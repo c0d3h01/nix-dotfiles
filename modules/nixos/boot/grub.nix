@@ -1,3 +1,4 @@
+# Boot backend — GRUB (EFI)
 {
   lib,
   hostProfile,

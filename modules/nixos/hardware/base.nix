@@ -1,3 +1,4 @@
+# Hardware — base platform detection, initrd, firmware, tmpfs
 {
   config,
   lib,
@@ -38,12 +39,12 @@
       (lib.mkIf (config.hardware.cpu.intel.updateMicrocode or false) ["kvm-intel"])
     ];
 
-    # kernel params
+    # Kernel parameters — disable mitigations for performance on trusted machines
     kernelParams = lib.mkDefault [
       "mitigations=off"
     ];
 
-    # Tmpfs settings
+    # Tmpfs — use RAM-backed /tmp for faster builds, reduce disk wear
     tmp = {
       useTmpfs = true;
       tmpfsSize = "60%";
@@ -61,13 +62,13 @@
   networking.useDHCP = lib.mkDefault true;
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
-  # Firmware updates
+  # Firmware updates via fwupd
   services.fwupd = {
     enable = true;
     daemonSettings.EspLocation = config.boot.loader.efi.efiSysMountPoint;
   };
 
-  # ACPI/backlight
+  # ACPI / backlight control
   services.acpid.enable = true;
   hardware.acpilight.enable = true;
 }

@@ -1,3 +1,4 @@
+# Security — sops-nix for age-encrypted secrets
 {
   inputs,
   self,

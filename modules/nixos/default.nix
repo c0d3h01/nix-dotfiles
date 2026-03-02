@@ -1,17 +1,17 @@
+# NixOS modules — top-level entry point
 {
   imports = [
     # keep-sorted start
-    ./bootloader
+    ./boot
     ./desktop
     ./hardware
     ./kernel
     ./networking
     ./nix
-    ./packages
     ./profile.nix
+    ./security
     ./services
     ./system
-    ./udev-rules
     # keep-sorted end
   ];
 }

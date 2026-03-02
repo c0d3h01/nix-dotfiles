@@ -1,3 +1,4 @@
+# Boot backend — systemd-boot (EFI)
 {
   lib,
   hostProfile,
