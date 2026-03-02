@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - uses: DeterminateSystems/nix-installer-action@v20
+      - uses: DeterminateSystems/determinate-nix-action@v3
 
       - name: Check flake inputs
         uses: DeterminateSystems/flake-checker-action@main
