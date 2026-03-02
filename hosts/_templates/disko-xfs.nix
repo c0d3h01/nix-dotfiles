@@ -1,3 +1,4 @@
+# Purpose: XFS disko template for reference (not used by any host)
 {
   disko.devices = {
     disk = {

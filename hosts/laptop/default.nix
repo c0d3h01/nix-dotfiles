@@ -1,10 +1,11 @@
+# Purpose: laptop host-specific configuration (users, SSH keys, disko)
 let
   sshKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICSjL8HGjiSAnLHupMZin095bql7A8+UDfc7t9XCZs8l c0d3h01"
   ];
 in {
   imports = [
-    ../disko/hardware0x0.nix
+    ./disko.nix
   ];
 
   users.users = {

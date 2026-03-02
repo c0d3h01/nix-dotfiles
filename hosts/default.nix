@@ -3,7 +3,7 @@
 {
   laptop = {
     system = "x86_64-linux";
-    modules = [./laptop.nix];
+    modules = [./laptop];
 
     users.c0d3h01 = {
       isMainUser = true;

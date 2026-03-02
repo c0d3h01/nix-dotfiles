@@ -28,14 +28,7 @@
       ];
 
       imports = [
-        # keep-sorted start
-        modules/flake/devShell.nix
-        modules/flake/formatter.nix
-        modules/flake/home.nix
-        modules/flake/iso.nix
-        modules/flake/nixos.nix
-        modules/flake/overlays.nix
-        # keep-sorted end
+        ./flake
       ];
     });
 }

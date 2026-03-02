@@ -1,3 +1,4 @@
+# Purpose: disk partitioning layout for laptop (btrfs + swap + ESP)
 {
   disko.devices = {
     disk.main = {
@@ -25,7 +26,6 @@
               type = "swap";
               discardPolicy = "both";
               resumeDevice = true;
-              # priority = 100;
             };
           };
 

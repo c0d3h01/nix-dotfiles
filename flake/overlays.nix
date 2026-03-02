@@ -1,9 +1,8 @@
+# Purpose: nixpkgs overlays and per-system pkgs instantiation
 {inputs, ...}: let
   inherit (inputs.nixpkgs) lib;
   overlays = [
     inputs.nix-openclaw.overlays.default
-    # (final: prev: {
-    # })
   ];
 in {
   perSystem = {system, ...}: {
