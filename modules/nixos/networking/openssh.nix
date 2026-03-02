@@ -1,18 +1,16 @@
+# Networking — hardened OpenSSH daemon
 {
-  # SSH Daemon
   services.openssh = {
     enable = true;
     startWhenNeeded = true;
 
-    # Settings
     allowSFTP = true;
     openFirewall = true;
     ports = [22];
 
     settings = {
-      # Don't allow root login
+      # ── Authentication hardening ────────────────────────────────────
       PermitRootLogin = "no";
-      # only allow key based logins and not password
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
       AuthenticationMethods = "publickey";
@@ -22,26 +20,33 @@
       UseDns = false;
       X11Forwarding = false;
 
-      # Use key exchange algorithms recommended by `nixpkgs#ssh-audit`
+      # Limit brute-force window
+      LoginGraceTime = 30;
+      MaxAuthTries = 3;
+      MaxSessions = 5;
+      MaxStartups = "3:50:10";
+
+      # ── Key exchange (ssh-audit recommended) ────────────────────────
       KexAlgorithms = [
+        "sntrup761x25519-sha512@openssh.com"
+        "mlkem768x25519-sha256"
+        "sntrup761x25519-sha512"
         "curve25519-sha256"
         "curve25519-sha256@libssh.org"
         "diffie-hellman-group16-sha512"
         "diffie-hellman-group18-sha512"
-        "sntrup761x25519-sha512@openssh.com"
         "diffie-hellman-group-exchange-sha256"
-        "mlkem768x25519-sha256"
-        "sntrup761x25519-sha512"
       ];
 
-      # Use Macs recommended by `nixpkgs#ssh-audit`
+      # ── MACs (ssh-audit recommended) ────────────────────────────────
       Macs = [
         "hmac-sha2-512-etm@openssh.com"
         "hmac-sha2-256-etm@openssh.com"
         "umac-128-etm@openssh.com"
       ];
 
-      # kick out inactive sessions
+      # ── Session keepalive ───────────────────────────────────────────
+      # Kill idle sessions after 5 min (5 × 60s)
       ClientAliveCountMax = 5;
       ClientAliveInterval = 60;
     };
@@ -53,7 +58,6 @@
         type = "rsa";
       }
       {
-        bits = 4096;
         path = "/etc/ssh/ssh_host_ed25519_key";
         type = "ed25519";
       }
