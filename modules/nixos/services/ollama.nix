@@ -9,6 +9,5 @@
 
       OLLAMA_NUM_PARALLEL = "1";
     };
-
   };
 }
