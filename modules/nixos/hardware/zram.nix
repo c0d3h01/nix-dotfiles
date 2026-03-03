@@ -1,7 +1,13 @@
-{lib, ...}: {
-  zramSwap = {
-    enable = lib.mkDefault true;
-    algorithm = lib.mkDefault "lz4";
-    memoryPercent = lib.mkDefault 75;
+{
+  services.zram-generator = {
+    enable = true;
+    settings = {
+      zram0 = {
+        compression-algorithm = "zstd";
+        fs-type = "swap";
+        swap-priority = 100;
+        zram-size = "ram";
+      };
+    };
   };
 }
