@@ -3,7 +3,6 @@
     ./boot
     ./desktop
     ./hardware
-    ./kernel
     ./networking
     ./nix
     ./profile.nix
