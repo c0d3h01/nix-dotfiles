@@ -1,4 +1,3 @@
-# Purpose: ripgrep — recursive grep with smart defaults
 {
   programs.ripgrep = {
     enable = true;

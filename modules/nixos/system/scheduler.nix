@@ -18,7 +18,6 @@ in
       };
     }
 
-    # If the scheduler crashes, restart quickly so we don't sit on the fallback scheduler for long.
     (lib.mkIf isWorkstation {
       systemd.services.scx.serviceConfig.RestartSec = lib.mkDefault 1;
     })

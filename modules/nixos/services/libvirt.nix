@@ -1,4 +1,3 @@
-# Services — libvirt/QEMU virtualisation
 {pkgs, ...}: {
   programs.virt-manager.enable = true;
   virtualisation = {

@@ -1,13 +1,10 @@
-# Security — sops-nix for age-encrypted secrets
 {
   inputs,
   self,
   ...
 }: {
   imports = [
-    # keep-sorted start
     inputs.sops.nixosModules.sops
-    # keep-sorted end
   ];
 
   sops = {

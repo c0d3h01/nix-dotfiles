@@ -1,7 +1,5 @@
-# NixOS modules — top-level entry point
 {
   imports = [
-    # keep-sorted start
     ./boot
     ./desktop
     ./hardware
@@ -12,6 +10,5 @@
     ./security
     ./services
     ./system
-    # keep-sorted end
   ];
 }

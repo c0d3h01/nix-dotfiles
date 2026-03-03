@@ -1,4 +1,3 @@
-# Purpose: direnv — automatic environment loading
 {
   programs.direnv = {
     enable = true;

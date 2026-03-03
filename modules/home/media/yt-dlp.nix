@@ -1,4 +1,3 @@
-# Purpose: yt-dlp — YouTube downloader with sponsorblock
 {
   programs.yt-dlp = {
     enable = true;

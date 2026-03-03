@@ -1,5 +1,3 @@
-# Host registry — single source of truth for the entire fleet.
-# To add a machine, add one block. To add a user, add one sub-block.
 {
   laptop = {
     system = "x86_64-linux";
@@ -18,7 +16,6 @@
       windowManager = "gnome";
     };
 
-    # Host-level knobs
     bootloader = "limine";
   };
 }

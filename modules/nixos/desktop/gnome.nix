@@ -8,28 +8,23 @@
   inherit (lib) mkIf mkForce;
 in {
   config = mkIf (hostProfile.windowManager == "gnome") {
-    # GNOME desktop environment configuration
     services.desktopManager.gnome.enable = true;
     services.displayManager.gdm.enable = true;
     services.displayManager.defaultSession = "gnome";
 
-    # KDE Connect requires specific ports to be open
     networking.firewall = lib.mkIf config.networking.firewall.enable {
       allowedTCPPorts = [1716]; # KDE connect port
       allowedUDPPorts = [1716];
     };
 
-    # Enable tuned service for performance tuning
     services.tuned.enable = true;
     services.tuned.settings.dynamic_tuning = true;
 
-    # Disable - useless services; trackers
     services.gnome.localsearch.enable = mkForce false;
     services.gnome.tinysparql.enable = mkForce false;
     services.gnome.gnome-online-accounts.enable = mkForce false;
     services.gnome.gnome-initial-setup.enable = mkForce false;
 
-    # Exclude unwanted GNOME packages
     environment = {
       systemPackages = with pkgs; [
         gnome-tweaks
@@ -41,7 +36,6 @@ in {
         playerctl # gsconnect play/pause command
         pamixer # gcsconnect volume control
 
-        # Gnome extensions
         gnomeExtensions.gsconnect
         gnomeExtensions.dash-to-dock
       ];

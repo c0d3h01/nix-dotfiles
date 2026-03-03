@@ -1,4 +1,3 @@
-# Purpose: lazygit — terminal UI for git
 {
   programs.lazygit = {
     enable = true;

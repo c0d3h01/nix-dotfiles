@@ -8,7 +8,6 @@
   isXfs = rootFs == "xfs";
   isBtrfs = rootFs == "btrfs";
 in {
-  # Filesystem-specific packages
   environment.systemPackages = lib.mkMerge [
     (lib.mkIf isXfs [pkgs.xfsprogs])
     (lib.mkIf isBtrfs [pkgs.btrfs-progs])
@@ -16,7 +15,6 @@ in {
 
   services.fstrim.enable = lib.mkDefault true;
 
-  # XFS scrub service
   systemd.services.xfs-scrub = lib.mkIf isXfs {
     description = "XFS filesystem scrub for data integrity";
     serviceConfig = {
@@ -36,7 +34,6 @@ in {
     wantedBy = ["timers.target"];
   };
 
-  # Btrfs scrub service
   systemd.services.btrfs-scrub = lib.mkIf isBtrfs {
     description = "Btrfs filesystem scrub for data integrity";
     serviceConfig = {

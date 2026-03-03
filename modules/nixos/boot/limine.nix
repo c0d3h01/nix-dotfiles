@@ -1,4 +1,3 @@
-# Boot backend — Limine (EFI)
 {
   lib,
   hostProfile,
@@ -7,7 +6,6 @@
   selected = hostProfile.bootloader;
 in {
   boot.loader = lib.mkIf (selected == "limine") {
-    # Make Limine the active bootloader.
     grub.enable = lib.mkForce false;
     systemd-boot.enable = lib.mkForce false;
 

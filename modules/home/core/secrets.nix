@@ -1,4 +1,3 @@
-# Purpose: sops-nix secret management for home-manager
 {
   inputs,
   self,
@@ -6,9 +5,7 @@
   ...
 }: {
   imports = [
-    # keep-sorted start
     inputs.sops.homeManagerModules.sops
-    # keep-sorted end
   ];
 
   sops = {

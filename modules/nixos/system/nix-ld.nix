@@ -1,4 +1,3 @@
-# System — nix-ld, AppImage, Flatpak — run non-Nix binaries
 {
   pkgs,
   lib,
@@ -6,7 +5,6 @@
   hostProfile,
   ...
 }: {
-  # ── nix-ld — dynamic linker for unpatched binaries ──────────────────
   programs.nix-ld.enable = lib.mkDefault true;
   programs.nix-ld.libraries = with pkgs;
     [
@@ -68,13 +66,10 @@
       libxshmfence
     ];
 
-  # ── AppImage — binfmt registration for .AppImage files ──────────────
   programs.appimage = {
     enable = hostProfile.isWorkstation;
     binfmt = true;
   };
 
-  # ── Flatpak — disabled by default, enable if needed ─────────────────
-  # flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
   services.flatpak.enable = lib.mkIf hostProfile.isWorkstation false;
 }

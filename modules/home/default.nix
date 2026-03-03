@@ -1,4 +1,3 @@
-# Purpose: home-manager entry point — auto-imports all module groups
 {
   config,
   pkgs,
@@ -6,14 +5,12 @@
   ...
 }: {
   imports = [
-    # keep-sorted start
     ./cli
     ./core
     ./dev
     ./media
     ./shell
     ./terminal
-    # keep-sorted end
   ];
 
   programs.home-manager.enable = true;

@@ -1,4 +1,3 @@
-# Purpose: spicetify — themed Spotify client
 {
   config,
   lib,
@@ -13,9 +12,7 @@ in {
   options.dotfiles.home.features.spicetify.enable = mkEnableOption "Spicetify";
 
   imports = [
-    # keep-sorted start
     inputs.spicetify.homeManagerModules.default
-    # keep-sorted end
   ];
 
   config.programs.spicetify = mkIf ((userConfig.workstation or false) && cfg.enable) (

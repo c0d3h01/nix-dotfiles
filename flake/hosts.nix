@@ -1,4 +1,3 @@
-# Purpose: unified NixOS and Home Manager host builder
 {
   config,
   inputs,
@@ -10,7 +9,6 @@
   overlay = config.flake.overlays.default;
   homeModule = self + /modules/home;
 
-  # Find the primary user for a host (the one with isMainUser = true)
   mainUser = hostCfg: let
     found =
       builtins.filter
@@ -19,7 +17,6 @@
   in
     builtins.head found;
 
-  # Instantiate nixpkgs with overlays for a given system
   mkPkgs = system:
     import inputs.nixpkgs {
       inherit system;
@@ -30,7 +27,6 @@
       };
     };
 
-  # ── NixOS configurations (via easy-hosts) ────────────────────────────────
   mkEasyHost = hostName: hostCfg: let
     primary = mainUser hostCfg;
     userCfg = hostCfg.users.${primary};
@@ -47,7 +43,6 @@
       // userCfg;
   };
 
-  # ── Home Manager configurations ──────────────────────────────────────────
   mkAllHomeConfigs = let
     perHost = hostName: hostCfg:
       lib.mapAttrsToList (
@@ -78,13 +73,10 @@
     );
 in {
   imports = [
-    # keep-sorted start
     inputs.easy-hosts.flakeModule
     inputs.home-manager.flakeModules.home-manager
-    # keep-sorted end
   ];
 
-  # ── NixOS hosts ──────────────────────────────────────────────────────────
   easy-hosts = {
     shared.modules = [
       (self + /modules/nixos)
@@ -118,7 +110,6 @@ in {
     hosts = builtins.mapAttrs mkEasyHost hosts;
   };
 
-  # ── Home Manager standalone configs ──────────────────────────────────────
   flake = {
     homeModules.default = homeModule;
     homeConfigurations = mkAllHomeConfigs;

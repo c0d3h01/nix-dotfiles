@@ -1,4 +1,3 @@
-# Purpose: development shell with tooling for this flake
 {inputs, ...}: {
   imports = [
     inputs.devshell.flakeModule

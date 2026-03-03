@@ -9,7 +9,6 @@
       openFirewall = true;
     };
 
-    # Avahi (mDNS) for network printer discovery
     avahi = {
       enable = false;
       nssmdns4 = true;

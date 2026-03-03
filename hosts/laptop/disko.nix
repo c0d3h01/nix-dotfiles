@@ -1,4 +1,3 @@
-# Purpose: disk partitioning layout for laptop (btrfs + swap + ESP)
 {
   disko.devices = {
     disk.main = {

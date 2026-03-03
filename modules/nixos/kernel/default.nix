@@ -1,8 +1,6 @@
 {
   imports = [
-    # keep-sorted start
     ./sysctl.nix
     ./version.nix
-    # keep-sorted end
   ];
 }

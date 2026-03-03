@@ -1,10 +1,7 @@
-# Purpose: core home-manager infra — session variables, XDG, secrets
 {config, ...}: {
   imports = [
-    # keep-sorted start
     ./secrets.nix
     ./xdg.nix
-    # keep-sorted end
   ];
 
   home.sessionVariables = {

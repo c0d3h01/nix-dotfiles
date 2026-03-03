@@ -4,7 +4,6 @@ _: {
     enableCompletion = true;
 
     bashrcExtra = ''
-      # Bash history configuration
       export HISTFILE="$HOME/.bash_history"
       export HISTSIZE=5000
       export HISTFILESIZE=5000
@@ -14,14 +13,12 @@ _: {
       shopt -s histverify
       shopt -s cmdhist
 
-      # Bash shell options
       shopt -s autocd
       shopt -s cdspell
       shopt -s dirspell
       shopt -s nocaseglob
       shopt -s checkwinsize
 
-      # Vi mode for Bash
       set -o vi
       bind -m vi-insert "\C-p":history-search-backward
       bind -m vi-insert "\C-n":history-search-forward

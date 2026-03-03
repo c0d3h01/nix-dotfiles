@@ -1,4 +1,3 @@
-# Purpose: treefmt-based formatter and formatting CI check
 {self, ...}: {
   perSystem = {pkgs, ...}: let
     mkFormatter = pkgs': let
