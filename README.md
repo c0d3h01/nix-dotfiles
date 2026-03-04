@@ -43,7 +43,8 @@ flake.nix              # Inputs + flake-parts wiring
 flake.lock             # Pinned deps (never edit manually)
 Makefile               # All operational commands
 flake/                 # Flake submodules (hosts, overlays, devshell, formatter)
-hosts/                 # Per-host configs (users, disko, SSH keys)
+hosts/                 # Per-host configs (users, filesystems, SSH keys)
+scripts/               # Operational scripts (partitioning)
 modules/nixos/         # System-level NixOS modules (grouped by category)
 modules/home/          # User-level Home Manager modules (grouped by category)
 secrets/               # sops-encrypted secrets (age)
@@ -80,7 +81,7 @@ All hosts are declared in a single registry — `hosts/default.nix`:
 | Field | Purpose |
 |---|---|
 | `system` | Target architecture |
-| `modules` | Host-specific config directory (hardware, disko, SSH keys) |
+| `modules` | Host-specific config directory (filesystems, SSH keys) |
 | `users.<name>.isMainUser` | Primary user — their flags drive the host profile |
 | `users.<name>.workstation` | Enables desktop apps, GPU 32-bit, AppImage, scheduler |
 | `users.<name>.windowManager` | Desktop environment: `gnome` / `kde` / `xfce` |
@@ -93,7 +94,7 @@ All hosts are declared in a single registry — `hosts/default.nix`:
 1. Reads the host registry
 2. Finds the main user (`isMainUser = true`)
 3. Builds a flat `hostConfig` attrset (hostname, username, system, bootloader, user flags)
-4. Registers each host via `easy-hosts` with shared NixOS modules + disko + home-manager
+4. Registers each host via `easy-hosts` with shared NixOS modules + home-manager
 5. Wires Home Manager for the main user with `userConfig` as `extraSpecialArgs`
 6. Exports standalone `homeConfigurations` for every `user@host` pair
 
@@ -113,7 +114,7 @@ Assertions validate allowed values at evaluation time — invalid profiles fail 
 
 1. Add an entry to `hosts/default.nix`
 2. Create `hosts/<name>/default.nix` (SSH keys, user passwords)
-3. Create `hosts/<name>/disko.nix` (disk layout — templates in `hosts/_templates/`)
+3. Create `hosts/<name>/filesystems.nix` (label-based mounts — copy from an existing host)
 4. Build: `nix build .#nixosConfigurations.<name>.config.system.build.toplevel`
 
 ---
@@ -191,14 +192,16 @@ make fmt                  # Format everything (treefmt)
 make clean                # GC + store optimise
 
 # Fresh install
-make install-disko [HOST] # Partition + format (DESTRUCTIVE)
-make install-nixos [HOST] # nixos-install from flake
+make partition DISK=/dev/nvme0n1  # Partition + format + mount (DESTRUCTIVE)
+make install-nixos [HOST]         # nixos-install from flake
 
 # Rescue
-make troubleshoot         # Mount subvolumes + nixos-enter
+make troubleshoot         # Mount subvolumes by label + nixos-enter
 ```
 
 `HOST` defaults to the current hostname. Positional shorthand: `make rebuild laptop`.
+
+Partitioning uses `scripts/partition.sh` which creates GPT partitions with fixed labels (`nixos-boot`, `nixos-swap`, `nixos-root`). NixOS mounts by label, so the config works on any disk without changes.
 
 ---
 
@@ -207,8 +210,8 @@ make troubleshoot         # Mount subvolumes + nixos-enter
 ```bash
 # Boot NixOS ISO, then:
 git clone https://github.com/c0d3h01/dotfiles && cd dotfiles
-make install-disko laptop    # format disks (destructive)
-make install-nixos laptop    # install system
+make partition DISK=/dev/nvme0n1   # partition + format + mount (destructive)
+make install-nixos laptop          # install system
 reboot
 ```
 

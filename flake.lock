@@ -20,26 +20,6 @@
         "type": "github"
       }
     },
-    "disko": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1772420042,
-        "narHash": "sha256-naZz40TUFMa0E0CutvwWsSPhgD5JldyTUDEgP9ADpfU=",
-        "owner": "nix-community",
-        "repo": "disko",
-        "rev": "5af7af10f14706e4095bd6bc0d9373eb097283c6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "disko",
-        "type": "github"
-      }
-    },
     "easy-hosts": {
       "locked": {
         "lastModified": 1755470564,
@@ -256,7 +236,6 @@
     "root": {
       "inputs": {
         "devshell": "devshell",
-        "disko": "disko",
         "easy-hosts": "easy-hosts",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",

@@ -4,7 +4,7 @@ let
   ];
 in {
   imports = [
-    ./disko.nix
+    ./filesystems.nix
   ];
 
   users.users = {

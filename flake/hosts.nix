@@ -80,7 +80,6 @@ in {
   easy-hosts = {
     shared.modules = [
       (self + /modules/nixos)
-      inputs.disko.nixosModules.disko
       inputs.home-manager.nixosModules.home-manager
       {
         nixpkgs.overlays = [config.flake.overlays.default];

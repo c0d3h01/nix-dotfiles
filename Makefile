@@ -1,19 +1,17 @@
-.PHONY: help rebuild home check fmt clean install-nix install-disko install-nixos troubleshoot-mount troubleshoot-enter troubleshoot
+.PHONY: help rebuild home check fmt clean install-nix partition install-nixos troubleshoot-mount troubleshoot-enter troubleshoot
 MAKEFLAGS += --no-print-directory
 .DEFAULT_GOAL := help
 
 # ── Defaults ──────────────────────────────────────────────────────────────
 HOST ?= $(shell hostname)
-INSTALL_FLAKE ?= github:c0d3h01/nix-dotfiles#$(HOST)
-ROOT_DEV ?= /dev/nvme0n1p3
-EFI_DEV ?= /dev/nvme0n1p1
+DISK ?= /dev/nvme0n1
 MNT ?= /mnt
 USER ?= $(shell whoami)
 
 # ── Positional shorthand: `make rebuild laptop` ──────────────────────────
 CMD := $(firstword $(MAKECMDGOALS))
 ARG := $(word 2,$(MAKECMDGOALS))
-ifneq ($(filter rebuild home install-disko install-nixos,$(CMD)),)
+ifneq ($(filter rebuild home partition install-nixos,$(CMD)),)
   ifeq ($(HOST),$(shell hostname))
     ifneq ($(ARG),)
       HOST := $(ARG)
@@ -40,24 +38,20 @@ home: _need-host ## Home Manager switch
 install-nix: ## Install Nix package manager (multi-user)
 	curl -L https://nixos.org/nix/install | sh -s -- --daemon
 
-install-disko: _need-host ## Disko destroy/format/mount for INSTALL_FLAKE (DESTRUCTIVE)
-	sudo nix --experimental-features "nix-command flakes" run \
-		github:nix-community/disko/latest -- \
-		--mode destroy,format,mount \
-		--yes-wipe-all-disks \
-		--flake "$(INSTALL_FLAKE)"
+partition: ## Partition + format + mount via scripts/partition.sh (DESTRUCTIVE)
+	sudo ./scripts/partition.sh $(DISK)
 
-install-nixos: _need-host ## Run nixos-install for INSTALL_FLAKE
-	sudo nixos-install --flake "$(INSTALL_FLAKE)" --no-root-passwd
+install-nixos: _need-host ## Run nixos-install from local flake
+	sudo nixos-install --flake ".#$(HOST)" --no-root-passwd
 
-troubleshoot-mount: ## Mount BTRFS subvolumes + EFI for rescue
-	sudo mount -t btrfs -o subvol=/@ "$(ROOT_DEV)" "$(MNT)"
+troubleshoot-mount: ## Mount BTRFS subvolumes + EFI for rescue (by label)
+	sudo mount -t btrfs -o subvol=/@ /dev/disk/by-label/nixos-root "$(MNT)"
 	sudo mkdir -p "$(MNT)/home" "$(MNT)/nix" "$(MNT)/var/tmp" "$(MNT)/var/log" "$(MNT)/boot"
-	sudo mount -t btrfs -o subvol=/@home "$(ROOT_DEV)" "$(MNT)/home"
-	sudo mount -t btrfs -o subvol=/@nix "$(ROOT_DEV)" "$(MNT)/nix"
-	sudo mount -t btrfs -o subvol=/@tmp "$(ROOT_DEV)" "$(MNT)/var/tmp"
-	sudo mount -t btrfs -o subvol=/@log "$(ROOT_DEV)" "$(MNT)/var/log"
-	sudo mount "$(EFI_DEV)" "$(MNT)/boot"
+	sudo mount -t btrfs -o subvol=/@home /dev/disk/by-label/nixos-root "$(MNT)/home"
+	sudo mount -t btrfs -o subvol=/@nix /dev/disk/by-label/nixos-root "$(MNT)/nix"
+	sudo mount -t btrfs -o subvol=/@tmp /dev/disk/by-label/nixos-root "$(MNT)/var/tmp"
+	sudo mount -t btrfs -o subvol=/@log /dev/disk/by-label/nixos-root "$(MNT)/var/log"
+	sudo mount /dev/disk/by-label/NIXBOOT "$(MNT)/boot"
 
 troubleshoot-enter: troubleshoot-mount ## Enter installed NixOS environment via nixos-enter
 	sudo nixos-enter --root "$(MNT)"
