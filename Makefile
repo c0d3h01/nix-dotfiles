@@ -2,13 +2,13 @@
 MAKEFLAGS += --no-print-directory
 .DEFAULT_GOAL := help
 
-# ── Defaults ──────────────────────────────────────────────────────────────
+# Defaults
 HOST ?= $(shell hostname)
 DISK ?= /dev/nvme0n1
 MNT ?= /mnt
 USER ?= $(shell whoami)
 
-# ── Positional shorthand: `make rebuild laptop` ──────────────────────────
+# Positional shorthand: `make rebuild laptop`
 CMD := $(firstword $(MAKECMDGOALS))
 ARG := $(word 2,$(MAKECMDGOALS))
 ifneq ($(filter rebuild home partition install-nixos,$(CMD)),)
@@ -22,7 +22,7 @@ $(ARG):
   endif
 endif
 
-# ── Targets ───────────────────────────────────────────────────────────────
+# Targets
 help: ## Show this help
 	@printf "\033[1mUsage:\033[0m make \033[36m<target>\033[0m [HOST=<host>]\n\n"
 	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) \
@@ -69,6 +69,6 @@ clean: ## GC + optimise Nix store
 	sudo nix-collect-garbage -d
 	nix store optimise
 
-# ── Helpers ───────────────────────────────────────────────────────────────
+# Helpers
 _need-host:
 	@test -n "$(HOST)" || { echo "Usage: make $(CMD) HOST=<host>"; exit 1; }
