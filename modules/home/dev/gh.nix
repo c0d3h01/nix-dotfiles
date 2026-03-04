@@ -1,5 +1,4 @@
-# Purpose: GitHub CLI configuration with SSH auth and workflow aliases
-{...}: {
+{
   programs.gh = {
     enable = true;
 
@@ -10,6 +9,5 @@
     };
   };
 
-  # gh extensions managed declaratively
   programs.gh.extensions = [];
 }
