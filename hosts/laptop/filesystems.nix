@@ -1,5 +1,3 @@
-# Purpose: Declarative filesystem mounts using partition labels.
-#          Labels are set by scripts/partition.sh — no device paths needed.
 {
   fileSystems = {
     "/" = {
@@ -74,9 +72,9 @@
     };
   };
 
-  swapDevices = [
-    {
-      device = "/dev/disk/by-label/nixos-swap";
-    }
-  ];
+  # swapDevices = [
+  #   {
+  #     device = "/dev/disk/by-label/nixos-swap";
+  #   }
+  # ];
 }
