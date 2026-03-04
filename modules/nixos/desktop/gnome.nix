@@ -17,9 +17,6 @@ in {
       allowedUDPPorts = [1716];
     };
 
-    services.tuned.enable = true;
-    services.tuned.settings.dynamic_tuning = true;
-
     services.gnome.localsearch.enable = mkForce false;
     services.gnome.tinysparql.enable = mkForce false;
     services.gnome.gnome-online-accounts.enable = mkForce false;
