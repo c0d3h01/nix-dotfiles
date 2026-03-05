@@ -1,4 +1,4 @@
-# Format all Nix files with treefmt. On push: create & merge a PR.
+# Format all Nix files with treefmt. On push: create & auto-merge a PR.
 # On PR: fail if formatting drifts.
 name: Format
 
@@ -36,9 +36,14 @@ jobs:
         if: github.event_name == 'push'
         uses: peter-evans/create-pull-request@v8
         with:
-          commit-message: "style: auto-format"
-          title: "style: auto-format"
-          branch: auto-fmt
+          commit-message: "style(fmt): apply nix formatting"
+          title: "style(fmt): apply nix formatting"
+          body: |
+            Automated formatting applied by `nix fmt` via [treefmt](https://github.com/numtide/treefmt).
+
+            This PR ensures all Nix files conform to the project's formatting standards.
+          branch: auto/fmt
+          labels: automated, style
 
     outputs:
       pull-request-url: ${{ steps.pr.outputs.pull-request-url }}

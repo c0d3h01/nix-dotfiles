@@ -1,5 +1,5 @@
 # Update git submodules daily (02:51 UTC).
-name: Update submodules
+name: Update Submodules
 
 on:
   repository_dispatch:
@@ -31,9 +31,14 @@ jobs:
         id: pr
         uses: peter-evans/create-pull-request@v8
         with:
-          commit-message: "chore: update submodules"
-          title: "chore: update submodules"
-          branch: submodule-updates
+          commit-message: "chore(deps): update git submodules"
+          title: "chore(deps): update git submodules"
+          body: |
+            Automated daily update of git submodules to their latest upstream commits.
+
+            Review the submodule pointer changes below to verify updates.
+          branch: auto/submodules
+          labels: automated, dependencies
 
     outputs:
       pull-request-url: ${{ steps.pr.outputs.pull-request-url }}
