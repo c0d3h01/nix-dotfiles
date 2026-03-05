@@ -6,15 +6,20 @@
 }: {
   imports = [
     ./bash.nix
+    ./bat.nix
     ./dircolors.nix
     ./direnv.nix
     ./dotfiles.nix
+    ./eza.nix
+    ./fzf.nix
+    ./fonts.nix
     ./gh.nix
     ./neovim.nix
     ./nixgl.nix
     ./openclaw.nix
     ./secrets.nix
     ./spicetify.nix
+    ./starship.nix
     ./tmux.nix
     ./tools.nix
     ./xdg.nix

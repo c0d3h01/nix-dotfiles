@@ -32,7 +32,6 @@
       "ghostty".source = "${dotfiles}/.config/ghostty";
       "wezterm".source = "${dotfiles}/.config/wezterm";
       "VSCodium/User".source = "${dotfiles}/.config/VSCodium/User";
-      "starship.toml".source = "${dotfiles}/.config/starship.toml";
       "chrome-flags.conf".source = "${dotfiles}/.config/chrome-flags.conf";
       "chromium-flags.conf".source = "${dotfiles}/.config/chromium-flags.conf";
     };

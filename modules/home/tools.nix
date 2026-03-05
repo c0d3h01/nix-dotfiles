@@ -13,7 +13,6 @@
     jq
     yq-go
     fd
-    eza
     tree
     file
     unzip
@@ -23,11 +22,10 @@
     gitFull
     git-lfs
     lazygit
-    starship
-    bat
-    fzf
     ripgrep
     yt-dlp
+
+    pkgs.nur.repos.mic92.hello-nur
   ];
 
   systemTools = with pkgs; [
@@ -59,7 +57,7 @@
     tokei
     hyperfine
     # GUI Tools
-    (pkgs.wrapWithNixGL pkgs.wezterm "wezterm-gui")
+    (pkgs.wrapWithNixGL pkgs.wezterm "wezterm")
     (pkgs.wrapWithNixGL pkgs.kitty "kitty")
   ];
 in {
