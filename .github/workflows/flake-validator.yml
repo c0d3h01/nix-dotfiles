@@ -2,6 +2,7 @@
 name: Validate Flake
 
 on:
+  workflow_dispatch:
   push:
     branches: [master]
   pull_request:
