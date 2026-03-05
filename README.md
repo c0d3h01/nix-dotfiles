@@ -214,9 +214,3 @@ make partition DISK=/dev/nvme0n1   # partition + format + mount (destructive)
 make install-nixos laptop          # install system
 reboot
 ```
-
----
-
-## License
-
-See [LICENSE](LICENSE).
