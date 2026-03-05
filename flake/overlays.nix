@@ -9,35 +9,37 @@
           inherit (prev) lndir;
         };
 
-      # ── nixGL wrapper helper ──────────────────────────────────────────
-      # Usage: pkgs.wrapWithNixGL pkgs.wezterm "wezterm-gui"
-      #   pkg      – the package to wrap
-      #   binName  – the GL binary inside the package (defaults to pkg.pname)
-      # On NixOS this is a no-op; on other distros it prefixes the binary
-      # with nixGLIntel so it picks up the host GL/Vulkan stack.
+      # ── nixGL wrapper ─────────────────────────────────────────────────
+      # Usage: pkgs.wrapWithNixGL pkgs.kitty "kitty"
+      # No-op on NixOS; auto-detects GL driver on other distros.
       wrapWithNixGL = pkg: binName: let
         bin =
           if binName != null
           then binName
           else pkg.pname or (lib.getName pkg);
-        nixglPkgs = final.nixgl or {};
       in
-        if isNixOS || !(nixglPkgs ? nixGLIntel)
+        if isNixOS || !(final ? nixgl)
         then pkg
-        else
+        else let
+          nixGLBin = lib.getExe final.nixgl.nixGLIntel;
+        in
           final.symlinkJoin {
             name = "${pkg.name or bin}-nixgl";
             paths = [pkg];
             buildInputs = [final.makeWrapper];
             postBuild = ''
-              if [ -f $out/bin/${bin} ]; then
-                wrapProgram $out/bin/${bin} \
-                  --prefix PATH : "${lib.makeBinPath [nixglPkgs.nixGLIntel]}"
+              if [ -f "$out/bin/${bin}" ]; then
+                rm "$out/bin/${bin}"
+                makeWrapper ${nixGLBin} "$out/bin/${bin}" \
+                  --add-flags "${pkg}/bin/${bin}"
               fi
             '';
           };
     })
     inputs.nix-openclaw.overlays.default
+    inputs.nur.overlays.default
+  ]
+  ++ lib.optionals (!isNixOS) [
     inputs.nixgl.overlays.default
   ];
 in {
