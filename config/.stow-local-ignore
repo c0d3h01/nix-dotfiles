@@ -1,0 +1,5 @@
+^\.gitignore$
+^\.zshrc
+^\.zprofile
+^\.bashrc
+^\.bash_profile
