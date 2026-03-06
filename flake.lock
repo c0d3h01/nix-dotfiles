@@ -20,22 +20,6 @@
         "type": "github"
       }
     },
-    "dotfiles": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1772598188,
-        "narHash": "sha256-+Quko92uXNX/on3nkr3js4ECB5thuKs6AhRinOY8i7c=",
-        "owner": "c0d3h01",
-        "repo": "dotfiles",
-        "rev": "f99eb633e9dc1cae4dcff648c3e051b9bf246ac5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "c0d3h01",
-        "repo": "dotfiles",
-        "type": "github"
-      }
-    },
     "easy-hosts": {
       "locked": {
         "lastModified": 1755470564,
@@ -333,7 +317,6 @@
     "root": {
       "inputs": {
         "devshell": "devshell",
-        "dotfiles": "dotfiles",
         "easy-hosts": "easy-hosts",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
