@@ -16,7 +16,10 @@
 
     activation.updateDotfilesSubmodules = config.lib.dag.entryAfter ["writeBoundary"] ''
       DOTFILES_DIR="$HOME/.dotfiles"
-      if [ -d "$DOTFILES_DIR/.git" ]; then
+      if [ ! -d "$DOTFILES_DIR/.git" ]; then
+        ${pkgs.git}/bin/git clone https://github.com/c0d3h01/dotfiles.git "$DOTFILES_DIR"
+      else
+        ${pkgs.git}/bin/git -C "$DOTFILES_DIR" pull --rebase
         ${pkgs.git}/bin/git -C "$DOTFILES_DIR" submodule update --init --recursive 2>/dev/null || true
       fi
     '';
