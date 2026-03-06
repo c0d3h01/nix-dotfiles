@@ -34,7 +34,7 @@ in {
         pamixer # gcsconnect volume control
 
         gnomeExtensions.gsconnect
-        gnomeExtensions.dash-to-dock
+        # gnomeExtensions.dash-to-dock
       ];
 
       gnome.excludePackages = with pkgs; [
