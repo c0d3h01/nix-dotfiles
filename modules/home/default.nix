@@ -1,15 +1,18 @@
 {
   imports = [
+    ./alacritty.nix
+    ./apps.nix
     ./bash.nix
     ./bat.nix
     ./dircolors.nix
+    ./ghostty.nix
     ./direnv.nix
-    ./dotfiles.nix
     ./eza.nix
     ./fonts.nix
     ./fzf.nix
     ./gh.nix
     ./home.nix
+    ./kitty.nix
     ./neovim.nix
     ./nixgl.nix
     ./openclaw.nix
@@ -17,7 +20,8 @@
     ./spicetify.nix
     ./starship.nix
     ./tmux.nix
-    ./tools.nix
+    ./wezterm.nix
+    ./yt-dlp.nix
     ./zoxide.nix
     ./zsh.nix
   ];
