@@ -18,7 +18,6 @@
     ./starship.nix
     ./tmux.nix
     ./tools.nix
-    ./xdg.nix
     ./zoxide.nix
     ./zsh.nix
   ];
