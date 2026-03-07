@@ -78,14 +78,14 @@ All hosts are declared in a single registry — `hosts/default.nix`:
 }
 ```
 
-| Field | Purpose |
-|---|---|
-| `system` | Target architecture |
-| `modules` | Host-specific config directory (filesystems, SSH keys) |
-| `users.<name>.isMainUser` | Primary user — their flags drive the host profile |
-| `users.<name>.workstation` | Enables desktop apps, GPU 32-bit, AppImage, scheduler |
-| `users.<name>.windowManager` | Desktop environment: `gnome` / `kde` / `xfce` |
-| `bootloader` | Bootloader: `limine` / `systemd` / `grub` |
+| Field                        | Purpose                                                |
+| ---------------------------- | ------------------------------------------------------ |
+| `system`                     | Target architecture                                    |
+| `modules`                    | Host-specific config directory (filesystems, SSH keys) |
+| `users.<name>.isMainUser`    | Primary user — their flags drive the host profile      |
+| `users.<name>.workstation`   | Enables desktop apps, GPU 32-bit, AppImage, scheduler  |
+| `users.<name>.windowManager` | Desktop environment: `gnome` / `kde` / `xfce`          |
+| `bootloader`                 | Bootloader: `limine` / `systemd` / `grub`              |
 
 ### How the Build Works
 
