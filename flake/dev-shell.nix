@@ -14,6 +14,7 @@
       packages = [
         pkgs.gnumake
         pkgs.gitMinimal
+        pkgs.nil
         pkgs.age
         (pkgs.git-crypt.override {git = pkgs.gitMinimal;})
         pkgs.sops
