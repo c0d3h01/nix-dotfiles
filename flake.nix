@@ -19,6 +19,8 @@
     nixgl.inputs.nixpkgs.follows = "nixpkgs";
     nur.url = "github:nix-community/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
+    nixvim.url = "github:nix-community/nixvim";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {flake-utils, ...} @ inputs:

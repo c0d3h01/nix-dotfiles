@@ -27,25 +27,9 @@
 
   environment.localBinInPath = true;
 
-  # Developer documentation: full man pages including POSIX and library docs
   documentation = {
-    dev.enable = true;
-    man.enable = true;
-  };
-
-  environment.systemPackages = with pkgs; [
-    android-tools # adb/fastboot — uaccess rules handled by systemd 258+
-    man-pages
-    man-pages-posix
-  ];
-
-  programs.chromium.enable = true;
-
-  # nix-index: provides command-not-found suggestions from nixpkgs
-  programs.nix-index = {
-    enable = true;
-    enableBashIntegration = true;
-    enableZshIntegration = true;
+    dev.enable = false;
+    man.enable = false;
   };
 
   programs.zsh.enable = true;
@@ -64,7 +48,7 @@
       "input" # Direct input device access
       "kvm" # KVM hardware acceleration for VMs
       "networkmanager"
-      "plugdev" # USB peripherals (programmers, debug probes)
+      "plugdev" # USB peripherals
       "video"
       "wheel"
     ];

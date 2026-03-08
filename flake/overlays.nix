@@ -23,8 +23,7 @@
           then pkg
           else let
             nixGLBin = lib.getExe final.nixgl.nixGLIntel;
-          in
-            final.symlinkJoin {
+            wrapped = final.symlinkJoin {
               name = "${pkg.name or bin}-nixgl";
               paths = [pkg];
               buildInputs = [final.makeWrapper];
@@ -35,6 +34,13 @@
                     --add-flags "${pkg}/bin/${bin}"
                 fi
               '';
+            };
+          in
+            wrapped
+            // {
+              pname = pkg.pname or bin;
+              version = pkg.version or (lib.getVersion pkg);
+              meta = pkg.meta or {};
             };
       })
       inputs.nix-openclaw.overlays.default

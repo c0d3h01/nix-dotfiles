@@ -1,27 +1,37 @@
 {
   imports = [
     ./alacritty.nix
-    ./apps.nix
     ./bash.nix
     ./bat.nix
+    ./chromium.nix
+    ./delta.nix
     ./dircolors.nix
-    ./ghostty.nix
     ./direnv.nix
     ./eza.nix
+    ./fd.nix
     ./fonts.nix
     ./fzf.nix
     ./gh.nix
+    ./ghostty.nix
+    ./git.nix
     ./home.nix
     ./kitty.nix
-    ./neovim.nix
+    ./lazygit.nix
+    ./lsd.nix
+    # ./neovim.nix
     ./nixgl.nix
+    ./nixvim.nix
     ./openclaw.nix
+    ./packages.nix
+    ./ripgrep.nix
     ./secrets.nix
     ./spicetify.nix
     ./starship.nix
     ./tmux.nix
+    ./vesktop.nix
     ./wezterm.nix
     ./yt-dlp.nix
+    ./zellij.nix
     ./zoxide.nix
     ./zsh.nix
   ];

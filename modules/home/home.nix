@@ -16,9 +16,9 @@
   };
 
   dotfiles.home.features = {
-    ghostty.enable = false;
+    ghostty.enable = true;
     wezterm.enable = false;
-    alacritty.enable = true;
+    alacritty.enable = false;
     kitty.enable = false;
     spicetify.enable = true;
     openclaw.enable = false;

@@ -7,16 +7,9 @@
   isWorkstation = userConfig.workstation or false;
 
   cli = with pkgs; [
-    fd
     tree
-    gitFull
-    git-lfs
-    lazygit
-    ripgrep
-    yt-dlp
     glances
     stow
-    bat
     imagemagick
     mise
   ];
