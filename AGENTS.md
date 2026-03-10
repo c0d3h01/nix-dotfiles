@@ -1,27 +1,41 @@
----
-name: commit
-description:
-  Create a well-formed git commit from current changes using session history for
-  rationale and summary; use when asked to commit, prepare a commit message, or
-  finalize staged work.
----
+# Skills
 
-# Commit
+## Structure
 
-## Goals
+- Keep `commit.core` unchanged once accepted.
+- Add new behavior only in new `commit.extension.*` sections.
+- Never rewrite old extension sections; add another extension section instead.
+- Read order: `commit.core` -> `commit.extension.*` (top to bottom).
+
+## `commit`
+
+### Module Index
+
+- `commit.core` (stable baseline rules)
+- `commit.extension.template` (copy this block to add future rules)
+
+### Module: `commit.core`
+
+#### Description
+
+Create a well-formed git commit from current changes using session history for
+rationale and summary; use when asked to commit, prepare a commit message, or
+finalize staged work.
+
+#### Goals
 
 - Produce a commit that reflects the actual code changes and the session
   context.
 - Follow common git conventions (type prefix, short subject, wrapped body).
 - Include both summary and rationale in the body.
 
-## Inputs
+#### Inputs
 
 - Codex session history for intent and rationale.
 - `git status`, `git diff`, and `git diff --staged` for actual changes.
 - Repo-specific commit conventions if documented.
 
-## Steps
+#### Steps
 
 1. Read session history to identify scope, intent, and rationale.
 2. Inspect the working tree and staged changes (`git status`, `git diff`,
@@ -40,24 +54,22 @@ description:
    - Summary of key changes (what changed).
    - Rationale and trade-offs (why it changed).
    - Tests or validation run (or explicit note if not run).
-9. Append a `Co-authored-by` trailer for Codex using `Codex <codex@openai.com>`
-   unless the user explicitly requests a different identity.
-10. Wrap body lines at 72 characters.
-11. Create the commit message with a here-doc or temp file and use
+9. Wrap body lines at 72 characters.
+10. Create the commit message with a here-doc or temp file and use
     `git commit -F <file>` so newlines are literal (avoid `-m` with `\n`).
-12. Commit only when the message matches the staged changes: if the staged diff
-    includes unrelated files or the message describes work that isn't staged,
+11. Commit only when the message matches the staged changes: if the staged diff
+    includes unrelated files or the message describes work that is not staged,
     fix the index or revise the message before committing.
 
-## Output
+#### Output
 
 - A single commit created with `git commit` whose message reflects the session.
 
-## Template
+#### Template
 
 Type and scope are examples only; adjust to fit the repo and changes.
 
-```
+```text
 <type>(<scope>): <short summary>
 
 Summary:
@@ -70,6 +82,24 @@ Rationale:
 
 Tests:
 - <command or "not run (reason)">
+```
 
-Co-authored-by: Codex <codex@openai.com>
+### Module: `commit.extension.template`
+
+Use this template for future additions. Duplicate this section and rename it to
+`commit.extension.<name>`.
+
+```text
+### Module: commit.extension.<name>
+
+Purpose:
+- <what this extension adds>
+
+Rules:
+- <new rule 1>
+- <new rule 2>
+
+Precedence:
+- Extends `commit.core`
+- If conflict exists, this extension must explicitly state override behavior
 ```
