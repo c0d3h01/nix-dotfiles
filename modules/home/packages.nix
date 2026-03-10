@@ -12,6 +12,13 @@
     stow
     imagemagick
     mise
+    tldr
+    alejandra
+    nil
+    nixd
+    uv
+    rustup
+    python3
   ];
 
   apps = [];
