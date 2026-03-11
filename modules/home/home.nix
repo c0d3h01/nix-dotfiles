@@ -32,7 +32,7 @@
     dev.gh.enable = true;
     dev.lazygit.enable = true;
     dev.delta.enable = true;
-    dev.neovim.enable = true;
+    dev.neovim.enable = false;
 
     editor.nixvim.enable = true;
 
