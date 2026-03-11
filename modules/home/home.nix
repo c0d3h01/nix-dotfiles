@@ -41,7 +41,6 @@
     features.alacritty.enable = false;
     features.kitty.enable = false;
     features.spicetify.enable = true;
-    features.openclaw.enable = false;
     features.vesktop.enable = true;
     features.chromium.enable = true;
     features.yt-dlp.enable = true;

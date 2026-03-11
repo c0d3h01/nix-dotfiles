@@ -21,7 +21,6 @@
     ./neovim.nix
     ./nixgl.nix
     ./nixvim.nix
-    ./openclaw.nix
     ./packages.nix
     ./ripgrep.nix
     ./secrets.nix

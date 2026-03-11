@@ -19,7 +19,6 @@
 
   baseOverlays = [
     inputs.nixgl.overlays.default
-    inputs.nix-openclaw.overlays.default
     inputs.nur.overlays.default
   ];
 
