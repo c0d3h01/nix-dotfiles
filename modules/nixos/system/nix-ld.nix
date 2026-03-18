@@ -71,12 +71,5 @@ in {
         libxkbfile
         libxshmfence
       ];
-
-    programs.appimage = {
-      enable = hostProfile.isWorkstation;
-      binfmt = true;
-    };
-
-    services.flatpak.enable = mkIf hostProfile.isWorkstation false;
   };
 }
