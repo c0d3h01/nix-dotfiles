@@ -1,8 +1,10 @@
 {
   imports = [
+    ./appImage.nix
     ./audio.nix
     ./diff.nix
     ./firewalld.nix
+    ./flatpak.nix
     ./fonts.nix
     ./gnome.nix
     ./gnupg.nix
