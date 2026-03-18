@@ -1,4 +1,4 @@
-.PHONY: help rebuild home check fmt clean partition install-nix install-nixos mount-rescue troubleshoot
+.PHONY: help rebuild home check fmt clean partition install-nix install-nixos mount-rescue troubleshoot swap-on swap-off
 MAKEFLAGS += --no-print-directory
 .DEFAULT_GOAL := help
 
@@ -7,61 +7,66 @@ DISK ?= /dev/nvme0n1
 MNT  ?= /mnt
 USER ?= $(shell whoami)
 
-CMD := $(firstword $(MAKECMDGOALS))
-ARG := $(word 2,$(MAKECMDGOALS))
-ifneq ($(filter rebuild home install-nixos,$(CMD)),)
-  ifeq ($(HOST),$(shell hostname))
-    ifneq ($(ARG),)
-      HOST := $(ARG)
-      .PHONY: $(ARG)
-$(ARG):
-	@:
-    endif
-  endif
-endif
+NIX_EXPERIMENTAL := --extra-experimental-features "nix-command flakes"
 
 help: ## Show this help
-	@printf "\033[1mUsage:\033[0m make \033[36m<target>\033[0m [HOST=<host>]\n\n"
-	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) \
-		| awk -F ':.*## ' '{printf "  \033[36m%-16s\033[0m %s\n", $$1, $$2}'
-	@printf "\nDefaults:  HOST=%s  USER=%s  DISK=%s\n" "$(HOST)" "$(USER)" "$(DISK)"
+	@echo "Usage: make <target> [HOST=<host>]"
+	@echo ""
+	@echo "Targets:"
+	@echo "  rebuild          NixOS rebuild switch"
+	@echo "  home             Home Manager switch (standalone)"
+	@echo "  partition        Partition + format + mount (DESTRUCTIVE)"
+	@echo "  install-nix      Install Nix package manager (multi-user)"
+	@echo "  install-nixos    Run nixos-install from local flake"
+	@echo "  mount-rescue     Mount BTRFS subvolumes for rescue"
+	@echo "  troubleshoot     Mount + enter NixOS rescue environment"
+	@echo "  swap-on          Create temporary swapfile for installation"
+	@echo "  swap-off         Remove temporary swapfile"
+	@echo "  check            Flake check (all systems)"
+	@echo "  fmt              Format all Nix files"
+	@echo "  clean            GC + optimise Nix store"
+	@echo ""
+	@echo "Defaults:"
+	@echo "  HOST=$(HOST)"
+	@echo "  USER=$(USER)"
+	@echo "  DISK=$(DISK)"
 
-rebuild: _need-host ## NixOS rebuild switch
-	sudo nixos-rebuild switch --flake ".#$(HOST)"
+rebuild: _need-host
+	sudo nix $(NIX_EXPERIMENTAL) nixos-rebuild switch --flake ".#$(HOST)"
 
-home: _need-host ## Home Manager switch (standalone)
-	home-manager switch --flake ".#$(USER)@$(HOST)"
+home: _need-host
+	nix $(NIX_EXPERIMENTAL) run home-manager switch --flake ".#$(USER)@$(HOST)"
 
-partition: ## Partition + format + mount (DESTRUCTIVE)
-	sudo nix run .#partition -- $(DISK) $(MNT)
+partition:
+	sudo nix $(NIX_EXPERIMENTAL) run .#partition -- $(DISK) $(MNT)
 
-install-nix: ## Install Nix package manager (multi-user)
-	nix run .#install-nix
+install-nix:
+	nix $(NIX_EXPERIMENTAL) run .#install-nix
 
-install-nixos: _need-host ## Run nixos-install from local flake
-	sudo nixos-install --flake ".#$(HOST)" --no-root-passwd
+install-nixos: _need-host
+	sudo nix $(NIX_EXPERIMENTAL) run .#nixos-install -- --flake ".#$(HOST)" --no-root-passwd
 
-mount-rescue: ## Mount BTRFS subvolumes for rescue
-	sudo nix run .#mount-rescue -- $(MNT)
+mount-rescue:
+	sudo nix $(NIX_EXPERIMENTAL) run .#mount-rescue -- $(MNT)
 
-troubleshoot: ## Mount + enter NixOS rescue environment
-	sudo nix run .#troubleshoot -- $(MNT)
+troubleshoot:
+	sudo nix $(NIX_EXPERIMENTAL) run .#troubleshoot -- $(MNT)
 
-swap-on: ## Create temporary swapfile for installation
-	sudo nix run .#swap-on -- $(MNT)
+swap-on:
+	sudo nix $(NIX_EXPERIMENTAL) run .#swap-on -- $(MNT)
 
-swap-off: ## Remove temporary swapfile
-	sudo nix run .#swap-off -- $(MNT)
+swap-off:
+	sudo nix $(NIX_EXPERIMENTAL) run .#swap-off -- $(MNT)
 
-check: ## Flake check (all systems)
-	nix flake check --all-systems
+check:
+	nix $(NIX_EXPERIMENTAL) flake check --all-systems
 
-fmt: ## Format all Nix files
-	nix fmt
+fmt:
+	nix $(NIX_EXPERIMENTAL) fmt
 
-clean: ## GC + optimise Nix store
+clean:
 	sudo nix-collect-garbage -d
-	nix store optimise
+	nix $(NIX_EXPERIMENTAL) store optimise
 
 _need-host:
 	@test -n "$(HOST)" || { echo "Usage: make $(CMD) HOST=<host>"; exit 1; }
