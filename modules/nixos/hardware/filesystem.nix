@@ -8,7 +8,6 @@
   rootFs = config.fileSystems."/".fsType;
   isBtrfs = rootFs == "btrfs";
 in {
-
   environment.systemPackages = mkMerge [
     (mkIf isBtrfs [pkgs.btrfs-progs])
   ];
