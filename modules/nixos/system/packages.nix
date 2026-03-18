@@ -11,7 +11,6 @@
 
   desktopApps = with pkgs; [
     vscode-fhs
-    brave
     antigravity-fhs
     postman
     github-desktop
