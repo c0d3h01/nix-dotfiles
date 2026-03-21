@@ -24,13 +24,6 @@
 
   system.stateVersion = "25.11";
 
-  environment.localBinInPath = true;
-
-  documentation.dev.enable = false;
-  documentation.man.enable = false;
-
-  programs.firefox.enable = true;
-
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
