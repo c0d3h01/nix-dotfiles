@@ -2,6 +2,7 @@
   imports = [
     ./appImage.nix
     ./audio.nix
+    ./bpftune.nix
     ./diff.nix
     ./firewalld.nix
     ./flatpak.nix
