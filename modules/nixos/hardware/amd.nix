@@ -9,9 +9,8 @@ in {
   # AMD GPU & CPU Configuration
   hardware.graphics = mkIf hostProfile.isWorkstation {
     enable = mkDefault true;
-    enable32Bit = mkDefault true;
-
     extraPackages = with pkgs; [
+      amdvlk
       vulkan-tools
       libva-vdpau-driver
 
@@ -20,6 +19,11 @@ in {
       # rocmPackages.clr.icd
       # rocmPackages.hip
       # rocmPackages.miopen-hip
+    ];
+
+    enable32Bit = mkDefault true;
+    extraPackages32 = with pkgs; [
+      driversi686Linux.amdvlk
     ];
   };
 
