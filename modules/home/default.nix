@@ -3,7 +3,6 @@
     ./alacritty.nix
     ./bash.nix
     ./bat.nix
-    ./chromium.nix
     ./delta.nix
     ./dircolors.nix
     ./direnv.nix
@@ -18,10 +17,8 @@
     ./kitty.nix
     ./lazygit.nix
     ./lsd.nix
-    ./neovim.nix
     ./nixgl.nix
     ./nixvim.nix
-    ./packages.nix
     ./ripgrep.nix
     ./secrets.nix
     ./spicetify.nix
@@ -30,7 +27,6 @@
     ./vesktop.nix
     ./wezterm.nix
     ./yt-dlp.nix
-    ./zellij.nix
     ./zoxide.nix
     ./zsh.nix
   ];

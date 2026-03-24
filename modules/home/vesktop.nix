@@ -26,9 +26,7 @@ in {
         hardwareAcceleration = true;
         openLinksWithElectron = false;
 
-        splashTheming = true;
-        splashBackground = "#000000";
-        splashColor = "#ffffff";
+        splashTheming = false;
         splashAnimationDuration = 500;
 
         saveWindowState = true;
@@ -41,7 +39,7 @@ in {
         useQuickCss = true;
         enableReactDevtools = false;
         frameless = false;
-        transparent = false;
+        transparent = true;
         winCtrlQ = false;
         disableMinSize = true;
         winNativeTitleBar = false;

@@ -25,14 +25,10 @@
     shell.zoxide.enable = true;
     shell.lsd.enable = true;
 
-    terminal.tmux.enable = true;
-    terminal.zellij.enable = true;
-
     dev.git.enable = true;
     dev.gh.enable = true;
     dev.lazygit.enable = true;
     dev.delta.enable = true;
-    dev.neovim.enable = false;
 
     editor.nixvim.enable = true;
 
@@ -42,7 +38,6 @@
     features.kitty.enable = false;
     features.spicetify.enable = true;
     features.vesktop.enable = true;
-    features.chromium.enable = true;
     features.yt-dlp.enable = true;
 
     fonts.enable = true;
