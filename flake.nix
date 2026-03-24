@@ -54,7 +54,7 @@
         fullName = "Harshal Sawant";
         system = "x86_64-linux";
         isNixOS = true;
-        bootloader = "limine";
+        bootloader = "grub";
         windowManager = "gnome";
         workstation = true;
         stateVersion = "25.11";

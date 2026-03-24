@@ -1,4 +1,4 @@
-{
+{lib, ...}: {
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/nixos-root";
@@ -6,10 +6,8 @@
       options = [
         "subvol=/@"
         "noatime"
-        "compress=zstd:3"
+        "compress=zstd:1"
         "ssd"
-        "discard=async"
-        "space_cache=v2"
       ];
     };
 
@@ -19,10 +17,8 @@
       options = [
         "subvol=/@home"
         "noatime"
-        "compress=zstd:3"
+        "compress=zstd:1"
         "ssd"
-        "discard=async"
-        "space_cache=v2"
       ];
     };
 
@@ -32,10 +28,8 @@
       options = [
         "subvol=/@nix"
         "noatime"
-        "compress=zstd:3"
+        "compress=zstd:1"
         "ssd"
-        "discard=async"
-        "space_cache=v2"
       ];
     };
 
@@ -45,23 +39,20 @@
       options = [
         "subvol=/@tmp"
         "noatime"
-        "compress=zstd:3"
+        "compress=zstd:1"
         "ssd"
-        "discard=async"
-        "space_cache=v2"
       ];
     };
 
     "/var/log" = {
       device = "/dev/disk/by-label/nixos-root";
       fsType = "btrfs";
+      neededForBoot = true;
       options = [
         "subvol=/@log"
         "noatime"
-        "compress=zstd:3"
+        "compress=zstd:1"
         "ssd"
-        "discard=async"
-        "space_cache=v2"
       ];
     };
 

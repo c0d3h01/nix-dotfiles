@@ -29,28 +29,4 @@ in {
       message = "hostConfig.bootloader must be one of: systemd, limine, grub.";
     }
   ];
-
-  dotfiles.nixos = {
-    hardware.graphics.enable = lib.mkDefault hostProfile.isWorkstation;
-    hardware.zram.enable = lib.mkDefault true;
-    hardware.udev.enable = lib.mkDefault true;
-
-    services.podman.enable = lib.mkDefault true;
-    services.ollama.enable = lib.mkDefault true;
-    services.libvirt.enable = lib.mkDefault false;
-    services.wireshark.enable = lib.mkDefault true;
-
-    system.audio.enable = lib.mkDefault true;
-    system.diff.enable = lib.mkDefault true;
-    system.firewalld.enable = lib.mkDefault true;
-    system.fonts.enable = lib.mkDefault true;
-    system.gnupg.enable = lib.mkDefault true;
-    system.nix-ld.enable = lib.mkDefault true;
-    system.oomd.enable = lib.mkDefault true;
-    system.openssh.enable = lib.mkDefault true;
-    system.pam.enable = lib.mkDefault true;
-    system.printing.enable = lib.mkDefault false;
-    system.scheduler.enable = lib.mkDefault hostProfile.isWorkstation;
-    system.secrets.enable = lib.mkDefault true;
-  };
 }
