@@ -10,22 +10,19 @@ in {
   hardware.graphics = mkIf hostProfile.isWorkstation {
     enable = mkDefault true;
     extraPackages = with pkgs; [
-      amdvlk
-      vulkan-tools
+      mesa
       libva-vdpau-driver
-
-      # Only for - ROCm (HIP/CLR)
-      # rocmPackages.clr
-      # rocmPackages.clr.icd
-      # rocmPackages.hip
-      # rocmPackages.miopen-hip
     ];
 
     enable32Bit = mkDefault true;
-    extraPackages32 = with pkgs; [
-      driversi686Linux.amdvlk
+    extraPackages32 = with pkgs.driversi686Linux; [
+      mesa
     ];
   };
+
+  # Load amdgpu in initrd: fixes Plymouth KMS, eliminates low-res flicker,
+  # and ensures the GPU is ready before any DRM consumer starts.
+  hardware.amdgpu.initrd.enable = true;
 
   # Enable OpenCL - ROCM only.
   # hardware.amdgpu.opencl.enable = mkDefault true;
