@@ -17,14 +17,9 @@
 }: let
   inherit (inputs.nixpkgs) lib;
 
-  baseOverlays = [
-    inputs.nixgl.overlays.default
+  overlays = [
     inputs.nur.overlays.default
   ];
-
-  nixglWrapperOverlay = import ../overlays/nixgl-wrapper.nix {inherit isNixOS;};
-
-  allOverlays = baseOverlays ++ [nixglWrapperOverlay];
 
   hostConfig = {
     inherit
@@ -50,7 +45,7 @@
     inherit system;
     config.allowUnfree = true;
     config.allowUnsupportedSystem = true;
-    overlays = allOverlays;
+    inherit overlays;
   };
 in {
   nixos = lib.nixosSystem {
@@ -59,7 +54,7 @@ in {
     modules =
       [
         {
-          nixpkgs.overlays = allOverlays;
+          nixpkgs.overlays = overlays;
           networking.hostId = builtins.substring 0 8 (builtins.hashString "md5" hostname);
         }
 

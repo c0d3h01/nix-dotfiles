@@ -1,10 +1,22 @@
 # scripts as nix packages, exposed via flake.outputs.packages
 {pkgs}: let
   inherit (pkgs) writeShellApplication;
+  inherit (pkgs) lib;
+  isLinux = pkgs.stdenv.hostPlatform.isLinux;
 in {
+  install-nix = writeShellApplication {
+    name = "install-nix";
+    runtimeInputs = with pkgs; [curl];
+    text = ''
+      echo "Installing Nix package manager (multi-user)..."
+      curl -L https://nixos.org/nix/install | sh -s -- --daemon
+    '';
+  };
+}
+// lib.optionalAttrs isLinux {
   partition = writeShellApplication {
     name = "partition";
-    runtimeInputs = with pkgs; [util-linux parted dosfstools btrfs-progs gptfdisk coreutils];
+    runtimeInputs = with pkgs; [util-linux dosfstools btrfs-progs gptfdisk coreutils];
     text = ''
       DISK="''${1:-}"
       MNT="''${2:-/mnt}"
@@ -197,15 +209,6 @@ in {
       else
         echo "No swapfile found at ''${SWAPFILE}"
       fi
-    '';
-  };
-
-  install-nix = writeShellApplication {
-    name = "install-nix";
-    runtimeInputs = with pkgs; [curl];
-    text = ''
-      echo "Installing Nix package manager (multi-user)..."
-      curl -L https://nixos.org/nix/install | sh -s -- --daemon
     '';
   };
 }
