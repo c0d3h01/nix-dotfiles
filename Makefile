@@ -1,14 +1,11 @@
-.PHONY: help rebuild home check fmt clean partition install-nix install-nixos mount-rescue troubleshoot swap-on swap-off
-MAKEFLAGS := $(filter-out -w --print-directory,$(MAKEFLAGS))
-MAKEFLAGS += --no-print-directory
-.DEFAULT_GOAL := help
-
 HOST ?= $(shell hostname)
 DISK ?= /dev/nvme0n1
 MNT  ?= /mnt
 USER ?= $(shell whoami)
 
-NIX_EXPERIMENTAL := --extra-experimental-features "nix-command flakes"
+NIX_FLAGS := --extra-experimental-features "nix-command flakes"
+
+.PHONY: help rebuild home partition install-nix install-nixos mount-rescue troubleshoot swap-on swap-off check fmt clean
 
 help: ## Show this help
 	@echo "Usage: make <target> [HOST=<host>]"
@@ -27,47 +24,44 @@ help: ## Show this help
 	@echo "  fmt              Format all Nix files"
 	@echo "  clean            GC + optimise Nix store"
 	@echo ""
-	@echo "Defaults:"
-	@echo "  HOST=$(HOST)"
-	@echo "  USER=$(USER)"
-	@echo "  DISK=$(DISK)"
+	@echo "Defaults: HOST=$(HOST), USER=$(USER), DISK=$(DISK)"
 
-rebuild: _need-host
+rebuild:
+	@test -n "$(HOST)" || { echo "Error: HOST is empty"; exit 1; }
 	sudo nixos-rebuild switch --flake ".#$(HOST)"
 
-home: _need-host
-	home-manager $(NIX_EXPERIMENTAL) switch --flake ".#$(USER)@$(HOST)"
+home:
+	@test -n "$(HOST)" || { echo "Error: HOST is empty"; exit 1; }
+	home-manager $(NIX_FLAGS) switch --flake ".#$(USER)@$(HOST)"
 
 partition:
-	sudo nix $(NIX_EXPERIMENTAL) run .#partition -- $(DISK) $(MNT)
+	sudo nix $(NIX_FLAGS) run .#partition -- $(DISK) $(MNT)
 
 install-nix:
-	nix $(NIX_EXPERIMENTAL) run .#install-nix
+	nix $(NIX_FLAGS) run .#install-nix
 
-install-nixos: _need-host
-	sudo nix $(NIX_EXPERIMENTAL) run .#nixos-install -- --flake ".#$(HOST)" --no-root-passwd
+install-nixos:
+	@test -n "$(HOST)" || { echo "Error: HOST is empty"; exit 1; }
+	sudo nix $(NIX_FLAGS) run .#nixos-install -- --flake ".#$(HOST)" --no-root-passwd
 
 mount-rescue:
-	sudo nix $(NIX_EXPERIMENTAL) run .#mount-rescue -- $(MNT)
+	sudo nix $(NIX_FLAGS) run .#mount-rescue -- $(MNT)
 
 troubleshoot:
-	sudo nix $(NIX_EXPERIMENTAL) run .#troubleshoot -- $(MNT)
+	sudo nix $(NIX_FLAGS) run .#troubleshoot -- $(MNT)
 
 swap-on:
-	sudo nix $(NIX_EXPERIMENTAL) run .#swap-on -- $(MNT)
+	sudo nix $(NIX_FLAGS) run .#swap-on -- $(MNT)
 
 swap-off:
-	sudo nix $(NIX_EXPERIMENTAL) run .#swap-off -- $(MNT)
+	sudo nix $(NIX_FLAGS) run .#swap-off -- $(MNT)
 
 check:
-	nix $(NIX_EXPERIMENTAL) flake check --all-systems
+	nix $(NIX_FLAGS) flake check --all-systems
 
 fmt:
-	nix $(NIX_EXPERIMENTAL) fmt
+	nix $(NIX_FLAGS) fmt
 
 clean:
 	sudo nix-collect-garbage -d
-	nix $(NIX_EXPERIMENTAL) store optimise
-
-_need-host:
-	@test -n "$(HOST)" || { echo "Usage: make $(CMD) HOST=<host>"; exit 1; }
+	nix $(NIX_FLAGS) store optimise
