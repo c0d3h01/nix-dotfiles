@@ -1,7 +1,6 @@
 {
   imports = [
     ./bootloader
-    ./hardening
     ./hardware
     ./kernel
     ./networking

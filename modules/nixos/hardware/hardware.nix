@@ -41,8 +41,7 @@ in {
   };
 
   boot = {
-    plymouth.enable = true;
-    consoleLogLevel = 0;
+    plymouth.enable = false;
     tmp.cleanOnBoot = true;
 
     initrd = {

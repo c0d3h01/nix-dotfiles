@@ -4,10 +4,6 @@
     # disable all mitigations for Spectre, Meltdown, etc.
     "mitigations=off"
 
-    #
-    "quiet"
-    "splash"
-
     # make stack-based attacks on the kernel harder
     "randomize_kstack_offset=on"
 

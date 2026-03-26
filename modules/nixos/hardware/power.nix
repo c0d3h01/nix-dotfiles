@@ -1,14 +1,9 @@
-{
-  services.tuned = {
-    enable = true;
-    # ppdSettings.main.battery_detection = true;
-  };
-
+{hostProfile, ...}: {
   services.upower = {
-    enable = true;
-    percentageLow = 15;
-    percentageCritical = 5;
-    percentageAction = 3;
+    enable = hostProfile.isWorkstation;
+    percentageLow = 25;
+    percentageCritical = 20;
+    percentageAction = 15;
     criticalPowerAction = "Hibernate";
   };
 }

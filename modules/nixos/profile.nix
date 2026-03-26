@@ -15,10 +15,10 @@ in {
     {
       assertion = lib.elem hostProfile.windowManager [
         "gnome"
-        "kde"
+        "plasma"
         "xfce"
       ];
-      message = "hostConfig.windowManager must be one of: gnome, kde, xfce.";
+      message = "hostConfig.windowManager must be one of: gnome, plasma, xfce.";
     }
     {
       assertion = lib.elem hostProfile.bootloader [

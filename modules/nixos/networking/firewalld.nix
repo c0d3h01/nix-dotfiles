@@ -1,14 +1,11 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   networking = {
     nftables.enable = true;
 
     firewall = {
       backend = "firewalld";
-      checkReversePath = lib.mkForce "loose";
+      checkReversePath = "loose";
+
       logRefusedConnections = false;
       logReversePathDrops = true;
 

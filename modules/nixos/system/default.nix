@@ -2,20 +2,15 @@
   imports = [
     ./appImage.nix
     ./audio.nix
-    ./bpftune.nix
-    ./diff.nix
     ./flatpak.nix
     ./fonts.nix
     ./gnome.nix
-    ./irqbalance.nix
     ./nix-ld.nix
     ./nix.nix
     ./nixpkgs.nix
-    ./oomd.nix
     ./packages.nix
     ./plasma.nix
     ./printing.nix
-    ./scheduler.nix
     ./secrets.nix
     ./user.nix
     ./xfce.nix

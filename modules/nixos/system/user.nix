@@ -32,15 +32,12 @@
     shell = pkgs.zsh;
 
     extraGroups = [
-      "adbusers"
+      "wheel"
       "audio"
-      "dialout"
-      "input"
-      "kvm"
+      "video"
       "networkmanager"
       "plugdev"
-      "video"
-      "wheel"
+      "adbusers"
     ];
   };
 }

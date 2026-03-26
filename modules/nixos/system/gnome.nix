@@ -30,10 +30,7 @@ in {
         gnome-photos
         vlc
         libreoffice-still
-        playerctl
-        pamixer
         kdePackages.partitionmanager
-
         gnomeExtensions.gsconnect
       ];
 

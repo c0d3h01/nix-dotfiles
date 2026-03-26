@@ -2,15 +2,17 @@
   inherit (lib) mkDefault;
 in {
   systemd = {
-    # Systemd OOMd
     oomd = {
       enable = true;
       enableRootSlice = true;
       enableUserSlices = true;
       enableSystemSlice = true;
-      settings.OOM.DefaultMemoryPressureDurationSec = "20s";
+      settings.OOM = {
+        DefaultMemoryPressureDurationSec = "8s";
+        DefaultSwapUsedLimit = "40%";
+      };
     };
 
-    services.nix-daemon.serviceConfig.OOMScoreAdjust = mkDefault 350;
+    services.nix-daemon.serviceConfig.OOMScoreAdjust = mkDefault 500;
   };
 }

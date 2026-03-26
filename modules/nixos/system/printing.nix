@@ -1,15 +1,15 @@
 {hostProfile, ...}: {
   services = {
     printing = {
-      enable = hostProfile.isWorkstation;
-      openFirewall = hostProfile.isWorkstation;
+      enable = false;
+      openFirewall = true;
     };
 
     avahi = {
-      enable = hostProfile.isWorkstation;
+      enable = false;
       nssmdns4 = true;
       nssmdns6 = true;
-      openFirewall = hostProfile.isWorkstation;
+      openFirewall = true;
     };
   };
 }

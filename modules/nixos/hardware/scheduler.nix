@@ -1,6 +1,6 @@
 {hostProfile, ...}: {
   services.scx = {
-    enable = hostProfile.isWorkstation;
+    enable = false; # hostProfile.isWorkstation;
     scheduler = "scx_lavd";
     extraArgs = [
       "--performance"

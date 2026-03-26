@@ -6,7 +6,7 @@
 }: let
   inherit (lib) mkIf;
 in {
-  config = mkIf (hostProfile.windowManager == "kde") {
+  config = mkIf (hostProfile.windowManager == "plasma") {
     services.desktopManager.plasma6.enable = true;
     services.displayManager.sddm.enable = true;
     services.displayManager.sddm.wayland.enable = true;
