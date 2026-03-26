@@ -2,28 +2,68 @@
   description = "NixOS Dotfiles";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    # Just for pinning
+    systems.url = "github:nix-systems/default";
 
-    sops.url = "github:Mic92/sops-nix";
-    sops.inputs.nixpkgs.follows = "nixpkgs";
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs.systems.follows = "systems";
+    };
 
-    spicetify.url = "github:Gerg-L/spicetify-nix";
-    spicetify.inputs.nixpkgs.follows = "nixpkgs";
+    flake-compat = {
+      url = "github:nix-community/flake-compat";
+      flake = false;
+    };
 
-    nixgl.url = "github:nix-community/nixGL";
-    nixgl.inputs.nixpkgs.follows = "nixpkgs";
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
 
-    nur.url = "github:nix-community/NUR";
-    nur.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    nixvim.url = "github:nix-community/nixvim";
-    nixvim.inputs.nixpkgs.follows = "nixpkgs";
+    sops = {
+      url = "github:Mic92/sops-nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
 
-    llm-agents.url = "github:numtide/llm-agents.nix";
-    llm-agents.inputs.nixpkgs.follows = "nixpkgs";
+    spicetify = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+      };
+    };
+
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+      };
+    };
+
+    lix = {
+      url = "git+https://gerrit.lix.systems/lix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "flake-compat";
+      };
+    };
   };
 
   outputs = {
@@ -54,8 +94,8 @@
         fullName = "Harshal Sawant";
         system = "x86_64-linux";
         isNixOS = true;
-        bootloader = "grub";
-        windowManager = "gnome";
+        bootloader = "grub"; # limine | grub | systemd
+        windowManager = "gnome"; # xfce | gnome | plasma
         workstation = true;
         stateVersion = "25.11";
         nixosModules = [./hosts/laptop];
