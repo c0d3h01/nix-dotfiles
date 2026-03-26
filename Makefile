@@ -1,4 +1,5 @@
 .PHONY: help rebuild home check fmt clean partition install-nix install-nixos mount-rescue troubleshoot swap-on swap-off
+MAKEFLAGS := $(filter-out -w --print-directory,$(MAKEFLAGS))
 MAKEFLAGS += --no-print-directory
 .DEFAULT_GOAL := help
 
