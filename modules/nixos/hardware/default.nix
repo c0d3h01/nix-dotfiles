@@ -2,13 +2,11 @@
   imports = [
     ./acpi.nix
     ./amd.nix
-    ./bpftune.nix
+    ./bluetooth.nix
     ./filesystem.nix
     ./hardware.nix
-    ./irqbalance.nix
     ./oomd.nix
-    ./power.nix
-    ./scheduler.nix
+    ./optimise.nix
     ./touchpad.nix
     ./zram.nix
   ];
