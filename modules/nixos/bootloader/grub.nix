@@ -11,10 +11,7 @@ in {
     efiSupport = true;
     device = "nodev";
     configurationLimit = 15;
-    efiInstallAsRemovable = false;
-
-    useOSProber = false;
-    # extraEntries = ''
-    # '';
+    efiInstallAsRemovable = true;
+    useOSProber = true;
   };
 }
