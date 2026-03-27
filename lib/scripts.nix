@@ -1,4 +1,3 @@
-# scripts as nix packages, exposed via flake.outputs.packages
 {pkgs}: let
   inherit (pkgs) writeShellApplication;
   inherit (pkgs) lib;
@@ -17,7 +16,7 @@ in
   // lib.optionalAttrs isLinux {
     partition = writeShellApplication {
       name = "partition";
-      runtimeInputs = with pkgs; [util-linux dosfstools btrfs-progs e2fsprogs gptfdisk coreutils];
+      runtimeInputs = with pkgs; [util-linux dosfstools btrfs-progs e2fsprogs gptfdisk coreutils zfs];
       text = ''
         DISK="''${1:-}"
         MNT="''${2:-/mnt}"
@@ -45,9 +44,11 @@ in
         echo "Choose filesystem for root partition:"
         echo "  [1] btrfs (default)"
         echo "  [2] ext4"
-        read -rp "Enter choice [1/2]: " fs_choice
+        echo "  [3] zfs"
+        read -rp "Enter choice [1/2/3]: " fs_choice
         case "''${fs_choice:-1}" in
           2) FS_TYPE="ext4" ;;
+          3) FS_TYPE="zfs" ;;
           *) FS_TYPE="btrfs" ;;
         esac
         echo "-> Using: ''${FS_TYPE}"
@@ -59,7 +60,6 @@ in
         echo "    1  nixos-boot  ''${BOOT_SIZE}   FAT32 (EFI)"
         echo "    2  nixos-root  remaining  ''${FS_TYPE}"
         echo "  (no swap partition — zram-generator handles swap at runtime)"
-        echo "  (a temporary 4G swapfile is created for installation only)"
         echo ""
         read -rp "Type 'yes' to continue: " confirm
         if [[ $confirm != "yes" ]]; then
@@ -68,6 +68,10 @@ in
         fi
 
         umount -R "$MNT" 2>/dev/null || true
+
+        # Export any existing zpool that may hold a claim on the disk before
+        # we zap it; this prevents zpool create from failing with "in use".
+        zpool export zpool 2>/dev/null || true
 
         sgdisk --zap-all "$DISK"
         sgdisk \
@@ -120,6 +124,41 @@ in
           mount -t btrfs -o "subvol=/@log,''${BTRFS_OPTS}" "$PART_ROOT" "''${MNT}/var/log"
           mount -o umask=0077 "$PART_BOOT" "''${MNT}/boot"
 
+        elif [[ $FS_TYPE == "zfs" ]]; then
+          POOL_NAME="zpool"
+          # Derive hostid identically to mkHost.nix:
+          #   builtins.substring 0 8 (builtins.hashString "md5" hostname)
+          HOST_ID="$(echo -n "$(hostname)" | md5sum | cut -c1-8)"
+
+          zpool create \
+            -o ashift=12 \
+            -o autotrim=on \
+            -O acltype=posixacl \
+            -O compression=zstd \
+            -O dnodesize=auto \
+            -O normalization=formD \
+            -O relatime=on \
+            -O xattr=sa \
+            -O mountpoint=none \
+            -R "$MNT" \
+            "$POOL_NAME" "$PART_ROOT"
+
+          zfs create -o mountpoint=legacy "$POOL_NAME/root"
+          zfs create -o mountpoint=legacy "$POOL_NAME/home"
+          zfs create -o mountpoint=legacy \
+            -o com.sun:auto-snapshot=false \
+            "$POOL_NAME/nix"
+          zfs create -o mountpoint=legacy "$POOL_NAME/log"
+
+          zgenhostid "$HOST_ID"
+
+          mount -t zfs "$POOL_NAME/root" "$MNT"
+          mkdir -p "$MNT/home" "$MNT/nix" "$MNT/var/log" "$MNT/boot"
+          mount -t zfs "$POOL_NAME/home" "$MNT/home"
+          mount -t zfs "$POOL_NAME/nix"  "$MNT/nix"
+          mount -t zfs "$POOL_NAME/log"  "$MNT/var/log"
+          mount -o umask=0077 "$PART_BOOT" "$MNT/boot"
+
         else
           mkfs.ext4 -L nixos-root \
             -E lazy_itable_init=0,lazy_journal_init=0 \
@@ -140,33 +179,52 @@ in
 
     mount-rescue = writeShellApplication {
       name = "mount-rescue";
-      runtimeInputs = with pkgs; [util-linux btrfs-progs coreutils];
+      runtimeInputs = with pkgs; [util-linux btrfs-progs coreutils zfs];
       text = ''
-        MNT="''${1:-/mnt}"
-
         if [[ $EUID -ne 0 ]]; then
           echo "Error: must run as root"
           exit 1
         fi
 
-        echo "Mounting BTRFS subvolumes + EFI to ''${MNT}..."
+        MNT="''${1:-/mnt}"
+        FS="$(blkid -s TYPE -o value /dev/disk/by-label/nixos-root 2>/dev/null || true)"
 
-        mount -t btrfs -o subvol=/@ /dev/disk/by-label/nixos-root "$MNT"
-        mkdir -p "$MNT/home" "$MNT/nix" "$MNT/var/tmp" "$MNT/var/log" "$MNT/boot"
-        mount -t btrfs -o subvol=/@home /dev/disk/by-label/nixos-root "$MNT/home"
-        mount -t btrfs -o subvol=/@nix /dev/disk/by-label/nixos-root "$MNT/nix"
-        mount -t btrfs -o subvol=/@tmp /dev/disk/by-label/nixos-root "$MNT/var/tmp"
-        mount -t btrfs -o subvol=/@log /dev/disk/by-label/nixos-root "$MNT/var/log"
-        mount /dev/disk/by-label/nixos-boot "$MNT/boot"
+        if [[ $FS == "zfs_member" ]]; then
+          echo "Detected ZFS — importing pool..."
+          zpool import -f -R "$MNT" zpool
+          mount -t zfs zpool/root "$MNT"
+          mkdir -p "$MNT/home" "$MNT/nix" "$MNT/var/log" "$MNT/boot"
+          mount -t zfs zpool/home "$MNT/home"
+          mount -t zfs zpool/nix  "$MNT/nix"
+          mount -t zfs zpool/log  "$MNT/var/log"
+          mount /dev/disk/by-label/nixos-boot "$MNT/boot"
 
-        echo "All subvolumes mounted at ''${MNT}"
+        elif [[ $FS == "btrfs" ]]; then
+          echo "Mounting BTRFS subvolumes + EFI to ''${MNT}..."
+          mount -t btrfs -o subvol=/@ /dev/disk/by-label/nixos-root "$MNT"
+          mkdir -p "$MNT/home" "$MNT/nix" "$MNT/var/tmp" "$MNT/var/log" "$MNT/boot"
+          mount -t btrfs -o subvol=/@home /dev/disk/by-label/nixos-root "$MNT/home"
+          mount -t btrfs -o subvol=/@nix  /dev/disk/by-label/nixos-root "$MNT/nix"
+          mount -t btrfs -o subvol=/@tmp  /dev/disk/by-label/nixos-root "$MNT/var/tmp"
+          mount -t btrfs -o subvol=/@log  /dev/disk/by-label/nixos-root "$MNT/var/log"
+          mount /dev/disk/by-label/nixos-boot "$MNT/boot"
+
+        else
+          echo "Mounting ext4 root + EFI to ''${MNT}..."
+          mount -t ext4 -o noatime,errors=remount-ro \
+            /dev/disk/by-label/nixos-root "$MNT"
+          mkdir -p "$MNT/boot"
+          mount /dev/disk/by-label/nixos-boot "$MNT/boot"
+        fi
+
+        echo "Mounted at ''${MNT}"
         echo "Run: sudo nixos-enter --root $MNT"
       '';
     };
 
     troubleshoot = writeShellApplication {
       name = "troubleshoot";
-      runtimeInputs = with pkgs; [util-linux btrfs-progs coreutils nixos-install-tools];
+      runtimeInputs = with pkgs; [util-linux btrfs-progs coreutils zfs nixos-install-tools];
       text = ''
         MNT="''${1:-/mnt}"
 
@@ -177,13 +235,32 @@ in
 
         echo "Mounting rescue environment at ''${MNT}..."
 
-        mount -t btrfs -o subvol=/@ /dev/disk/by-label/nixos-root "$MNT"
-        mkdir -p "$MNT/home" "$MNT/nix" "$MNT/var/tmp" "$MNT/var/log" "$MNT/boot"
-        mount -t btrfs -o subvol=/@home /dev/disk/by-label/nixos-root "$MNT/home"
-        mount -t btrfs -o subvol=/@nix /dev/disk/by-label/nixos-root "$MNT/nix"
-        mount -t btrfs -o subvol=/@tmp /dev/disk/by-label/nixos-root "$MNT/var/tmp"
-        mount -t btrfs -o subvol=/@log /dev/disk/by-label/nixos-root "$MNT/var/log"
-        mount /dev/disk/by-label/nixos-boot "$MNT/boot"
+        FS="$(blkid -s TYPE -o value /dev/disk/by-label/nixos-root 2>/dev/null || true)"
+
+        if [[ $FS == "zfs_member" ]]; then
+          zpool import -f -R "$MNT" zpool
+          mount -t zfs zpool/root "$MNT"
+          mkdir -p "$MNT/home" "$MNT/nix" "$MNT/var/log" "$MNT/boot"
+          mount -t zfs zpool/home "$MNT/home"
+          mount -t zfs zpool/nix  "$MNT/nix"
+          mount -t zfs zpool/log  "$MNT/var/log"
+          mount /dev/disk/by-label/nixos-boot "$MNT/boot"
+
+        elif [[ $FS == "btrfs" ]]; then
+          mount -t btrfs -o subvol=/@ /dev/disk/by-label/nixos-root "$MNT"
+          mkdir -p "$MNT/home" "$MNT/nix" "$MNT/var/tmp" "$MNT/var/log" "$MNT/boot"
+          mount -t btrfs -o subvol=/@home /dev/disk/by-label/nixos-root "$MNT/home"
+          mount -t btrfs -o subvol=/@nix  /dev/disk/by-label/nixos-root "$MNT/nix"
+          mount -t btrfs -o subvol=/@tmp  /dev/disk/by-label/nixos-root "$MNT/var/tmp"
+          mount -t btrfs -o subvol=/@log  /dev/disk/by-label/nixos-root "$MNT/var/log"
+          mount /dev/disk/by-label/nixos-boot "$MNT/boot"
+
+        else
+          mount -t ext4 -o noatime,errors=remount-ro \
+            /dev/disk/by-label/nixos-root "$MNT"
+          mkdir -p "$MNT/boot"
+          mount /dev/disk/by-label/nixos-boot "$MNT/boot"
+        fi
 
         echo "Entering NixOS environment..."
         nixos-enter --root "$MNT"
@@ -200,6 +277,14 @@ in
 
         if [[ $EUID -ne 0 ]]; then
           echo "Error: must run as root"
+          exit 1
+        fi
+
+        FS="$(findmnt -n -o FSTYPE "$MNT" 2>/dev/null || true)"
+        if [[ $FS == "zfs" ]]; then
+          echo "Error: cannot place a swapfile on a ZFS mountpoint."
+          echo "  ZFS swap requires a zvol. For installation, use zram (already active)"
+          echo "  or add a zvol manually: zfs create -V 4G zpool/swap"
           exit 1
         fi
 
