@@ -23,7 +23,6 @@ in
         e2fsprogs # mkfs.ext4, chattr
         gptfdisk # sgdisk, partprobe
         coreutils # truncate, fallocate, chmod, etc.
-        zfs # zpool, zfs, zgenhostid
       ];
       text = ''
         DISK="''${1:-}"
@@ -52,11 +51,9 @@ in
         echo "Choose filesystem for root partition:"
         echo "  [1] btrfs (default) — recommended, best feature set"
         echo "  [2] ext4            — simple, stable fallback"
-        echo "  [3] zfs             — advanced, requires more RAM"
-        read -rp "Enter choice [1/2/3]: " fs_choice
+        read -rp "Enter choice [1/2]: " fs_choice
         case "''${fs_choice:-1}" in
           2) FS_TYPE="ext4" ;;
-          3) FS_TYPE="zfs" ;;
           *) FS_TYPE="btrfs" ;;
         esac
         echo "-> Using: ''${FS_TYPE}"
@@ -79,15 +76,10 @@ in
         echo "Unmounting ''${MNT}..."
         umount -R "$MNT" 2>/dev/null || true
 
-        # Release any existing ZFS pool holding a claim on the disk.
-        # Must happen before wipefs or zpool create will error.
-        echo "Releasing any existing ZFS pool..."
-        zpool export zpool 2>/dev/null || true
-
         echo "Wiping partition table and filesystem signatures on ''${DISK}..."
         sgdisk --zap-all "$DISK"
         # sgdisk destroys the partition table but leaves filesystem superblocks
-        # (btrfs, ext4, ZFS) at their on-disk offsets. Wipe them explicitly so
+        # (btrfs, ext4) at their on-disk offsets. Wipe them explicitly so
         # no tool can misdetect old data on the raw device.
         wipefs -a "$DISK"
 
@@ -122,8 +114,8 @@ in
 
         # Wipe partition-level superblocks too. btrfs writes a backup superblock
         # near the end of the partition; when the partition boundary aligns with
-        # the old one, it survives the whole-disk wipe above and causes ZFS to
-        # refuse creation even with a clean GPT.
+        # the old one, it survives the whole-disk wipe above and could cause
+        # misdetection of old data on the raw device.
         echo "Wiping filesystem signatures on partitions..."
         wipefs -a "$PART_BOOT"
         wipefs -a "$PART_ROOT"
@@ -155,51 +147,6 @@ in
           mount -t btrfs -o "subvol=/@log,''${BTRFS_OPTS}"  "$PART_ROOT" "''${MNT}/var/log"
           mount -o umask=0077 "$PART_BOOT" "''${MNT}/boot"
 
-        elif [[ $FS_TYPE == "zfs" ]]; then
-          POOL_NAME="zpool"
-
-          # Derive hostid using the same algorithm as mkHost.nix:
-          #   builtins.substring 0 8 (builtins.hashString "md5" hostname)
-          # The -n flag is critical — without it, echo appends a newline and
-          # produces a different hash than Nix, breaking ZFS import at boot.
-          HOST_ID="$(echo -n "$(hostname)" | md5sum | cut -c1-8)"
-
-          echo "Creating ZFS pool ''${POOL_NAME}..."
-
-          zpool create \
-            -o ashift=12 \
-            -o autotrim=on \
-            -O acltype=posixacl \
-            -O compression=zstd \
-            -O dnodesize=auto \
-            -O normalization=formD \
-            -O relatime=on \
-            -O xattr=sa \
-            -O mountpoint=none \
-            -R "$MNT" \
-            "$POOL_NAME" "$PART_ROOT"
-
-          echo "Creating ZFS datasets..."
-          # mountpoint=legacy hands mount control to /etc/fstab (NixOS fileSystems).
-          zfs create -o mountpoint=legacy                        "$POOL_NAME/root"
-          zfs create -o mountpoint=legacy                        "$POOL_NAME/home"
-          zfs create -o mountpoint=legacy \
-                     -o com.sun:auto-snapshot=false              "$POOL_NAME/nix"
-          zfs create -o mountpoint=legacy                        "$POOL_NAME/log"
-
-          # Write hostid so NixOS can verify pool ownership at boot.
-          # boot.zfs.forceImportRoot = false in zfs.nix relies on this matching.
-          echo "Setting hostid to ''${HOST_ID}..."
-          zgenhostid "$HOST_ID"
-
-          echo "Mounting ZFS datasets..."
-          mount -t zfs "$POOL_NAME/root" "$MNT"
-          mkdir -p "$MNT"/{home,nix,var/log,boot}
-          mount -t zfs "$POOL_NAME/home" "$MNT/home"
-          mount -t zfs "$POOL_NAME/nix"  "$MNT/nix"
-          mount -t zfs "$POOL_NAME/log"  "$MNT/var/log"
-          mount -o umask=0077 "$PART_BOOT" "$MNT/boot"
-
         else
           echo "Formatting root as ext4..."
           mkfs.ext4 -L nixos-root \
@@ -216,13 +163,13 @@ in
         echo "Done! Partition layout:"
         lsblk -o NAME,SIZE,FSTYPE,LABEL,MOUNTPOINT "$DISK"
         echo ""
-        echo "Next: make swap-on (btrfs/ext4 only) then make install-nixos HOST=<host>"
+        echo "Next: make swap-on then make install-nixos HOST=<host>"
       '';
     };
 
     mount-rescue = writeShellApplication {
       name = "mount-rescue";
-      runtimeInputs = with pkgs; [util-linux btrfs-progs coreutils zfs];
+      runtimeInputs = with pkgs; [util-linux btrfs-progs coreutils];
       text = ''
         if [[ $EUID -ne 0 ]]; then
           echo "Error: must run as root"
@@ -235,19 +182,7 @@ in
         FS="$(blkid -s TYPE -o value /dev/disk/by-label/nixos-root 2>/dev/null || true)"
         echo "Detected filesystem: ''${FS:-unknown}"
 
-        if [[ $FS == "zfs_member" ]]; then
-          echo "Importing ZFS pool to ''${MNT}..."
-          # -f overrides hostid mismatch (expected when booting a live ISO).
-          # -R sets the pool's temporary mountpoint root so datasets land under $MNT.
-          zpool import -f -R "$MNT" zpool
-          mount -t zfs zpool/root "$MNT"
-          mkdir -p "$MNT"/{home,nix,var/log,boot}
-          mount -t zfs zpool/home "$MNT/home"
-          mount -t zfs zpool/nix  "$MNT/nix"
-          mount -t zfs zpool/log  "$MNT/var/log"
-          mount /dev/disk/by-label/nixos-boot "$MNT/boot"
-
-        elif [[ $FS == "btrfs" ]]; then
+        if [[ $FS == "btrfs" ]]; then
           echo "Mounting btrfs subvolumes to ''${MNT}..."
           mount -t btrfs -o subvol=/@ /dev/disk/by-label/nixos-root "$MNT"
           mkdir -p "$MNT"/{home,nix,var/tmp,var/log,boot}
@@ -273,7 +208,7 @@ in
 
     troubleshoot = writeShellApplication {
       name = "troubleshoot";
-      runtimeInputs = with pkgs; [util-linux btrfs-progs coreutils zfs nixos-install-tools];
+      runtimeInputs = with pkgs; [util-linux btrfs-progs coreutils nixos-install-tools];
       text = ''
         MNT="''${1:-/mnt}"
 
@@ -286,16 +221,7 @@ in
         echo "Detected filesystem: ''${FS:-unknown}"
         echo "Mounting rescue environment at ''${MNT}..."
 
-        if [[ $FS == "zfs_member" ]]; then
-          zpool import -f -R "$MNT" zpool
-          mount -t zfs zpool/root "$MNT"
-          mkdir -p "$MNT"/{home,nix,var/log,boot}
-          mount -t zfs zpool/home "$MNT/home"
-          mount -t zfs zpool/nix  "$MNT/nix"
-          mount -t zfs zpool/log  "$MNT/var/log"
-          mount /dev/disk/by-label/nixos-boot "$MNT/boot"
-
-        elif [[ $FS == "btrfs" ]]; then
+        if [[ $FS == "btrfs" ]]; then
           mount -t btrfs -o subvol=/@ /dev/disk/by-label/nixos-root "$MNT"
           mkdir -p "$MNT"/{home,nix,var/tmp,var/log,boot}
           mount -t btrfs -o subvol=/@home /dev/disk/by-label/nixos-root "$MNT/home"

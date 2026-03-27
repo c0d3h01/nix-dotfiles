@@ -4,7 +4,7 @@ let
   ];
 in {
   imports = [
-    ../filesystems/zfs.nix
+    ../filesystems/btrfs.nix
   ];
 
   users.users = {
