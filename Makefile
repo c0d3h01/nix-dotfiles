@@ -5,7 +5,7 @@ USER ?= $(shell whoami)
 
 NIX_FLAGS := --extra-experimental-features "nix-command flakes"
 
-.PHONY: help rebuild home partition install-nix install-nixos mount-rescue troubleshoot swap-on swap-off check fmt clean
+.PHONY: help rebuild home partition install-nix install-nixos mount-rescue troubleshoot check fmt clean
 
 help: ## Show this help
 	@echo "Usage: make <target> [HOST=<host>]"
@@ -16,10 +16,8 @@ help: ## Show this help
 	@echo "  partition        Partition + format + mount (DESTRUCTIVE)"
 	@echo "  install-nix      Install Nix package manager (multi-user)"
 	@echo "  install-nixos    Run nixos-install from local flake"
-	@echo "  mount-rescue     Mount BTRFS subvolumes for rescue"
+	@echo "  mount-rescue     Mount filesystems for rescue"
 	@echo "  troubleshoot     Mount + enter NixOS rescue environment"
-	@echo "  swap-on          Create temporary swapfile for installation"
-	@echo "  swap-off         Remove temporary swapfile"
 	@echo "  check            Flake check (all systems)"
 	@echo "  fmt              Format all Nix files"
 	@echo "  clean            GC + optimise Nix store"
@@ -42,19 +40,13 @@ install-nix:
 
 install-nixos:
 	@test -n "$(HOST)" || { echo "Error: HOST is empty"; exit 1; }
-	sudo nix $(NIX_FLAGS) run .#nixos-install -- --flake ".#$(HOST)" --no-root-passwd
+	sudo nixos-install --flake ".#$(HOST)" --no-root-passwd
 
 mount-rescue:
 	sudo nix $(NIX_FLAGS) run .#mount-rescue -- $(MNT)
 
 troubleshoot:
 	sudo nix $(NIX_FLAGS) run .#troubleshoot -- $(MNT)
-
-swap-on:
-	sudo nix $(NIX_FLAGS) run .#swap-on -- $(MNT)
-
-swap-off:
-	sudo nix $(NIX_FLAGS) run .#swap-off -- $(MNT)
 
 check:
 	nix $(NIX_FLAGS) flake check --all-systems
