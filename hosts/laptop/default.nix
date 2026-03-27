@@ -4,7 +4,7 @@ let
   ];
 in {
   imports = [
-    ./filesystems.nix
+    ../filesystems/zfs.nix
   ];
 
   users.users = {

@@ -36,7 +36,7 @@ in {
       options = ["subvol=/@log"] ++ btrfsOpts;
     };
     "/boot" = {
-      device = "/dev/disk/by-label/NIXBOOT";
+      device = "/dev/disk/by-label/nixos-boot";
       fsType = "vfat";
       options = ["umask=0077"];
     };

@@ -17,7 +17,7 @@ in
   // lib.optionalAttrs isLinux {
     partition = writeShellApplication {
       name = "partition";
-      runtimeInputs = with pkgs; [util-linux dosfstools btrfs-progs gptfdisk coreutils];
+      runtimeInputs = with pkgs; [util-linux dosfstools btrfs-progs e2fsprogs gptfdisk coreutils];
       text = ''
         DISK="''${1:-}"
         MNT="''${2:-/mnt}"
@@ -42,11 +42,22 @@ in
           exit 1
         fi
 
+        echo "Choose filesystem for root partition:"
+        echo "  [1] btrfs (default)"
+        echo "  [2] ext4"
+        read -rp "Enter choice [1/2]: " fs_choice
+        case "''${fs_choice:-1}" in
+          2) FS_TYPE="ext4" ;;
+          *) FS_TYPE="btrfs" ;;
+        esac
+        echo "-> Using: ''${FS_TYPE}"
+        echo ""
+
         echo "WARNING: This will DESTROY all data on ''${DISK}"
         echo ""
         echo "  Partition layout:"
         echo "    1  nixos-boot  ''${BOOT_SIZE}   FAT32 (EFI)"
-        echo "    2  nixos-root  remaining  Btrfs"
+        echo "    2  nixos-root  remaining  ''${FS_TYPE}"
         echo "  (no swap partition — zram-generator handles swap at runtime)"
         echo "  (a temporary 4G swapfile is created for installation only)"
         echo ""
@@ -75,7 +86,7 @@ in
             ((attempts++))
           done
           if [[ ! -e "/dev/disk/by-partlabel/''${label}" ]]; then
-            echo "Error: partition label ''\'''${label}' not found after waiting"
+            echo "Error: partition label ''${label} not found after waiting"
             exit 1
           fi
         }
@@ -86,32 +97,44 @@ in
         PART_BOOT="/dev/disk/by-partlabel/nixos-boot"
         PART_ROOT="/dev/disk/by-partlabel/nixos-root"
 
-        mkfs.fat -F 32 -n NIXBOOT "$PART_BOOT"
-        mkfs.btrfs -f -L nixos-root "$PART_ROOT"
+        mkfs.fat -F 32 -n nixos-boot "$PART_BOOT"
 
-        mount "$PART_ROOT" "$MNT"
-        btrfs subvolume create "''${MNT}/@"
-        btrfs subvolume create "''${MNT}/@home"
-        btrfs subvolume create "''${MNT}/@nix"
-        btrfs subvolume create "''${MNT}/@tmp"
-        btrfs subvolume create "''${MNT}/@log"
-        umount "$MNT"
+        if [[ $FS_TYPE == "btrfs" ]]; then
+          mkfs.btrfs -f -L nixos-root "$PART_ROOT"
 
-        BTRFS_OPTS="noatime,compress=zstd:3,ssd,discard=async,space_cache=v2"
+          mount "$PART_ROOT" "$MNT"
+          btrfs subvolume create "''${MNT}/@"
+          btrfs subvolume create "''${MNT}/@home"
+          btrfs subvolume create "''${MNT}/@nix"
+          btrfs subvolume create "''${MNT}/@tmp"
+          btrfs subvolume create "''${MNT}/@log"
+          umount "$MNT"
 
-        mount -t btrfs -o "subvol=/@,''${BTRFS_OPTS}" "$PART_ROOT" "$MNT"
-        mkdir -p "''${MNT}/home" "''${MNT}/nix" "''${MNT}/var/tmp" "''${MNT}/var/log" "''${MNT}/boot"
-        mount -t btrfs -o "subvol=/@home,''${BTRFS_OPTS}" "$PART_ROOT" "''${MNT}/home"
-        mount -t btrfs -o "subvol=/@nix,''${BTRFS_OPTS}" "$PART_ROOT" "''${MNT}/nix"
-        mount -t btrfs -o "subvol=/@tmp,''${BTRFS_OPTS}" "$PART_ROOT" "''${MNT}/var/tmp"
-        mount -t btrfs -o "subvol=/@log,''${BTRFS_OPTS}" "$PART_ROOT" "''${MNT}/var/log"
-        mount -o umask=0077 "$PART_BOOT" "''${MNT}/boot"
+          BTRFS_OPTS="noatime,compress=zstd:3,ssd,discard=async,space_cache=v2"
+
+          mount -t btrfs -o "subvol=/@,''${BTRFS_OPTS}" "$PART_ROOT" "$MNT"
+          mkdir -p "''${MNT}/home" "''${MNT}/nix" "''${MNT}/var/tmp" "''${MNT}/var/log" "''${MNT}/boot"
+          mount -t btrfs -o "subvol=/@home,''${BTRFS_OPTS}" "$PART_ROOT" "''${MNT}/home"
+          mount -t btrfs -o "subvol=/@nix,''${BTRFS_OPTS}" "$PART_ROOT" "''${MNT}/nix"
+          mount -t btrfs -o "subvol=/@tmp,''${BTRFS_OPTS}" "$PART_ROOT" "''${MNT}/var/tmp"
+          mount -t btrfs -o "subvol=/@log,''${BTRFS_OPTS}" "$PART_ROOT" "''${MNT}/var/log"
+          mount -o umask=0077 "$PART_BOOT" "''${MNT}/boot"
+
+        else
+          mkfs.ext4 -L nixos-root \
+            -E lazy_itable_init=0,lazy_journal_init=0 \
+            "$PART_ROOT"
+
+          mount -t ext4 -o noatime,discard,errors=remount-ro "$PART_ROOT" "$MNT"
+          mkdir -p "''${MNT}/boot"
+          mount -o umask=0077 "$PART_BOOT" "''${MNT}/boot"
+        fi
 
         echo ""
         echo "Done! Partition layout:"
         lsblk -o NAME,SIZE,FSTYPE,LABEL,MOUNTPOINT "$DISK"
         echo ""
-        echo "Next: make swap (optional) then make install-nixos HOST=<host>"
+        echo "Next: make swap-on (optional) then make install-nixos HOST=<host>"
       '';
     };
 
@@ -134,7 +157,7 @@ in
         mount -t btrfs -o subvol=/@nix /dev/disk/by-label/nixos-root "$MNT/nix"
         mount -t btrfs -o subvol=/@tmp /dev/disk/by-label/nixos-root "$MNT/var/tmp"
         mount -t btrfs -o subvol=/@log /dev/disk/by-label/nixos-root "$MNT/var/log"
-        mount /dev/disk/by-label/NIXBOOT "$MNT/boot"
+        mount /dev/disk/by-label/nixos-boot "$MNT/boot"
 
         echo "All subvolumes mounted at ''${MNT}"
         echo "Run: sudo nixos-enter --root $MNT"
@@ -160,7 +183,7 @@ in
         mount -t btrfs -o subvol=/@nix /dev/disk/by-label/nixos-root "$MNT/nix"
         mount -t btrfs -o subvol=/@tmp /dev/disk/by-label/nixos-root "$MNT/var/tmp"
         mount -t btrfs -o subvol=/@log /dev/disk/by-label/nixos-root "$MNT/var/log"
-        mount /dev/disk/by-label/NIXBOOT "$MNT/boot"
+        mount /dev/disk/by-label/nixos-boot "$MNT/boot"
 
         echo "Entering NixOS environment..."
         nixos-enter --root "$MNT"
