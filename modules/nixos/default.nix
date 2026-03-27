@@ -3,7 +3,7 @@
     ./bootloader
     ./hardware
     ./kernel
-    ./networking
+    ./network
     ./services
     ./system
     ./profile.nix
