@@ -1,4 +1,3 @@
-# mkHost: produces { nixos, home, meta } from a single host definition
 {
   inputs,
   self,
@@ -17,68 +16,65 @@
 }: let
   inherit (inputs.nixpkgs) lib;
 
-  overlays = [
-    inputs.nur.overlays.default
-  ];
-
-  hostConfig = {
-    inherit
-      hostname
-      username
-      fullName
-      system
-      isNixOS
-      bootloader
-      windowManager
-      workstation
-      stateVersion
-      ;
+  # Shared extra arguments passed into every NixOS and HM module via specialArgs.
+  specialArgs = {
+    inherit inputs self system username fullName hostname;
+    hostConfig = {
+      inherit
+        hostname
+        username
+        fullName
+        system
+        isNixOS
+        bootloader
+        windowManager
+        workstation
+        stateVersion
+        ;
+    };
   };
 
-  commonSpecialArgs = {
-    inherit inputs self hostConfig;
-  };
-
-  homeModulePath = self + /modules/home;
-
-  pkgsStandalone = import inputs.nixpkgs {
+  # pkgs is used exclusively by the standalone `home` configuration below.
+  pkgs = import inputs.nixpkgs {
     inherit system;
     config.allowUnfree = true;
-    config.allowUnsupportedSystem = true;
-    inherit overlays;
+    overlays = [inputs.nur.overlays.default];
+  };
+
+  # Shared Home Manager integration block injected into the NixOS modules list.
+  hmNixosModule = {
+    home-manager = {
+      useGlobalPkgs = true;
+      useUserPackages = true;
+      backupFileExtension = "backup";
+      extraSpecialArgs = specialArgs;
+      users.${username}.imports = [(self + /modules/home)] ++ homeModules;
+    };
   };
 in {
-  nixos = lib.nixosSystem {
-    inherit system;
-    specialArgs = commonSpecialArgs;
-    modules =
-      [
-        {
-          nixpkgs.overlays = overlays;
-          networking.hostId = builtins.substring 0 8 (builtins.hashString "md5" hostname);
-        }
+  # NixOS system with Home Manager baked in.
+  nixos =
+    if !isNixOS
+    then null
+    else
+      lib.nixosSystem {
+        inherit system specialArgs;
+        modules =
+          [(self + /modules/nixos)]
+          ++ nixosModules
+          ++ [
+            inputs.home-manager.nixosModules.home-manager
+            hmNixosModule
+          ];
+      };
 
-        (self + /modules/nixos)
-
-        inputs.home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            backupFileExtension = "backup";
-            extraSpecialArgs = commonSpecialArgs;
-            users.${username}.imports = [homeModulePath] ++ homeModules;
-          };
-        }
-      ]
-      ++ nixosModules;
-  };
-
+  # Standalone Home Manager configuration.
   home = inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = pkgsStandalone;
-    extraSpecialArgs = commonSpecialArgs;
-    modules = [homeModulePath] ++ homeModules;
+    inherit pkgs;
+    extraSpecialArgs = specialArgs;
+    modules = [(self + /modules/home)] ++ homeModules;
   };
 
-  meta = {inherit hostname username;};
+  # Metadata surfaced to flake.nix for output key construction.
+  meta = {inherit hostname username system;};
 }

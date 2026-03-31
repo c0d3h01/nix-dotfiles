@@ -4,7 +4,7 @@ let
   ];
 in {
   imports = [
-    ../filesystems/btrfs.nix
+    ../filesystems/ext4.nix
   ];
 
   users.users = {

@@ -4,23 +4,27 @@
   ...
 }: {
   nix = {
-    package = pkgs.lix;
+    # nix alternative - modern nix version.
+    # package = pkgs.lixPackageSets.stable.lix;
 
-    # Prioritize UI responsiveness during builds
+    # Prioritize UI responsiveness during builds.
     daemonCPUSchedPolicy = "batch";
     daemonIOSchedClass = "idle";
 
+    # automatic garbage cleaner, scheduled.
     gc = {
       automatic = true;
       dates = "daily";
       options = "--delete-older-than 7d";
     };
 
+    # auto optimization, scheduled.
     optimise = {
       automatic = true;
       dates = "Sun 04:00";
     };
 
+    # global nix settings.
     settings = {
       # Prevent disk full errors on small NVMe
       min-free = 1024 * 1024 * 1024;
@@ -29,9 +33,8 @@
       # Critical for 6GB RAM: Limit parallel builds to prevent OOM
       max-jobs = 2;
       cores = 2;
-      auto-allocate-uids = true;
 
-      experimental-features = ["nix-command" "flakes" "auto-allocate-uids"];
+      experimental-features = ["nix-command" "flakes"];
 
       # Network & Caches
       http-connections = 25;

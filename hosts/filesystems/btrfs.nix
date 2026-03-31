@@ -8,37 +8,40 @@ _: let
     "discard=async"
   ];
 in {
-  fileSystems = {
-    "/" = {
-      device = rootDev;
-      fsType = "btrfs";
-      options = ["subvol=/@"] ++ btrfsOpts;
-    };
-    "/home" = {
-      device = rootDev;
-      fsType = "btrfs";
-      options = ["subvol=/@home"] ++ btrfsOpts;
-    };
-    "/nix" = {
-      device = rootDev;
-      fsType = "btrfs";
-      options = ["subvol=/@nix"] ++ btrfsOpts;
-    };
-    "/var/tmp" = {
-      device = rootDev;
-      fsType = "btrfs";
-      options = ["subvol=/@tmp"] ++ btrfsOpts;
-    };
-    "/var/log" = {
-      device = rootDev;
-      fsType = "btrfs";
-      neededForBoot = true;
-      options = ["subvol=/@log"] ++ btrfsOpts;
-    };
-    "/boot" = {
-      device = "/dev/disk/by-label/nixos-boot";
-      fsType = "vfat";
-      options = ["umask=0077"];
-    };
+  fileSystems."/" = {
+    device = rootDev;
+    fsType = "btrfs";
+    options = ["subvol=/@"] ++ btrfsOpts;
+  };
+
+  fileSystems."/home" = {
+    device = rootDev;
+    fsType = "btrfs";
+    options = ["subvol=/@home"] ++ btrfsOpts;
+  };
+
+  fileSystems."/nix" = {
+    device = rootDev;
+    fsType = "btrfs";
+    options = ["subvol=/@nix"] ++ btrfsOpts;
+  };
+
+  fileSystems."/var/tmp" = {
+    device = rootDev;
+    fsType = "btrfs";
+    options = ["subvol=/@tmp"] ++ btrfsOpts;
+  };
+
+  fileSystems."/var/log" = {
+    device = rootDev;
+    fsType = "btrfs";
+    neededForBoot = true;
+    options = ["subvol=/@log"] ++ btrfsOpts;
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-label/nixos-boot";
+    fsType = "vfat";
+    options = ["umask=0077"];
   };
 }

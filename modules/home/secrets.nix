@@ -5,7 +5,7 @@
   ...
 }: {
   imports = [
-    inputs.sops.homeManagerModules.sops
+    inputs.sops-nix.homeManagerModules.sops
   ];
 
   sops = {

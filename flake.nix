@@ -1,137 +1,113 @@
 {
-  description = "NixOS Dotfiles";
+  description = "NixOS flake configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-    # Just for pinning
     systems.url = "github:nix-systems/default";
-
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-      inputs.systems.follows = "systems";
-    };
-
-    flake-compat = {
-      url = "github:nix-community/flake-compat";
-      flake = false;
-    };
-
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    sops = {
+    sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    spicetify = {
+    spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nur = {
       url = "github:nix-community/NUR";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems";
-      };
-    };
-
-    lix = {
-      url = "git+https://gerrit.lix.systems/lix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-compat.follows = "flake-compat";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs = {
     self,
     nixpkgs,
+    systems,
     ...
   } @ inputs: let
     inherit (nixpkgs) lib;
 
-    supportedSystems = [
-      "x86_64-linux"
-      "aarch64-linux"
-      "aarch64-darwin"
-    ];
-    forAllSystems = lib.genAttrs supportedSystems;
-    pkgsFor = system:
+    # Instantiate pkgs for a given system with shared config.
+    mkPkgs = system:
       import nixpkgs {
         inherit system;
         config.allowUnfree = true;
+        overlays = [inputs.nur.overlays.default];
       };
+
+    # eachSystem replaces flake-utils.lib.eachDefaultSystem using the
+    eachSystem = f:
+      lib.genAttrs (import systems) f;
 
     mkHost = import ./lib/mkHost.nix {inherit inputs self;};
 
+    # Host definitions
     hosts = {
-      laptop = mkHost {
-        hostname = "laptop";
+      firus = mkHost {
+        hostname = "firus";
         username = "c0d3h01";
         fullName = "Harshal Sawant";
         system = "x86_64-linux";
-        isNixOS = true;
-        bootloader = "grub"; # limine | grub | systemd
-        windowManager = "gnome"; # xfce | gnome | plasma
-        workstation = true;
+        bootloader = "grub";
+        windowManager = "gnome";
         stateVersion = "25.11";
-        nixosModules = [./hosts/laptop];
+        nixosModules = [./hosts/firus];
       };
     };
-
-    fmtFor = system:
-      import ./lib/formatter.nix {
-        pkgs = pkgsFor system;
-        inherit self;
-      };
   in {
-    nixosConfigurations = lib.mapAttrs (_: h: h.nixos) hosts;
+    # NixOS systems
+    nixosConfigurations =
+      lib.filterAttrs (_: v: v != null)
+      (lib.mapAttrs (_: h: h.nixos) hosts);
 
-    homeConfigurations =
-      lib.mapAttrs' (
-        name: h:
-          lib.nameValuePair "${h.meta.username}@${name}" h.home
-      )
-      hosts;
+    # Standalone Home Manager configurations.
+    homeConfigurations = lib.mapAttrs' (
+      _: h: lib.nameValuePair "${h.meta.username}@${h.meta.hostname}" h.home
+    )
+    hosts;
 
-    overlays = import ./overlays {inherit inputs;};
-
-    devShells = forAllSystems (system: {
+    # Dev tools
+    devShells = eachSystem (system: {
       default = import ./lib/shell.nix {
-        pkgs = pkgsFor system;
-        inherit ((fmtFor system)) formatter;
+        pkgs = mkPkgs system;
+        inherit ((import ./lib/formatter.nix {
+            inherit self;
+            pkgs = mkPkgs system;
+          })) formatter;
       };
     });
 
-    formatter = forAllSystems (system: (fmtFor system).formatter);
+    formatter = eachSystem (
+      system:
+        (import ./lib/formatter.nix {
+          inherit self;
+          pkgs = mkPkgs system;
+        }).formatter
+    );
 
-    checks = forAllSystems (system: {
-      formatting = (fmtFor system).check;
+    checks = eachSystem (system: {
+      formatting =
+        (import ./lib/formatter.nix {
+          inherit self;
+          pkgs = mkPkgs system;
+        }).check;
     });
 
-    packages = forAllSystems (system: import ./lib/scripts.nix {pkgs = pkgsFor system;});
+    packages = eachSystem (
+      system:
+        import ./lib/scripts.nix {pkgs = mkPkgs system;}
+    );
   };
 }

@@ -23,17 +23,20 @@
   };
 
   # System State Version
-  system.stateVersion = "25.11";
+  system.stateVersion = hostConfig.stateVersion;
 
   # Shell Environment
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
   # Primary User Configuration
+  users.groups.${hostConfig.username} = {};
+
   users.users.${hostConfig.username} = {
     isNormalUser = true;
     createHome = true;
     description = hostConfig.fullName;
+    group = hostConfig.username;
     shell = pkgs.zsh;
 
     extraGroups = [

@@ -9,12 +9,12 @@
   inherit (lib) mkIf;
 in {
   imports = [
-    inputs.spicetify.homeManagerModules.default
+    inputs.spicetify-nix.homeManagerModules.default
   ];
 
   config.programs.spicetify = mkIf (hostConfig.workstation or false) (
     let
-      spicePkgs = inputs.spicetify.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+      spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
     in {
       enable = true;
       theme = spicePkgs.themes.sleek;
