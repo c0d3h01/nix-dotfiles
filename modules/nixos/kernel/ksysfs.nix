@@ -1,11 +1,8 @@
 {
   boot.kernel.sysfs = {
     kernel.mm.transparent_hugepage = {
-      enabled = "madvise";
-
-      # defer+madvise: async compaction only when process explicitly requests it
-      defrag = "defer+madvise";
-
+      enabled = "always";
+      defrag = "defer";
       shmem_enabled = "within_size";
     };
   };

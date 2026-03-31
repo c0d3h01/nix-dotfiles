@@ -7,6 +7,9 @@
   inherit (lib) mkIf;
 in {
   config = mkIf hostProfile.isWorkstation {
+    # Use schedutil governor for dynamic frequency scaling
+    # powerManagement.cpuFreqGovernor = "schedutil";
+
     services = {
       # Dynamically tunes kernel BPF parameters for network and latency optimization
       bpftune.enable = true;
@@ -23,21 +26,9 @@ in {
       };
 
       scx = {
-        # Enable SCX only on workstations; disabled on servers
+        # Enable SCX only on workstations.
         enable = true;
-
-        # scx_lavd: Latency-critical, adaptive scheduler for desktops
-        scheduler = "scx_lavd";
-
-        extraArgs = [
-          # Balance latency and power; avoids constant max freq heat spikes
-          "--interactive"
-          # Limit active cores under light load to save power/heat
-          "--active_core_ratio"
-          "0.75"
-          # Disable frequency scaling within scheduler (let CPU governor handle it)
-          "--no_freq_scale"
-        ];
+        scheduler = "scx_bpfland";
       };
     };
   };

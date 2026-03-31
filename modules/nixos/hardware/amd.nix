@@ -27,9 +27,6 @@ in {
   # Enable OpenCL - ROCM only.
   # hardware.amdgpu.opencl.enable = mkDefault true;
 
-  # Use schedutil governor for dynamic frequency scaling
-  powerManagement.cpuFreqGovernor = "schedutil";
-
   # Use the open-source amdgpu driver
   services.xserver.videoDrivers = mkDefault ["amdgpu"];
 

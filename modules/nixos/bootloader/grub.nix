@@ -9,9 +9,9 @@ in {
     enable = true;
 
     efiSupport = true;
-    device = "nodev";
+    devices = ["nodev"];
     configurationLimit = 15;
     efiInstallAsRemovable = false;
-    useOSProber = true;
+    useOSProber = false;
   };
 }
