@@ -7,23 +7,22 @@
   inherit (lib) mkIf;
 in {
   config = mkIf (hostProfile.windowManager == "plasma") {
-    services.desktopManager.plasma6.enable = true;
-    services.displayManager.sddm.enable = true;
-    services.displayManager.sddm.wayland.enable = true;
-
-    services.displayManager.defaultSession = "plasmax11";
-
-    hardware = {
-      bluetooth.enable = true;
-      bluetooth.powerOnBoot = true;
+    services = {
+      desktopManager.plasma6.enable = true;
+      displayManager = {
+        sddm.enable = true;
+        sddm.wayland.enable = true;
+        defaultSession = "plasmax11";
+      };
     };
 
-    environment.plasma6.excludePackages = with pkgs.kdePackages; [
+    environment.systemPackages = with pkgs.kdePackages; [
       kate
       kcalc
       konsole
       plasma-browser-integration
       partitionmanager
+      kdeconnect-kde
     ];
   };
 }
