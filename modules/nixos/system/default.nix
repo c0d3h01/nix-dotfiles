@@ -5,6 +5,7 @@
     ./flatpak.nix
     ./fonts.nix
     ./gnome.nix
+    ./input.nix
     ./nix-ld.nix
     ./nix.nix
     ./nixpkgs.nix
