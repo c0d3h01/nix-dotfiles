@@ -1,12 +1,12 @@
 {hostProfile, ...}: {
   services = {
     printing = {
-      enable = true;
+      enable = false;
       openFirewall = true;
     };
 
     avahi = {
-      enable = true;
+      enable = false;
       nssmdns4 = true;
       nssmdns6 = true;
       openFirewall = true;
