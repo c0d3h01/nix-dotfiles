@@ -8,9 +8,10 @@
   inherit (hostProfile) isWorkstation;
 in {
   programs.firefox.enable = isWorkstation;
-  environment.systemPackages = mkIf isWorkstation [
-    pkgs.vscode-fhs
-    pkgs.antigravity-fhs
-    pkgs.google-chrome
-  ];
+  environment.systemPackages = with pkgs;
+    mkIf isWorkstation [
+      vscode-fhs
+      antigravity-fhs
+      chromium
+    ];
 }

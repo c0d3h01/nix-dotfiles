@@ -8,12 +8,10 @@
   inherit (lib) mkIf mkForce;
 in {
   config = mkIf (hostProfile.windowManager == "gnome") {
-    services = {
-      desktopManager.gnome.enable = true;
-      displayManager = {
-        gdm.enable = true;
-        defaultSession = "gnome";
-      };
+    services.desktopManager.gnome.enable = true;
+    services.displayManager = {
+      gdm.enable = true;
+      defaultSession = "gnome";
     };
 
     services.gnome = {
@@ -39,6 +37,7 @@ in {
       gnome-photos
       vlc
       libreoffice-still
+      kdePackages.kpat # card game
       kdePackages.partitionmanager
     ];
 

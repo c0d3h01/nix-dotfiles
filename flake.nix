@@ -61,7 +61,7 @@
         fullName = "Harshal Sawant";
         system = "x86_64-linux";
         bootloader = "grub";
-        windowManager = "gnome";
+        windowManager = "plasma";
         stateVersion = "25.11";
         nixosModules = [./hosts/firus];
       };
