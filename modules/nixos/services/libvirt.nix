@@ -1,4 +1,14 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  hostConfig,
+  ...
+}: {
+  users.users.${hostConfig.username}.extraGroups = [
+    "plugdev" # USB devices (Android, Microcontrollers)
+    "adbusers" # Android Debug Bridge
+    "libvirtd" # KVM/QEMU virtualization access
+  ];
+
   programs.virt-manager.enable = true;
 
   virtualisation = {

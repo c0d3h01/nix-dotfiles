@@ -44,11 +44,6 @@
       "audio" # Sound/PipeWire
       "video" # GPU acceleration
       "networkmanager" # Network control
-      "plugdev" # USB devices (Android, Microcontrollers)
-      "adbusers" # Android Debug Bridge
-      "docker" # Docker daemon access
-      "libvirtd" # KVM/QEMU virtualization access
-      "git" # Git-specific group
     ];
   };
 }
