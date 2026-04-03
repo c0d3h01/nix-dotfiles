@@ -9,7 +9,7 @@
 
   # Locale
   i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocales = [ "en_IN/UTF-8" ];
+  i18n.extraLocales = ["en_IN/UTF-8"];
   i18n.extraLocaleSettings = {
     LC_CTYPE = "en_US.UTF-8";
     LC_MESSAGES = "en_US.UTF-8";
@@ -41,13 +41,13 @@
     shell = pkgs.zsh;
 
     extraGroups = [
-      "wheel"    # Admin privileges via sudo.
-      "adm"      # Read system logs (/var/log, journalctl).
-      "cdrom"    # Access optical drives (/dev/sr0).
-      "dip"      # Dial-up / PPP networking.
-      "plugdev"  # Access removable devices via udev.
-      "users"    # Default group for normal users.
-      "lpadmin"  # Manage printers via CUPS
+      "wheel" # Admin privileges via sudo.
+      "adm" # Read system logs (/var/log, journalctl).
+      "cdrom" # Access optical drives (/dev/sr0).
+      "dip" # Dial-up / PPP networking.
+      "plugdev" # Access removable devices via udev.
+      "users" # Default group for normal users.
+      "lpadmin" # Manage printers via CUPS
     ];
   };
 }
