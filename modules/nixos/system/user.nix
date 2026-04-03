@@ -32,6 +32,9 @@
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
+  # Primary User Configuration
+  users.groups.${hostConfig.username} = {};
+
   # User Configuration
   users.users.${hostConfig.username} = {
     isNormalUser = true;
