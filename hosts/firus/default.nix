@@ -4,7 +4,7 @@ let
   ];
 in {
   imports = [
-    ../filesystems/ext4.nix
+    ./disko-btrfs.nix
   ];
 
   users.users = {
