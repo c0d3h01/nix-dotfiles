@@ -14,8 +14,8 @@
     # automatic garbage cleaner, scheduled.
     gc = {
       automatic = true;
-      dates = "daily";
-      options = "--delete-older-than 7d";
+      dates = "weekly";
+      options = "--delete-older-than 30d";
     };
 
     # auto optimization, scheduled.
@@ -33,6 +33,9 @@
       # Critical for 6GB RAM: Limit parallel builds to prevent OOM
       max-jobs = 2;
       cores = 2;
+
+      # Store can be optimised during every build.
+      auto-optimise-store = true;
 
       experimental-features = ["nix-command" "flakes"];
 
