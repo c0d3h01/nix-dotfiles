@@ -18,13 +18,22 @@
             };
           };
 
-          plainSwap = {
-            label = "nixos-swap";
+          # plainSwap = {
+          #   label = "nixos-swap";
+          #   size = "4G";
+          #   content = {
+          #     type = "swap";
+          #     discardPolicy = "both";
+          #     # resumeDevice = true;
+          #   };
+          # };
+
+          encryptedSwap = {
             size = "4G";
             content = {
               type = "swap";
-              discardPolicy = "both";
-              resumeDevice = true;
+              randomEncryption = true;
+              priority = 100;
             };
           };
 
@@ -55,7 +64,7 @@
                   mountpoint = "/nix";
                   mountOptions = [
                     "noatime"
-                    "compress=zstd:1"
+                    "compress=zstd:3"
                   ];
                 };
               };
