@@ -1,4 +1,3 @@
-# dev shell for working on this repo
 {
   pkgs,
   formatter,

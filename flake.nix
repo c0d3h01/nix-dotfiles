@@ -91,7 +91,7 @@
 
     # Dev tools
     devShells = eachSystem (system: {
-      default = import ./lib/shell.nix {
+      default = import ./shell.nix {
         pkgs = mkPkgs system;
         inherit
           ((import ./lib/formatter.nix {
