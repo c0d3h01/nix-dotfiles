@@ -7,7 +7,7 @@ in {
     # Disko integration for disk partitioning
     inputs.disko.nixosModules.disko
 
-    ../filesystems/btrfs.nix
+    ./disko-btrfs.nix
   ];
 
   users.users = {
