@@ -36,28 +36,26 @@ in {
       gnome-console
       gnome-photos
       vlc
-      libreoffice-still
-      kdePackages.kpat # card game
       kdePackages.partitionmanager
     ];
 
-    environment.gnome.excludePackages = with pkgs; [
-      gnome-tour
-      decibels
-      gnome-font-viewer
-      epiphany
-      yelp
-      baobab
-      gnome-music
-      gnome-remote-desktop
-      gnome-usage
-      gnome-contacts
-      gnome-weather
-      gnome-maps
-      gnome-connections
-      gnome-system-monitor
-      gnome-user-docs
-      geary
-    ];
+    # environment.gnome.excludePackages = with pkgs; [
+    #   gnome-tour
+    #   decibels
+    #   gnome-font-viewer
+    #   epiphany
+    #   yelp
+    #   baobab
+    #   gnome-music
+    #   gnome-remote-desktop
+    #   gnome-usage
+    #   gnome-contacts
+    #   gnome-weather
+    #   gnome-maps
+    #   gnome-connections
+    #   gnome-system-monitor
+    #   gnome-user-docs
+    #   geary
+    # ];
   };
 }

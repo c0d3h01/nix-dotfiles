@@ -14,7 +14,6 @@
     ./printing.nix
     ./secrets.nix
     ./user.nix
-    ./xfce.nix
     ./xserver.nix
   ];
 }

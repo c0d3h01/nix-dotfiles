@@ -1,13 +1,12 @@
 {
   lib,
   pkgs,
-  hostProfile,
   ...
 }: let
   inherit (lib) mkIf mkDefault;
 in {
   # AMD GPU & CPU Configuration
-  hardware.graphics = mkIf hostProfile.isWorkstation {
+  hardware.graphics = {
     enable = mkDefault true;
     extraPackages = with pkgs; [
       mesa

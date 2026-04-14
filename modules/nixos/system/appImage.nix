@@ -1,6 +1,6 @@
-{hostProfile, ...}: {
+{
   programs.appimage = {
-    enable = hostProfile.isWorkstation;
+    enable = true;
     binfmt = true;
   };
 }

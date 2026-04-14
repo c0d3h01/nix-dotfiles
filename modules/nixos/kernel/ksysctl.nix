@@ -1,15 +1,5 @@
 {config, ...}: {
   boot.kernel.sysctl = {
-    # # Aggressively favour ZRAM over OOM — sweet spot for compressed swap on constrained RAM
-    # "vm.swappiness" = 150;
-    # # Keep hot filesystem metadata (dentries/inodes) in RAM longer
-    # "vm.vfs_cache_pressure" = 50;
-    # # Hard ceiling: block processes from dirtying more pages at this threshold
-    # # Lower value = more frequent smaller flushes = smoother latency on NVMe
-    # "vm.dirty_ratio" = 5;
-    # # Background writeback starts here — kswapd flushes before dirty_ratio is hit
-    # "vm.dirty_background_ratio" = 3;
-
     # The Magic SysRq key is a key combo that allows users connected to the
     # system console of a Linux kernel to perform some low-level commands.
     # Disable it, since we don't need it, and is a potential security concern.

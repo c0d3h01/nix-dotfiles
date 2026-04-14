@@ -1,4 +1,4 @@
-{hostProfile, ...}: {
+{
   services = {
     printing = {
       enable = false;

@@ -15,17 +15,5 @@
         PreferredMemoryPressureLimit = "95%";
       };
     };
-
-    services = {
-      # Protect the kernel and init system
-      systemd-journald.serviceConfig.OOMScoreAdjust = -1000;
-      systemd-udevd.serviceConfig.OOMScoreAdjust = -1000;
-
-      # Make GNOME shell harder to kill than apps, but easier than kernel
-      "gdm.service".serviceConfig.OOMScoreAdjust = -500;
-
-      # Nix builds are memory hungry; kill them first if needed
-      nix-daemon.serviceConfig.OOMScoreAdjust = 500;
-    };
   };
 }

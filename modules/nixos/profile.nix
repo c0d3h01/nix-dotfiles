@@ -4,9 +4,7 @@
   ...
 }: let
   hostProfile = {
-    isWorkstation = hostConfig.workstation or false;
     windowManager = hostConfig.windowManager or "gnome";
-    bootloader = hostConfig.bootloader or "systemd";
   };
 in {
   _module.args.hostProfile = hostProfile;
@@ -16,17 +14,8 @@ in {
       assertion = lib.elem hostProfile.windowManager [
         "gnome"
         "plasma"
-        "xfce"
       ];
-      message = "hostConfig.windowManager must be one of: gnome, plasma, xfce.";
-    }
-    {
-      assertion = lib.elem hostProfile.bootloader [
-        "systemd"
-        "limine"
-        "grub"
-      ];
-      message = "hostConfig.bootloader must be one of: systemd, limine, grub.";
+      message = "hostConfig.windowManager must be one of: gnome, plasma";
     }
   ];
 }

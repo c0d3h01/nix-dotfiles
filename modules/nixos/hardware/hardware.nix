@@ -27,18 +27,8 @@ in {
     sensor.iio.enable = mkDefault true;
   };
 
-  # Device mounting and smartcard daemons
-  services.udisks2.enable = true;
-  services.pcscd.enable = true;
-
   # Firmware support
-  services.fwupd = {
-    # Firmware update daemon (for UEFI, Thunderbolt, etc.)
-    enable = true;
-
-    # Set ESP location for firmware updates
-    daemonSettings.EspLocation = config.boot.loader.efi.efiSysMountPoint;
-  };
+  services.fwupd.enable = true;
 
   boot = {
     plymouth.enable = false;
@@ -79,9 +69,8 @@ in {
       ];
     };
 
-    kernelModules = mkMerge [
-      (mkIf (config.hardware.cpu.amd.updateMicrocode or false) ["kvm-amd"])
-      (mkIf (config.hardware.cpu.intel.updateMicrocode or false) ["kvm-intel"])
+    kernelModules = [
+      "kvm-amd"
     ];
   };
 }
