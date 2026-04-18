@@ -1,7 +1,4 @@
-{
-  config,
-  ...
-}: {
+{config, ...}: {
   home = {
     username = "${config.home.username}";
     homeDirectory = "/home/${config.home.username}";
