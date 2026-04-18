@@ -51,15 +51,16 @@
 
     system = "x86_64-linux";
 
-    mkPkgs = sys: import nixpkgs {
-      system = sys;
-      config.allowUnfree = true;
-      overlays = [ inputs.nur.overlays.default ];
-    };
+    mkPkgs = sys:
+      import nixpkgs {
+        system = sys;
+        config.allowUnfree = true;
+        overlays = [inputs.nur.overlays.default];
+      };
 
     eachSystem = f: lib.genAttrs (import systems) f;
 
-    specialArgs = { inherit inputs self system; };
+    specialArgs = {inherit inputs self system;};
   in {
     nixosConfigurations.default = lib.nixosSystem {
       inherit system specialArgs;
@@ -72,7 +73,7 @@
             useUserPackages = true;
             backupFileExtension = "backup";
             extraSpecialArgs = specialArgs;
-            users."c0d3h01".imports = [ ./modules/home ];
+            users."c0d3h01".imports = [./modules/home];
           };
         }
       ];
@@ -81,24 +82,35 @@
     homeConfigurations.default = inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = mkPkgs system;
       extraSpecialArgs = specialArgs;
-      modules = [ ./modules/home ];
+      modules = [./modules/home];
     };
 
     devShells = eachSystem (sys: {
       default = import ./shell.nix {
         pkgs = mkPkgs sys;
-        formatter = (import ./formatter.nix { inherit self; pkgs = mkPkgs sys; }).formatter;
+        inherit ((import ./formatter.nix {
+            inherit self;
+            pkgs = mkPkgs sys;
+          })) formatter;
       };
     });
 
-    formatter = eachSystem (sys:
-      (import ./formatter.nix { inherit self; pkgs = mkPkgs sys; }).formatter
+    formatter = eachSystem (
+      sys:
+        (import ./formatter.nix {
+          inherit self;
+          pkgs = mkPkgs sys;
+        }).formatter
     );
 
     checks = eachSystem (sys: {
-      formatting = (import ./formatter.nix { inherit self; pkgs = mkPkgs sys; }).check;
+      formatting =
+        (import ./formatter.nix {
+          inherit self;
+          pkgs = mkPkgs sys;
+        }).check;
     });
 
-    packages = eachSystem (sys: import ./scripts.nix { pkgs = mkPkgs sys; });
+    packages = eachSystem (sys: import ./scripts.nix {pkgs = mkPkgs sys;});
   };
 }
