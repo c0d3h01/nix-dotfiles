@@ -10,6 +10,11 @@ in {
   ];
 
   networking = {
+
+    # DHCP has been deprecated; use networkd instead
+    useDHCP = mkForce false;
+    useNetworkd = mkForce true;
+
     # Use predictable interface names (e.g., wlp3s0) for stable rules
     usePredictableInterfaceNames = true;
 
