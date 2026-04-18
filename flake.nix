@@ -41,7 +41,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, systems, ... }@inputs: {
+  outputs = { self, nixpkgs, systems, ... }@inputs: let
     eachSystem = systems.lib.genAttrs [ "x86_64-linux" ];
 
     mkPkgs = system:
@@ -50,7 +50,7 @@
         config.allowUnfree = true;
         overlays = [ inputs.nur.overlays.default ];
       };
-
+  in {
     nixosConfigurations = {
       c0d3h01 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
