@@ -21,6 +21,7 @@
   } @ inputs: let
     # Supported systems
     supportedSystems = ["x86_64-linux"];
+    primarySystem = builtins.head supportedSystems;
 
     # Helper to generate per-system attributes
     eachSystem = nixpkgs.lib.genAttrs supportedSystems;
@@ -42,7 +43,7 @@
       };
   in {
     nixosConfigurations.c0d3h01 = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+      system = primarySystem;
       modules = [
         ./modules/nixos
         inputs.home-manager.nixosModules.home-manager
@@ -58,7 +59,7 @@
     };
 
     homeConfigurations.c0d3h01 = inputs.home-manager.lib.homeManagerConfiguration {
-      pkgs = mkPkgs "x86_64-linux";
+      pkgs = mkPkgs primarySystem;
       modules = [./modules/home];
     };
 
