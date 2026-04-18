@@ -67,7 +67,7 @@
     hosts = {
       nixos = mkHost {
         hostname = "nixos";
-        username = "c0d3h01";
+        username = "anon";
         fullName = "Harshal Sawant";
         system = "x86_64-linux";
         bootloader = "grub";

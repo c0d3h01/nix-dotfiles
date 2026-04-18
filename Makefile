@@ -30,7 +30,7 @@ install-disko:
 		github:nix-community/disko/latest -- \
 		--mode destroy,format,mount \
 		--yes-wipe-all-disks \
-		--flake "github:c0d3h01/nix#nixos"
+		--flake "github:anon/nix#nixos"
 
 install-nixos:
 	sudo nixos-install --flake ".#$(HOST)" --no-root-passwd

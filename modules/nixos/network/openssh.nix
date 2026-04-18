@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  userName = "c0d3h01";
+  userName = "anon";
   secretName = "ssh_auth_keys_${userName}";
 in {
   services.openssh = {
