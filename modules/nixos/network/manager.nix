@@ -10,7 +10,6 @@ in {
   ];
 
   networking = {
-
     # DHCP has been deprecated; use networkd instead
     useDHCP = mkForce false;
     useNetworkd = mkForce true;
