@@ -4,10 +4,12 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) attrByPath mkIf;
+  kdeDesktopEnabled = attrByPath ["services" "kdeDesktop" "enable"] false config;
+  gnomeDesktopEnabled = attrByPath ["services" "gnomeDesktop" "enable"] false config;
 in {
   gtk = lib.mkMerge [
-    (mkIf config.services.kdeDesktop.enable {
+    (mkIf kdeDesktopEnabled {
       enable = true;
 
       theme = {
@@ -45,7 +47,7 @@ in {
       };
     })
 
-    (mkIf config.services.gnomeDesktop.enable {
+    (mkIf gnomeDesktopEnabled {
       enable = true;
 
       theme = {
