@@ -14,14 +14,11 @@
   };
 
   outputs = { self, nixpkgs, systems, ... }@inputs: let
-    # Systems to access its lib
-    sysLib = import systems { inherit inputs; };
-
     # Supported systems
     supportedSystems = [ "x86_64-linux" ];
 
     # Helper to generate per-system attributes
-    eachSystem = sysLib.genAttrs supportedSystems;
+    eachSystem = nixpkgs.lib.genAttrs supportedSystems;
 
     # Package set with overlays and config
     mkPkgs = system:
