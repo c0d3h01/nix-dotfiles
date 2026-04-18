@@ -64,16 +64,18 @@
       default = import ./shell.nix {inherit (mkPkgs system) pkgs;};
     });
 
-    formatter = eachSystem (system: let
-    formatter = import ./formatter.nix { inherit self; pkgs = mkPkgs system; };
-    in {
-      default = formatter.formatter;
-    });
+    formatter = eachSystem (system:
+      (import ./formatter.nix {
+        inherit self;
+        pkgs = mkPkgs system;
+      }).formatter);
 
-    checks = eachSystem (system: let
-      formatter = import ./formatter.nix { inherit self; pkgs = mkPkgs system; };
-    in {
-      formatting = formatter.check;
+    checks = eachSystem (system: {
+      formatting =
+        (import ./formatter.nix {
+          inherit self;
+          pkgs = mkPkgs system;
+        }).check;
     });
   };
 }
