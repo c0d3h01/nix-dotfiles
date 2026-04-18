@@ -10,7 +10,6 @@
   bootloader ? "systemd",
   windowManager ? "gnome",
   workstation ? true,
-  stateVersion ? "25.11",
   nixosModules ? [],
   homeModules ? [],
 }: let
@@ -29,7 +28,6 @@
         bootloader
         windowManager
         workstation
-        stateVersion
         ;
     };
   };

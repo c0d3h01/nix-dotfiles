@@ -4,7 +4,7 @@
   ...
 }: {
   # Identity & Time
-  networking.hostName = hostConfig.hostname;
+  networking.hostName = "nixos";
   time.timeZone = "Asia/Kolkata";
 
   # Locale
@@ -26,36 +26,34 @@
   };
 
   # System State Version
-  system.stateVersion = hostConfig.stateVersion;
+  system.stateVersion = "25.11";
 
   # Shell Environment
   programs.zsh.enable = true;
-  users.defaultUserShell = pkgs.zsh;
-
-  # Primary User Configuration
-  # users.groups.${hostConfig.username} = {};
-  users.groups = {
-    root = {};
-    c0d3h01 = {};
-    anon = {};
-  };
 
   # User Configuration
-  users.users.${hostConfig.username} = {
-    isNormalUser = true;
-    createHome = true;
-    description = hostConfig.fullName;
-    group = hostConfig.username;
-    shell = pkgs.zsh;
+  users.users = {
+    c0d3h01 = {
+      isNormalUser = true;
+      createHome = true;
+      description = "Harshal Sawant";
+      shell = pkgs.zsh;
 
-    extraGroups = [
-      "wheel" # Admin privileges via sudo.
-      "adm" # Read system logs (/var/log, journalctl).
-      "cdrom" # Access optical drives (/dev/sr0).
-      "dip" # Dial-up / PPP networking.
-      "plugdev" # Access removable devices via udev.
-      "users" # Default group for normal users.
-      "lpadmin" # Manage printers via CUPS
-    ];
+      extraGroups = [
+        "wheel"
+        "users"
+        "networkmanager"
+      ];
+    };
+
+    anon = {
+      isNormalUser = true;
+      createHome = true;
+      description = "Anony";
+
+      extraGroups = [
+        "networkmanager"
+      ];
+    };
   };
 }

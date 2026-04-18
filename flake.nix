@@ -72,7 +72,6 @@
         system = "x86_64-linux";
         bootloader = "grub";
         windowManager = "gnome";
-        stateVersion = "25.11";
         nixosModules = [./hosts/nixos];
       };
     };

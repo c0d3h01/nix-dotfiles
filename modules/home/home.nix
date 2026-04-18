@@ -1,12 +1,11 @@
 {
   config,
-  hostConfig,
   ...
 }: {
   home = {
-    inherit (hostConfig) username;
+    username = "${config.home.username}";
     homeDirectory = "/home/${config.home.username}";
-    inherit (hostConfig) stateVersion;
+    stateVersion = "25.11";
     enableNixpkgsReleaseCheck = false;
   };
 }
