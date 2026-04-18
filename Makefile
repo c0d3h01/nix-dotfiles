@@ -1,4 +1,4 @@
-HOST ?= firus
+HOST ?= nixos
 DISK ?= /dev/nvme0n1
 MNT  ?= /mnt
 USER ?= $(shell whoami)
@@ -30,7 +30,7 @@ install-disko:
 		github:nix-community/disko/latest -- \
 		--mode destroy,format,mount \
 		--yes-wipe-all-disks \
-		--flake "github:c0d3h01/nix#firus"
+		--flake "github:c0d3h01/nix#nixos"
 
 install-nixos:
 	sudo nixos-install --flake ".#$(HOST)" --no-root-passwd

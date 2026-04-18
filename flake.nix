@@ -65,15 +65,15 @@
 
     # Host definitions
     hosts = {
-      firus = mkHost {
-        hostname = "firus";
+      nixos = mkHost {
+        hostname = "nixos";
         username = "c0d3h01";
         fullName = "Harshal Sawant";
         system = "x86_64-linux";
         bootloader = "grub";
         windowManager = "gnome";
         stateVersion = "25.11";
-        nixosModules = [./hosts/firus];
+        nixosModules = [./hosts/nixos];
       };
     };
   in {

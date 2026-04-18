@@ -5,9 +5,9 @@
 in {
   imports = [
     # Disko integration for disk partitioning
-    inputs.disko.nixosModules.disko
+    # inputs.disko.nixosModules.disko
 
-    ./disko-btrfs.nix
+    ../filesystems/btrfs.nix
   ];
 
   users.users = {
