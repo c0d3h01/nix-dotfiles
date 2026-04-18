@@ -29,10 +29,10 @@ in {
       gnome-initial-setup.enable = lib.mkForce false;
     };
 
-    # GSConnect is a GNOME Shell extension, not a drop-in package replacement.
-    # This is the idiomatic NixOS way to enable it.
-    programs.kdeconnect.enable = true;
-    environment.gnome.extraExtensions = [pkgs.gnomeExtensions.gsconnect];
+    programs.kdeconnect = {
+      enable = true;
+      package = pkgs.gnomeExtensions.gsconnect;
+    };
 
     networking.firewall = lib.mkIf config.networking.firewall.enable {
       allowedTCPPorts = [1716];
