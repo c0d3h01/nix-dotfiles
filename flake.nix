@@ -3,79 +3,119 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    systems.url = "github:nix-systems/default";
-    disko.url = "github:nix-community/disko";
-    home-manager.url = "github:nix-community/home-manager";
-    sops-nix.url = "github:Mic92/sops-nix";
-    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
-    nur.url = "github:nix-community/NUR";
-    nixvim.url = "github:nix-community/nixvim";
-    stylix.url = "github:nix-community/stylix";
+    flake-utils.url = "github:numtide/flake-utils";
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self,
     nixpkgs,
-    systems,
+    flake-utils,
+    home-manager,
+    nur,
     ...
   } @ inputs: let
-    # Supported systems
-    supportedSystems = ["x86_64-linux"];
+    # Shared args passed into every NixOS module and HM module
+    specialArgs = {inherit inputs self;};
 
-    # Helper to generate per-system attributes
-    eachSystem = nixpkgs.lib.genAttrs supportedSystems;
-
-    # Package set with overlays and config
+    # Common nixpkgs config reused across hosts and standalone HM
     mkPkgs = system:
       import nixpkgs {
         inherit system;
         config.allowUnfree = true;
-        overlays = [
-          inputs.nur.overlays.default
+        overlays = [nur.overlays.default];
+      };
+  in
+    # System-scoped outputs: devShells, formatter, packages, checks
+    flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = mkPkgs system;
+    in {
+      devShells.default = pkgs.mkShell {
+        name = "nix-dotfiles";
+        nativeBuildInputs = with pkgs; [
+          gnumake
+          gitMinimal
+          nil
+          age
+          (git-crypt.override {git = gitMinimal;})
+          sops
+          alejandra
+          deadnix
+          statix
+          nix-output-monitor
+          home-manager.packages.${system}.home-manager
         ];
       };
-  in {
-    nixosConfigurations = eachSystem (system: {
-      c0d3h01 = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ./modules/nixos
-          inputs.home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = "backup";
-              users.c0d3h01.imports = [./modules/home];
-            };
-          }
-        ];
+
+      formatter = pkgs.alejandra;
+    })
+    # Non-system-scoped outputs: nixosConfigurations, homeConfigurations
+    # These are NEVER wrapped in eachSystem
+    // {
+      nixosConfigurations = {
+        # Add new hosts here: hostname = mkNixosSystem { ... };
+        c0d3h01 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          inherit specialArgs;
+          modules = [
+            {nixpkgs = {config.allowUnfree = true; overlays = [nur.overlays.default];};}
+            ./modules/nixos
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                backupFileExtension = "backup";
+                extraSpecialArgs = specialArgs;
+                users.c0d3h01.imports = [./modules/home];
+              };
+            }
+          ];
+        };
       };
-    });
 
-    homeConfigurations = eachSystem (system: {
-      c0d3h01 = inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = mkPkgs system;
-        modules = [./modules/home];
+      homeConfigurations = {
+        # Standalone HM: used when NixOS is NOT the host (e.g. Ubuntu, macOS)
+        # Activate with: home-manager switch --flake .#c0d3h01
+        "c0d3h01" = home-manager.lib.homeManagerConfiguration {
+          pkgs = mkPkgs "x86_64-linux";
+          extraSpecialArgs = specialArgs;
+          modules = [./modules/home];
+        };
       };
-    });
-
-    devShells = eachSystem (system: {
-      default = import ./shell.nix {inherit (mkPkgs system) pkgs;};
-    });
-
-    formatter = eachSystem (system:
-      (import ./formatter.nix {
-        inherit self;
-        pkgs = mkPkgs system;
-      }).formatter);
-
-    checks = eachSystem (system: {
-      formatting =
-        (import ./formatter.nix {
-          inherit self;
-          pkgs = mkPkgs system;
-        }).check;
-    });
-  };
+    };
 }
