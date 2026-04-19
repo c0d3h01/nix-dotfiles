@@ -44,9 +44,11 @@
       shell = pkgs.zsh;
 
       hashedPassword = "$y$j9T$jbMpDi1jashn36Vczb8jO/$E8M0edjvWOZg24Su5bFWaQ5tHcPkwyQ8HdzkAMx0km7";
-      openssh.authorizedKeys.keys = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICSjL8HGjiSAnLHupMZin095bql7A8+UDfc7t9XCZs8l";
+      openssh.authorizedKeys.keys = [
+      	"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICSjL8HGjiSAnLHupMZin095bql7A8+UDfc7t9XCZs8l"
+      ];
 
-      extraGroups = [
+    extraGroups = [
         "wheel"
         "users"
         "networkmanager"
