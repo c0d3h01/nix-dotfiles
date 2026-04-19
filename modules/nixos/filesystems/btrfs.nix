@@ -9,6 +9,16 @@
     ];
   };
 
+  fileSystems."/home" = {
+    device = "/dev/disk/by-label/nix-root";
+    fsType = "btrfs";
+    options = [
+      "subvol=@home"
+      "noatime"
+      "compress=zstd:3"
+    ];
+  };
+
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/nix-boot";
     fsType = "vfat";
