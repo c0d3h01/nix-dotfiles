@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# nixos-rescue.sh — NixOS Partition Setup & Chroot Rescue Tool
+# scripts.sh — NixOS Partition Setup & Chroot Rescue Tool
 # =============================================================================
 #
 # DESCRIPTION:
@@ -19,7 +19,7 @@
 #                   nixos-rebuild, passwd, or any system repair.
 #
 # USAGE:
-#   nixos-rescue.sh <command> [options]
+#   scripts.sh <command> [options]
 #
 # COMMANDS:
 #   partition   <disk>          Wipe <disk> and create the full partition layout.
@@ -40,16 +40,16 @@
 #
 # EXAMPLES:
 #   # Fresh install on /dev/nvme0n1
-#   sudo ./nixos-rescue.sh partition /dev/nvme0n1
+#   sudo ./scripts.sh partition /dev/nvme0n1
 #
 #   # Rescue a broken system (labels already exist on disk)
-#   sudo ./nixos-rescue.sh rescue
+#   sudo ./scripts.sh rescue
 #
 #   # Rescue into a non-standard mountpoint
-#   sudo ./nixos-rescue.sh rescue --target /mnt/recovery
+#   sudo ./scripts.sh rescue --target /mnt/recovery
 #
 #   # Dry-run to see what partition would do
-#   sudo ./nixos-rescue.sh partition /dev/nvme0n1 --dry-run
+#   sudo ./scripts.sh partition /dev/nvme0n1 --dry-run
 #
 # PARTITION LABELS (hardcoded to match NixOS config):
 #   nix-boot    EFI vfat partition
