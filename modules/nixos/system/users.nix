@@ -5,10 +5,14 @@
 
   # Identity & Time
   networking.hostName = "nixos";
+
+  # Set your time zone.
   time.timeZone = "Asia/Kolkata";
 
-  # Locale
+  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+
+  # Locale
   i18n.extraLocales = ["en_IN/UTF-8"];
   i18n.extraLocaleSettings = {
     LC_CTYPE = "en_US.UTF-8";
@@ -30,6 +34,9 @@
 
   # Shell Environment
   programs.zsh.enable = true;
+
+  # Browser
+  programs.firefox.enable = true;
 
   # User Configuration
   users.users = {
