@@ -88,7 +88,7 @@
     // {
       nixosConfigurations = {
         # Add new hosts here: hostname = mkNixosSystem { ... };
-        c0d3h01 = nixpkgs.lib.nixosSystem {
+        nixos = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           inherit specialArgs;
           modules = [
@@ -111,7 +111,7 @@
       homeConfigurations = {
         # Standalone HM: used when NixOS is NOT the host (e.g. Ubuntu, macOS)
         # Activate with: home-manager switch --flake .#c0d3h01
-        "c0d3h01" = home-manager.lib.homeManagerConfiguration {
+        "nixos" = home-manager.lib.homeManagerConfiguration {
           pkgs = mkPkgs "x86_64-linux";
           extraSpecialArgs = specialArgs;
           modules = [./modules/home];
