@@ -41,4 +41,4 @@ jobs:
         run: git diff --exit-code
 
       - name: Validate flake
-        run: nix flake check --show-trace
+        run: nix flake check --all-systems --show-trace
