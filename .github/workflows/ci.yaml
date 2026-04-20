@@ -23,7 +23,7 @@ jobs:
       - uses: DeterminateSystems/determinate-nix-action@v3
 
       - name: Format
-        run: nix fmt
+        run: nix fmt .
 
       - name: Commit formatting changes
         if: github.event_name == 'push'
