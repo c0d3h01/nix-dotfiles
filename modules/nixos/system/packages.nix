@@ -1,9 +1,9 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
-    # ocaml
-    # opam
-    # ocaml-pds
-    # ocaml-top
-    # ocaml_make
+    brave
+    vscode-fhs
+    antigravity-fhs
+    ocaml
+    opam
   ];
 }
