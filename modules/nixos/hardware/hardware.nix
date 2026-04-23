@@ -15,10 +15,10 @@ in {
     enableAllFirmware = mkDefault true;
 
     # Allow redistributable firmware (e.g., for Wi-Fi, GPU)
-    enableRedistributableFirmware = true;
+    enableRedistributableFirmware = mkDefault true;
 
     # Backlight control via ACPI (laptops)
-    acpilight.enable = true;
+    acpilight.enable = mkDefault true;
 
     # AMD CPU microcode updates
     cpu.amd.updateMicrocode = mkDefault true;
@@ -31,12 +31,11 @@ in {
   services.fwupd.enable = true;
 
   boot = {
-    plymouth.enable = false;
     tmp.cleanOnBoot = true;
 
     initrd = {
-      verbose = false;
-      systemd.enable = true;
+      verbose = true;
+
       compressor = "zstd";
       compressorArgs = ["-19" "-T0"];
 
