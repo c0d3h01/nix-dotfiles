@@ -7,7 +7,7 @@
       enable = true;
       efiSupport = true;
       devices = ["nodev"];
-      configurationLimit = 15;
+      configurationLimit = 20;
       efiInstallAsRemovable = false;
       useOSProber = false;
     };
