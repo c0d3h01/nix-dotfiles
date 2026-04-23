@@ -7,19 +7,22 @@
         type = "gpt";
         partitions = {
           ESP = {
-            label = "nixos-boot";
+            label = "nix-boot";
             size = "1G";
             type = "EF00";
             content = {
               type = "filesystem";
               format = "vfat";
               mountpoint = "/boot";
-              mountOptions = ["fmask=0077" "dmask=0077"];
+              mountOptions = [
+                "fmask=0077"
+                "dmask=0077"
+              ];
             };
           };
 
           # plainSwap = {
-          #   label = "nixos-swap";
+          #   label = "nix-swap";
           #   size = "4G";
           #   content = {
           #     type = "swap";
@@ -28,17 +31,18 @@
           #   };
           # };
 
-          encryptedSwap = {
-            size = "4G";
-            content = {
-              type = "swap";
-              randomEncryption = true;
-              priority = 100;
-            };
-          };
+          # encryptedSwap = {
+          #   label = "nix-swap";
+          #   size = "4G";
+          #   content = {
+          #     type = "swap";
+          #     randomEncryption = true;
+          #     priority = 100;
+          #   };
+          # };
 
           root = {
-            label = "nixos-root";
+            label = "nix-root";
             size = "100%";
             content = {
               type = "btrfs";
@@ -48,7 +52,7 @@
                   mountpoint = "/";
                   mountOptions = [
                     "noatime"
-                    "compress=zstd:1"
+                    "compress=zstd:3"
                   ];
                 };
 
@@ -64,7 +68,7 @@
                   mountpoint = "/nix";
                   mountOptions = [
                     "noatime"
-                    "compress=zstd:3"
+                    "compress=zstd:1"
                   ];
                 };
               };
