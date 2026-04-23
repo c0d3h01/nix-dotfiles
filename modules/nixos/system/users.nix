@@ -59,6 +59,8 @@
         "wheel"
         "users"
         "networkmanager"
+        "libvirtd"
+        "wireshark"
       ];
     };
 

@@ -1,10 +1,4 @@
 {pkgs, ...}: {
-  users.users.c0d3h01.extraGroups = [
-    "plugdev" # USB devices (Android, Microcontrollers)
-    "adbusers" # Android Debug Bridge
-    "libvirtd" # KVM/QEMU virtualization access
-  ];
-
   programs.virt-manager.enable = true;
 
   virtualisation = {
