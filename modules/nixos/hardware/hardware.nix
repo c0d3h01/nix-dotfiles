@@ -27,9 +27,6 @@ in {
     sensor.iio.enable = mkDefault true;
   };
 
-  # Firmware support
-  services.fwupd.enable = true;
-
   boot = {
     tmp.cleanOnBoot = true;
 

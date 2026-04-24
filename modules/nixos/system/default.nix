@@ -2,6 +2,7 @@
   imports = [
     ./appImage.nix
     ./audio.nix
+    ./earlyoom.nix
     ./flatpak.nix
     ./fonts.nix
     ./gnome.nix
@@ -9,15 +10,18 @@
     ./nix-ld.nix
     ./nix.nix
     ./nixpkgs.nix
+    ./oomd.nix
     ./packages.nix
     ./plasma.nix
     ./printing.nix
+    ./scheduler.nix
     ./secrets.nix
+    ./systemd.nix
     ./users.nix
     ./xserver.nix
   ];
 
-  # Desktop envrionment toggle
+  # Desktop environment toggle
   services.kdeDesktop.enable = false;
   services.gnomeDesktop.enable = true;
 }

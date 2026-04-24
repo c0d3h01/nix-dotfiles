@@ -4,9 +4,9 @@
     ./amd.nix
     ./bootloader.nix
     ./filesystem.nix
+    ./firmware.nix
     ./hardware.nix
-    ./oomd.nix
-    ./optimise.nix
+    ./power.nix
     ./touchpad.nix
     ./zram.nix
   ];

@@ -38,28 +38,9 @@ in {
       wifi = {
         backend = "wpa_supplicant"; # iwd | wpa_supplicant
         powersave = false;
-        # macAddress = "random";
+        macAddress = "random";
         scanRandMacAddress = true;
       };
     };
-  };
-
-  # Kernel TCP optimizations for low latency and better Wi-Fi performance
-  boot.kernel.sysctl = {
-    # Use BBR congestion control (better for wireless/variable bandwidth)
-    "net.ipv4.tcp_congestion_control" = "bbr";
-
-    # Reduce latency for interactive traffic
-    "net.ipv4.tcp_low_latency" = 1;
-
-    # Enable TCP Fast Open (reduces connection handshake time)
-    "net.ipv4.tcp_fastopen" = 3;
-
-    # Increase buffer sizes for high-throughput bursts
-    "net.core.rmem_max" = 16777216;
-    "net.core.wmem_max" = 16777216;
-
-    # Prevent packet drops under load
-    "net.core.netdev_max_backlog" = 5000;
   };
 }

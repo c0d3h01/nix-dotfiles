@@ -30,9 +30,8 @@
       min-free = 1024 * 1024 * 1024;
       max-free = 5 * 1024 * 1024 * 1024;
 
-      # Critical for 6GB RAM: Limit parallel builds to prevent OOM
-      max-jobs = 2;
-      cores = 2;
+      max-jobs = 4;
+      cores = 4;
 
       # Store can be optimised during every build.
       auto-optimise-store = true;
@@ -40,7 +39,8 @@
       experimental-features = ["nix-command" "flakes"];
 
       # Network & Caches
-      http-connections = 25;
+      http-connections = 128;
+      max-substitution-jobs = 128;
       builders-use-substitutes = true;
 
       substituters = [
