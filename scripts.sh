@@ -80,7 +80,7 @@ generate_nixos() {
 
 install_nixos() {
   echo -e "${GREEN}Installing NixOS...${NC}"
-  nixos-install --flake "github:c0d3h01/Nix#nixos" --no-root-passwd
+  nixos-install --flake ".#nixos" --no-root-passwd
 }
 
 rescue_mode() {
