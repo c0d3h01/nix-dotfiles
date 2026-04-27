@@ -33,7 +33,5 @@
     gspell # gtk spellchecker
     hunspell
     hunspellDicts.en_US
-    hunspellDicts.hi_IN   # Hindi
-    hunspellDicts.mr_IN   # Marathi
   ];
 }
